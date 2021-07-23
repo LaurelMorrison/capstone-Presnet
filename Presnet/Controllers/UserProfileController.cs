@@ -16,9 +16,9 @@ namespace Presnet.Controllers
     public class UserProfileController : ControllerBase
     {
         private readonly IUserProfileRepository _userProfileRepository;
-        public UserProfileController(IUserProfileRepository userProfileRepository)
+        public UserProfileController(IUserProfileRepository UserProfileRepository)
         {
-            _userProfileRepository = userProfileRepository;
+            _userProfileRepository = UserProfileRepository;
         }
 
         [HttpGet("{firebaseUserId}")]

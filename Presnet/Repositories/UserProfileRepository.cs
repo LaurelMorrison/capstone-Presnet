@@ -62,13 +62,13 @@ namespace Presnet.Repositories
                 {
                     cmd.CommandText = @"INSERT INTO UserProfile (firebaseUserId, firstName, lastName, email, address, createdTime, age, shoeSize, clothingSizeId, favoriteColorId)
                                         OUTPUT INSERTED.ID
-                                        VALUES (@firebaseUserId, @firstName, @email, @lastName, @address, @createdTime, @age, @shoeSize, @clothingSizeId, @favoriteColorId)";
+                                        VALUES (@firebaseUserId, @firstName, @lastName, @email, @address, @createdTime, @age, @shoeSize, @clothingSizeId, @favoriteColorId)";
                     DbUtils.AddParameter(cmd, "@firebaseUserId", userProfile.firebaseUserId);
                     DbUtils.AddParameter(cmd, "@firstName", userProfile.firstName);
-                    DbUtils.AddParameter(cmd, "@email", userProfile.email);
                     DbUtils.AddParameter(cmd, "@lastName", userProfile.lastName);
+                    DbUtils.AddParameter(cmd, "@email", userProfile.email);
                     DbUtils.AddParameter(cmd, "@address", userProfile.address);
-                    DbUtils.AddParameter(cmd, "@createdTime", userProfile.createdTime);
+                    DbUtils.AddParameter(cmd, "@createdTime", DateTime.Now);
                     DbUtils.AddParameter(cmd, "@age", userProfile.age);
                     DbUtils.AddParameter(cmd, "@shoeSize", userProfile.shoeSize);
                     DbUtils.AddParameter(cmd, "@clothingSizeId", userProfile.clothingSizeId);
@@ -87,8 +87,11 @@ namespace Presnet.Repositories
                     using (var cmd = conn.CreateCommand())
                     {
                         cmd.CommandText = @"
-                            SELECT up.id, Up.firebaseUserId, up.firstName, up.lastName, up.fullName, up.email, up.address, up.createdTime, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId
+                            SELECT up.id, Up.firebaseUserId, up.firstName, up.lastName, up.email, up.address, up.createdTime, 
+                                   up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size as clothingSize, fc.color as favoriteColor
                             FROM UserProfile up
+                            LEFT JOIN clothingSize cs ON cs.id = up.clothingSizeId
+                            LEFT JOIN favoriteColor fc ON fc.id = up.favoriteColorId
                             ORDER BY firstName";
 
                         var reader = cmd.ExecuteReader();
@@ -108,8 +111,15 @@ namespace Presnet.Repositories
                                 age = DbUtils.GetInt(reader, "age"),
                                 shoeSize = DbUtils.GetInt(reader, "shoeSize"),
                                 clothingSizeId = DbUtils.GetInt(reader, "clothingSizeId"),
-                                favoriteColorId = DbUtils.GetInt(reader, "favoriteColorId")
-
+                                favoriteColorId = DbUtils.GetInt(reader, "favoriteColorId"),
+                                ClothingSize = new ClothingSize()
+                                {
+                                    size = reader.GetString(reader.GetOrdinal("clothingSize")),
+                                },
+                                FavoriteColor = new FavoriteColor()
+                                {
+                                    color = reader.GetString(reader.GetOrdinal("favoriteColor")),
+                                }
                             });
                         }
                         reader.Close();
@@ -127,8 +137,7 @@ namespace Presnet.Repositories
                     {
                         cmd.CommandText = @"
                           SELECT up.id, Up.firebaseUserId, up.firstName, up.lastName, up.fullName, up.email, up.address, up.createdTime, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId
-                            FROM UserProfile up
-                          FROM UserProfile 
+                          FROM UserProfile up
                           WHERE id = @id ";
 
                         DbUtils.AddParameter(cmd, "@id", id);

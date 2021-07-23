@@ -1,16 +1,17 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Login from "./Login";
-import Register from "./Register";
+import Login from "./Auth/Login";
+import Register from "./Auth/Register";
+import { Homepage } from "./Homepage/Homepage";
 
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
     <main>
       <Switch>
-        {/* <Route path="/" exact>
-          {isLoggedIn ? < /> : <Redirect to="/login" />}
-        </Route> */}
+        <Route path="/" exact>
+          {isLoggedIn ? <Homepage /> : <Redirect to="/login" />}
+        </Route>
 
         <Route path="/login">
           <Login />

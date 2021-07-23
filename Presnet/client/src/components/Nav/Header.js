@@ -3,7 +3,7 @@ import { NavLink as RRNavLink } from "react-router-dom";
 import {
     Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink
 } from 'reactstrap';
-import { logout } from "../modules/authManager";
+import { logout } from "../../modules/authManager";
 
 export default function Header({ isLoggedIn }) {
     const [isOpen, setIsOpen] = useState(false);

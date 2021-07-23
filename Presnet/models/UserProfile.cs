@@ -33,6 +33,9 @@ namespace Presnet.models
         public int shoeSize { get; set; }
         public int favoriteColorId { get; set; }
         public int clothingSizeId { get; set; }
+        public FavoriteColor FavoriteColor { get; set; }
+        public ClothingSize ClothingSize { get; set; }
+
         public string fullName
         {
             get
