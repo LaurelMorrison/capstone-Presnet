@@ -12,8 +12,8 @@ export default function Header({ isLoggedIn }) {
     return (
         <div>
             <Navbar color="dark" dark expand="md">
-                <NavbarBrand tag={RRNavLink} to="/">StreamISH</NavbarBrand>
-                <NavbarToggler onClick={toggle} />
+                <NavbarBrand tag={RRNavLink} to="/">Presnet</NavbarBrand>
+                {/* <NavbarToggler onClick={toggle} /> */}
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
                         {isLoggedIn &&

@@ -8,21 +8,39 @@ namespace Presnet.models
 {
     public class UserProfile
     {
-        public int Id { get; set; }
+        public int id { get; set; }
 
         [Required]
         [StringLength(28, MinimumLength = 28)]
-        public string FirebaseUserId { get; set; }
+        public string firebaseUserId { get; set; }
 
         [Required]
         [MaxLength(50)]
-        public string Name { get; set; }
+        public string firstName { get; set; }
 
         [Required]
-        [MaxLength(255)]
-        public string Email { get; set; }
+        [MaxLength(50)]
+        public string lastName { get; set; }
 
-        
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [MaxLength(255)]
+        public string email { get; set; }
+
+        public string address { get; set; }
+        public DateTime createdTime { get; set; }
+        public int age { get; set; }
+        public int shoeSize { get; set; }
+        public int favoriteColorId { get; set; }
+        public int clothingSizeId { get; set; }
+        public string fullName
+        {
+            get
+            {
+                return $"{firstName} {lastName}";
+            }
+        }
+
     }
 }
 

@@ -32,6 +32,24 @@ namespace Presnet.Controllers
             return Ok(userProfile);
         }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_userProfileRepository.GetAllUsers());
+        }
+
+
+        [HttpGet("{id}")]
+        public IActionResult GetUserById(int id)
+        {
+            var user = _userProfileRepository.GetUserById(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
         [HttpGet("DoesUserExist/{firebaseUserId}")]
         public IActionResult DoesUserExist(string firebaseUserId)
         {
@@ -49,7 +67,7 @@ namespace Presnet.Controllers
             // All newly registered users start out as a "user" user type (i.e. they are not admins)
             _userProfileRepository.Add(userProfile);
             return CreatedAtAction(
-                nameof(GetByFirebaseUserId), new { firebaseUserId = userProfile.FirebaseUserId }, userProfile);
+                nameof(GetByFirebaseUserId), new { firebaseUserId = userProfile.firebaseUserId }, userProfile);
         }
     }
 }

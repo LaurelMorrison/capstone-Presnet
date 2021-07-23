@@ -39,7 +39,7 @@ export const login = (email, pw) => {
         // If we couldn't find the user in our app's database, we should logout of firebase
         logout();
 
-        throw new Error("Something's wrong. The user exists in firebase, but not in the application database.");
+        throw new Error("Something's wrong. Please try again.");
       }
     }).catch(err => {
       console.error(err);
