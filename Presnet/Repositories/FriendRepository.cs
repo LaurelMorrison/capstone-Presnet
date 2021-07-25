@@ -82,7 +82,7 @@ namespace Presnet.Repositories
         }
 
 
-        public void CreateComment(Friend friend)
+        public void AddFriend(Friend friend)
         {
             using (SqlConnection conn = Connection)
             {
@@ -106,7 +106,29 @@ namespace Presnet.Repositories
             }
 
         }
+        public void AddFriendStatus(FriendStatus friendStatus)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
 
+                {
+                    cmd.CommandText = @"
+                            INSERT INTO FriendStatus (status)
+                            OUTPUT Inserted.id
+                            VALUES (@status); ";
+                    cmd.Parameters.AddWithValue("@status", friendStatus.status);
+
+
+                    int id = (int)cmd.ExecuteScalar();
+
+                    friendStatus.id = id;
+                }
+
+            }
+
+        }
         public Friend GetFriendById(int id)
         {
             using (SqlConnection conn = Connection)
@@ -312,31 +334,6 @@ namespace Presnet.Repositories
                     reader.Close();
 
                     return friends;
-                }
-            }
-        }
-
-        public void requestFriend(int id)
-        {
-            using (SqlConnection conn = Connection)
-            {
-                conn.Open();
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
-                            UPDATE friendStatus fs
-                            SET fs.status = 'pending'
-                            FROM friend f
-                              LEFT JOIN friendStatus fs ON fs.id = f.statusId
-                              LEFT JOIN userProfile up ON up.id = f.userId
-                              LEFT JOIN userProfile fup ON fup.id = f.friendId
-                            WHERE f.userId = @id
-                        ";
-
-                    DbUtils.AddParameter(cmd, "@id", id);
-
-
-                    cmd.ExecuteNonQuery();
                 }
             }
         }

@@ -5,13 +5,13 @@ namespace Presnet.Repositories
 {
     public interface IFriendRepository
     {
-        void acceptFriend(int id);
-        void CreateComment(Friend friend);
+        void AddFriend(Friend friend);
+        void AddFriendStatus(FriendStatus friendStatus);
         List<Friend> GetAllFriends();
         List<Friend> GetAllPending(int id);
         List<Friend> GetAllRequested(int id);
         Friend GetFriendById(int id);
+        void acceptFriend(int id);
         void RejectFriend(int id);
-        void requestFriend(int id);
     }
 }
