@@ -13,7 +13,7 @@ export default function Header({ isLoggedIn }) {
         <div>
             <Navbar color="dark" dark expand="md">
                 <NavbarBrand tag={RRNavLink} to="/">Presnet</NavbarBrand>
-                {/* <NavbarToggler onClick={toggle} /> */}
+                <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
                         {isLoggedIn &&

@@ -38,6 +38,11 @@ namespace Presnet.Controllers
             return Ok(_userProfileRepository.GetAllUsers());
         }
 
+        [HttpGet("friendsearch")]
+        public IActionResult GetNonFriend()
+        {
+            return Ok(_userProfileRepository.GetAllNonFriend());
+        }
 
         [HttpGet("{id}")]
         public IActionResult GetUserById(int id)

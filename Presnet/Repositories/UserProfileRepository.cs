@@ -128,7 +128,53 @@ namespace Presnet.Repositories
                 }
             }
 
-            public UserProfile GetUserById(int id)
+        public List<UserProfile> GetAllNonFriend()
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            SELECT f.id, f.userId, f.friendId, f.statusId, up.id
+                                             up.firstName as UserName, fup.firstName as NonFriendFirstName, fup.id as NonFriendId, 
+                                             fup.lastName as NonFriendLastName, 
+                            FROM UserProfile up
+                            LEFT JOIN friend f ON up.id = f.userId
+                            LEFT JOIN UserProfile fup ON fup.id = f.friendId
+                            WHERE f.id IS NULL ";
+
+                    var reader = cmd.ExecuteReader();
+
+                    var users = new List<UserProfile>();
+                    while (reader.Read())
+                    {
+                        users.Add(new UserProfile()
+                        {
+                            id = DbUtils.GetInt(reader, "id"),
+                            firstName = DbUtils.GetString(reader, "UserName"),
+                            Friend = new Friend()
+                            {
+                                id = reader.GetInt32(reader.GetOrdinal("id")),
+                                userId = reader.GetInt32(reader.GetOrdinal("userId")),
+                                friendId = reader.GetInt32(reader.GetOrdinal("friendId")),
+                                statusId = reader.GetInt32(reader.GetOrdinal("statusId")),
+                            },
+                            NonFriend = new UserProfile()
+                            {
+                                id = DbUtils.GetInt(reader, "NonFriendId"),
+                                firstName = DbUtils.GetString(reader, "NonFriendFirstName"),
+                                lastName = DbUtils.GetString(reader, "NonFriendLastName"),
+                            },
+                        });
+                    }
+                    reader.Close();
+                    return users;
+                }
+            }
+        }
+
+        public UserProfile GetUserById(int id)
             {
                 using (var conn = Connection)
                 {

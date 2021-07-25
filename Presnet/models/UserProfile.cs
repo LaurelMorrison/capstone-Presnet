@@ -35,6 +35,8 @@ namespace Presnet.models
         public int clothingSizeId { get; set; }
         public FavoriteColor FavoriteColor { get; set; }
         public ClothingSize ClothingSize { get; set; }
+        public Friend Friend { get; set; }
+        public UserProfile NonFriend { get; set; }
 
         public string fullName
         {
