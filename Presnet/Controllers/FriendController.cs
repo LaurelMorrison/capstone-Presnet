@@ -30,7 +30,7 @@ namespace Presnet.Controllers
             return Ok(_friendRepository.GetAllFriends());
         }
 
-        [HttpGet]
+        [HttpGet("pending")]
         public IActionResult GetPending(int id)
         {
             var friends = _friendRepository.GetAllPending(id);
@@ -41,7 +41,7 @@ namespace Presnet.Controllers
             return Ok(friends);
         }
 
-        [HttpGet]
+        [HttpGet("requested")]
         public IActionResult GetRequested(int id)
         {
             var friends = _friendRepository.GetAllRequested(id);
@@ -50,12 +50,6 @@ namespace Presnet.Controllers
                 return NotFound();
             }
             return Ok(friends);
-        }
-
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok(_friendRepository.GetAllFriends());
         }
 
         [HttpGet("Id")]
@@ -79,7 +73,7 @@ namespace Presnet.Controllers
             return CreatedAtAction(nameof(GetAll), new { id = friend.id }, friend);
         }
 
-        [HttpPost]
+        [HttpPost("status")]
         public IActionResult addFriendStatus(FriendStatus friendStatus)
         {
             var currentUserProfile = GetCurrentUserProfile();
@@ -96,7 +90,7 @@ namespace Presnet.Controllers
         }
 
         // Accept Friend
-        [HttpPut("{id}")]
+        [HttpPut("accept/{id}")]
         public IActionResult AcceptFriendRequest(int id, Friend friend)
         {
             if (id != friend.id)
@@ -108,7 +102,7 @@ namespace Presnet.Controllers
         }
 
         // Accept Friend
-        [HttpPut("{id}")]
+        [HttpPut("reject/{id}")]
         public IActionResult RejectFriendRequest(int id, Friend friend)
         {
             if (id != friend.id)

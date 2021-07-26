@@ -38,7 +38,7 @@ namespace Presnet.Controllers
             return Ok(_userProfileRepository.GetAllUsers());
         }
 
-        [HttpGet]
+        [HttpGet("userList")]
         public IActionResult GetNonFriend()
         {
             return Ok(_userProfileRepository.GetAllNonFriend());
