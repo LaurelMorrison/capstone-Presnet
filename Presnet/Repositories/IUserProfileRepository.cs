@@ -8,7 +8,8 @@ namespace Presnet.Repositories
         void Add(UserProfile userProfile);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
         public List<UserProfile> GetAllUsers();
-        public List<UserProfile> GetAllNonFriend();
+        List<UserProfile> GetAllFriends(int id);
+        List<UserProfile> GetAllNonFriend(int id);
         UserProfile GetUserById(int id);
     }
 }

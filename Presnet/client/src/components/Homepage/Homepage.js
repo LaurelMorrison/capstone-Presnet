@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Homepage = () => {
+const Homepage = () => {
 
   return (
     <div>
@@ -8,3 +8,5 @@ export const Homepage = () => {
     </div>
   );
 }
+
+export default Homepage;

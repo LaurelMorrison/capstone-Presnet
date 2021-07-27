@@ -6,6 +6,7 @@ using Presnet.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Presnet.Controllers
@@ -38,10 +39,37 @@ namespace Presnet.Controllers
             return Ok(_userProfileRepository.GetAllUsers());
         }
 
-        [HttpGet("userList")]
-        public IActionResult GetNonFriend()
+        [HttpGet("friendList")]
+        public IActionResult GetAllFriends(int id)
         {
-            return Ok(_userProfileRepository.GetAllNonFriend());
+            var user = GetCurrentUserProfile();
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                var friends = _userProfileRepository.GetAllFriends(user.id);
+
+                return Ok(friends);
+            }
+        }
+
+        [HttpGet("userList")]
+        public IActionResult GetNonFriends()
+        {
+            var user = GetCurrentUserProfile();
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                var nonfriends = _userProfileRepository.GetAllNonFriend(user.id);
+
+                return Ok(nonfriends);
+            }
         }
 
         [HttpGet("{id}")]
@@ -73,6 +101,21 @@ namespace Presnet.Controllers
             _userProfileRepository.Add(userProfile);
             return CreatedAtAction(
                 nameof(GetByFirebaseUserId), new { firebaseUserId = userProfile.firebaseUserId }, userProfile);
+        }
+
+
+        // Get the current user
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (firebaseUserId != null)
+            {
+                return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

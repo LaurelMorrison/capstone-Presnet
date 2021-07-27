@@ -24,11 +24,6 @@ namespace Presnet.Controllers
             _userProfileRepository = UserProfileRepository;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            return Ok(_friendRepository.GetAllFriends());
-        }
 
         [HttpGet("pending")]
         public IActionResult GetPending(int id)
@@ -52,10 +47,10 @@ namespace Presnet.Controllers
             return Ok(friends);
         }
 
-        [HttpGet("Id")]
-        public IActionResult GetById(int id)
+        [HttpGet("getbyid/{friendId}")]
+        public IActionResult GetFriendById(int friendId)
         {
-            var friend = _friendRepository.GetFriendById(id);
+            var friend = _friendRepository.GetFriendById(friendId);
             if (friend == null)
             {
                 return NotFound();
@@ -63,31 +58,16 @@ namespace Presnet.Controllers
             return Ok(friend);
         }
 
-        [HttpPost]
-        public IActionResult addFriend(Friend friend)
-        {
-            var currentUserProfile = GetCurrentUserProfile();
-            friend.userId = currentUserProfile.id;
+        //[HttpPost]
+        //public IActionResult addFriend(Friend friend)
+        //{
+        //    var currentUserProfile = GetCurrentUserProfile();
+        //    friend.userId = currentUserProfile.id;
+        //    friend.statusId = 3;
 
-            _friendRepository.AddFriend(friend);
-            return CreatedAtAction(nameof(GetAll), new { id = friend.id }, friend);
-        }
-
-        [HttpPost("status")]
-        public IActionResult addFriendStatus(FriendStatus friendStatus)
-        {
-            var currentUserProfile = GetCurrentUserProfile();
-            friendStatus.status = "pending";
-
-            _friendRepository.AddFriendStatus(friendStatus);
-            return CreatedAtAction(nameof(GetAll), new { id = friendStatus.id }, friendStatus);
-        }
-
-        private UserProfile GetCurrentUserProfile()
-        {
-            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
-        }
+        //    _friendRepository.AddFriend(friend);
+        //    return CreatedAtAction(nameof(GetAll), new { id = friend.id }, friend);
+        //}
 
         // Accept Friend
         [HttpPut("accept/{id}")]
@@ -111,6 +91,13 @@ namespace Presnet.Controllers
             }
             _friendRepository.RejectFriend(id);
             return NoContent();
+        }
+
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

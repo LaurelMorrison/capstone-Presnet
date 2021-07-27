@@ -128,7 +128,7 @@ namespace Presnet.Repositories
                 }
             }
 
-        public List<UserProfile> GetAllNonFriend()
+        public List<UserProfile> GetAllNonFriend(int id)
         {
             using (var conn = Connection)
             {
@@ -136,14 +136,19 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            SELECT f.id, f.userId, f.friendId, f.statusId, up.id
-                                             up.firstName as UserName, fup.firstName as NonFriendFirstName, fup.id as NonFriendId, 
-                                             fup.lastName as NonFriendLastName, 
-                            FROM UserProfile up
-                            LEFT JOIN friend f ON up.id = f.userId
-                            LEFT JOIN UserProfile fup ON fup.id = f.friendId
-                            WHERE f.id IS NULL ";
-
+                            Select up.firstName, up.lastName, up.id
+                                FROM userProfile up
+                                WHERE up.id != 2 AND up.id != 1 AND up.id NOT IN (
+                            SELECT f.friendId
+                                FROM friend f
+                                WHERE f.statusId = 1 AND f.statusId = 2 AND f.UserID = @id
+                                 ) AND up.id NOT IN (
+                            SELECT f.userId
+                                FROM friend f
+                                WHERE f.statusId = 1 AND f.statusId = 2 AND f.friendId = @id 
+                                  )";
+                    DbUtils.AddParameter(cmd, "@userId", id);
+                    DbUtils.AddParameter(cmd, "@friendId", id);
                     var reader = cmd.ExecuteReader();
 
                     var users = new List<UserProfile>();
@@ -152,20 +157,61 @@ namespace Presnet.Repositories
                         users.Add(new UserProfile()
                         {
                             id = DbUtils.GetInt(reader, "id"),
-                            firstName = DbUtils.GetString(reader, "UserName"),
+                            firstName = DbUtils.GetString(reader, "firstName"),
                             Friend = new Friend()
                             {
                                 id = reader.GetInt32(reader.GetOrdinal("id")),
                                 userId = reader.GetInt32(reader.GetOrdinal("userId")),
                                 friendId = reader.GetInt32(reader.GetOrdinal("friendId")),
                                 statusId = reader.GetInt32(reader.GetOrdinal("statusId")),
-                            },
-                            NonFriend = new UserProfile()
+                            }
+                        });
+                    }
+                    reader.Close();
+                    return users;
+                }
+            }
+        }
+
+
+        public List<UserProfile> GetAllFriends(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Select up.firstName, up.lastName, up.id
+                                        FROM userProfile up
+                                        WHERE up.id != @id AND up.id IN (
+                                                SELECT f.friendId
+                                                FROM friend f
+                                                WHERE f.statusId = 1 AND f.userId = @id
+                                                ) 
+ 
+                                                OR up.id IN (
+                                                SELECT f.userId
+                                                FROM friend f
+                                                WHERE f.statusId = 1 AND f.friendId = @id
+                                                )";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    var reader = cmd.ExecuteReader();
+
+                    var users = new List<UserProfile>();
+                    while (reader.Read())
+                    {
+                        users.Add(new UserProfile()
+                        {
+                            id = DbUtils.GetInt(reader, "id"),
+                            firstName = DbUtils.GetString(reader, "firstName"),
+                            Friend = new Friend()
                             {
-                                id = DbUtils.GetInt(reader, "NonFriendId"),
-                                firstName = DbUtils.GetString(reader, "NonFriendFirstName"),
-                                lastName = DbUtils.GetString(reader, "NonFriendLastName"),
-                            },
+                                id = reader.GetInt32(reader.GetOrdinal("id")),
+                                userId = reader.GetInt32(reader.GetOrdinal("userId")),
+                                friendId = reader.GetInt32(reader.GetOrdinal("friendId")),
+                                statusId = reader.GetInt32(reader.GetOrdinal("statusId")),
+                            }
                         });
                     }
                     reader.Close();
