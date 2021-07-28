@@ -1,7 +1,4 @@
 import React from "react";
-import { Button } from "reactstrap";
-import { useHistory } from "react-router-dom";
-import { GetUserById } from "../../modules/accountManager"
 
 const MyAccount = ({ userProfile }) => {
 

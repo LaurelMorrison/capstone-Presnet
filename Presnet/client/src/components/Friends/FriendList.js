@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Button, Table } from "reactstrap";
+import { Table } from "reactstrap";
 import Friend from "./Friend"
-import { getAllFriends } from "../../modules/friendManager"
-import { searchUsers } from "../../modules/accountManager";
+import { GetAllFriends } from "../../modules/accountManager";
 
 const FriendList = () => {
     const [friends, setFriends] = useState([]);
-    const [users, setUsers] = useState([]);
-    const [search, setSearch] = useState([])
-
 
     const getFriends = () => {
-        getAllFriends().then(friends => setFriends(friends));
+        GetAllFriends().then(friends => setFriends(friends));
     }
 
     useEffect(() => {

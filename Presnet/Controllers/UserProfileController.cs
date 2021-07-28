@@ -40,7 +40,7 @@ namespace Presnet.Controllers
         }
 
         [HttpGet("friendList")]
-        public IActionResult GetAllFriends(int id)
+        public IActionResult GetAllFriends()
         {
             var user = GetCurrentUserProfile();
             if (user == null)

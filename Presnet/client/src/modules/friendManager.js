@@ -2,22 +2,6 @@ import { getToken } from './authManager'
 
 const baseUrl = '/api/friend';
 
-export const getAllFriends = () => {
-    return getToken().then((token) => {
-      return fetch(baseUrl, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }).then(res => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("An unknown error occorred while trying to fetching your friends");
-        }
-      });
-    });
-  };
 
 export const GetFriendById = (friendId) => {
         return getToken().then((token) => {

@@ -138,17 +138,16 @@ namespace Presnet.Repositories
                     cmd.CommandText = @"
                             Select up.firstName, up.lastName, up.id
                                 FROM userProfile up
-                                WHERE up.id != 2 AND up.id != 1 AND up.id NOT IN (
+                                WHERE up.id != @id AND up.id != 1 AND up.id NOT IN (
                             SELECT f.friendId
                                 FROM friend f
-                                WHERE f.statusId = 1 AND f.statusId = 2 AND f.UserID = @id
+                                WHERE (f.statusId = 1 OR f.statusId = 2) AND f.UserId = @id
                                  ) AND up.id NOT IN (
                             SELECT f.userId
                                 FROM friend f
-                                WHERE f.statusId = 1 AND f.statusId = 2 AND f.friendId = @id 
+                                WHERE (f.statusId = 1 OR f.statusId = 2) AND f.friendId = @id
                                   )";
-                    DbUtils.AddParameter(cmd, "@userId", id);
-                    DbUtils.AddParameter(cmd, "@friendId", id);
+                    DbUtils.AddParameter(cmd, "@id", id);
                     var reader = cmd.ExecuteReader();
 
                     var users = new List<UserProfile>();
@@ -158,13 +157,7 @@ namespace Presnet.Repositories
                         {
                             id = DbUtils.GetInt(reader, "id"),
                             firstName = DbUtils.GetString(reader, "firstName"),
-                            Friend = new Friend()
-                            {
-                                id = reader.GetInt32(reader.GetOrdinal("id")),
-                                userId = reader.GetInt32(reader.GetOrdinal("userId")),
-                                friendId = reader.GetInt32(reader.GetOrdinal("friendId")),
-                                statusId = reader.GetInt32(reader.GetOrdinal("statusId")),
-                            }
+                            lastName = DbUtils.GetString(reader, "lastName")
                         });
                     }
                     reader.Close();
@@ -183,7 +176,8 @@ namespace Presnet.Repositories
                 {
                     cmd.CommandText = @"Select up.firstName, up.lastName, up.id
                                         FROM userProfile up
-                                        WHERE up.id != @id AND up.id IN (
+                                        LEFT JOIN friend f ON f.userId = up.id
+                                        WHERE up.id IN (
                                                 SELECT f.friendId
                                                 FROM friend f
                                                 WHERE f.statusId = 1 AND f.userId = @id
@@ -205,13 +199,7 @@ namespace Presnet.Repositories
                         {
                             id = DbUtils.GetInt(reader, "id"),
                             firstName = DbUtils.GetString(reader, "firstName"),
-                            Friend = new Friend()
-                            {
-                                id = reader.GetInt32(reader.GetOrdinal("id")),
-                                userId = reader.GetInt32(reader.GetOrdinal("userId")),
-                                friendId = reader.GetInt32(reader.GetOrdinal("friendId")),
-                                statusId = reader.GetInt32(reader.GetOrdinal("statusId")),
-                            }
+                            lastName = DbUtils.GetString(reader, "lastName")
                         });
                     }
                     reader.Close();

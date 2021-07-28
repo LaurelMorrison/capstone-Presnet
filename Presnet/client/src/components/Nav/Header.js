@@ -25,7 +25,7 @@ export default function Header({ isLoggedIn }) {
                                     <NavLink tag={RRNavLink} to="/userProfile"> My Account</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/friend"> Friends</NavLink>
+                                    <NavLink tag={RRNavLink} to="/Friends"> Friends</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <a aria-current="page" className="nav-link"

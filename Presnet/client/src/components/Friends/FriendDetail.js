@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardImg, CardBody, Button } from "reactstrap";
-import { Link, useParams, useHistory } from "react-router-dom";
-import { GetFriendById, deleteFriend } from "../../modules/friendManager";
+import { Card, Button } from "reactstrap";
+import { Link, useParams } from "react-router-dom";
+import { GetFriendById } from "../../modules/friendManager";
 
 const FriendDetails = () => {
 

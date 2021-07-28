@@ -13,7 +13,41 @@ export const GetAllUsers = () => {
         if (res.ok) {
           return res.json();
         } else {
-          throw new Error("An unknown error occorred while trying to fetching friends");
+          throw new Error("An unknown error occorred while trying to fetching users");
+        }
+      });
+    });
+  };
+
+  export const GetAllFriends = () => {
+    return getToken().then((token) => {
+      return fetch(`${baseUrl}/friendList`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("An unknown error occorred while trying to fetching your friends");
+        }
+      });
+    });
+  };
+
+  export const GetNonFriends = () => {
+    return getToken().then((token) => {
+      return fetch(`${baseUrl}/userList`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("An unknown error occorred while trying to fetching your friends");
         }
       });
     });

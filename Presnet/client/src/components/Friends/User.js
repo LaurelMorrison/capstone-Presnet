@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "reactstrap";
-import { Link, useParams, useHistory } from "react-router-dom";
-import { deleteFriend, getAllFriends } from "../../modules/friendManager";
+import { Link } from "react-router-dom";
 import { Card, CardBody } from "reactstrap";
 
 
