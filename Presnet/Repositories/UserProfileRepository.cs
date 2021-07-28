@@ -216,9 +216,11 @@ namespace Presnet.Repositories
                     using (var cmd = conn.CreateCommand())
                     {
                         cmd.CommandText = @"
-                          SELECT up.id, Up.firebaseUserId, up.firstName, up.lastName, up.fullName, up.email, up.address, up.createdTime, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId
-                          FROM UserProfile up
-                          WHERE id = @id ";
+                          SELECT up.id, up.firstName, up.lastName, up.email, up.address, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size as clothingSize, fc.color as favoriteColor 
+                          FROM userProfile up
+                            LEFT JOIN clothingSize cs ON cs.id = up.clothingSizeId
+                            LEFT JOIN favoriteColor fc ON fc.id = up.favoriteColorId
+                          WHERE up.id = @id ";
 
                         DbUtils.AddParameter(cmd, "@id", id);
                         var reader = cmd.ExecuteReader();
@@ -230,16 +232,22 @@ namespace Presnet.Repositories
                             user = new UserProfile()
                             {
                                 id = DbUtils.GetInt(reader, "id"),
-                                firebaseUserId = DbUtils.GetString(reader, "firebaseUserId"),
                                 firstName = DbUtils.GetString(reader, "firstName"),
                                 lastName = DbUtils.GetString(reader, "lastName"),
                                 email = DbUtils.GetString(reader, "email"),
                                 address = DbUtils.GetString(reader, "address"),
-                                createdTime = DbUtils.GetDateTime(reader, "createdTime"),
                                 age = DbUtils.GetInt(reader, "age"),
                                 shoeSize = DbUtils.GetInt(reader, "shoeSize"),
                                 clothingSizeId = DbUtils.GetInt(reader, "clothingSizeId"),
-                                favoriteColorId = DbUtils.GetInt(reader, "favoriteColorId")
+                                favoriteColorId = DbUtils.GetInt(reader, "favoriteColorId"),
+                                ClothingSize = new ClothingSize()
+                                {
+                                    size = reader.GetString(reader.GetOrdinal("clothingSize")),
+                                },
+                                FavoriteColor = new FavoriteColor()
+                                {
+                                    color = reader.GetString(reader.GetOrdinal("favoriteColor"))
+                                }
                             };
                         }
 
@@ -248,6 +256,46 @@ namespace Presnet.Repositories
                         return user;
                     }
                 }
+        }
+
+        public void Update(UserProfile userProfile)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE UserProfile up
+                                        
+                                        SET  up.firstName = @firstName, 
+                                             up.lastName = @lastName, 
+                                             up.address = @address, 
+                                             up.email = @email, 
+                                             up.age = @age, 
+                                             up.shoeSize = @shoeSize, 
+                                             up.clothingSizeId = @clothingSizeId,
+                                             up.favoriteColorId = @favoriteColorId,
+                                             up.firebaseUserId = @firebaseUserId,
+                                             up.createdTime = @createdTime,
+                                            WHERE up.id = @id";
+
+                    DbUtils.AddParameter(cmd, "@firstName", userProfile.firstName);
+                    DbUtils.AddParameter(cmd, "@lastName", userProfile.lastName);
+                    DbUtils.AddParameter(cmd, "@address", userProfile.address);
+                    DbUtils.AddParameter(cmd, "@email", userProfile.email);
+                    DbUtils.AddParameter(cmd, "@age", userProfile.age);
+                    DbUtils.AddParameter(cmd, "@shoeSize", userProfile.shoeSize);
+                    DbUtils.AddParameter(cmd, "@clothingSizeId", userProfile.clothingSizeId);
+                    DbUtils.AddParameter(cmd, "@favoriteColorId", userProfile.favoriteColorId);
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", userProfile.firebaseUserId);
+                    DbUtils.AddParameter(cmd, "@createdTime", userProfile.createdTime);
+
+                    DbUtils.AddParameter(cmd, "@id", userProfile.id);
+
+
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
+    }
     }

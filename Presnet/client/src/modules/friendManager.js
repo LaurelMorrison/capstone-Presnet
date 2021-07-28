@@ -20,7 +20,7 @@ export const GetFriendById = (friendId) => {
         });
       };
 
-      export const addFriend = (comment) => {
+      export const addFriend = (friend) => {
         return getToken().then((token) => {
             return fetch(baseUrl, {
                 method: "POST",
@@ -28,7 +28,7 @@ export const GetFriendById = (friendId) => {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(comment)
+                body: JSON.stringify(friend)
             })
         })};
 

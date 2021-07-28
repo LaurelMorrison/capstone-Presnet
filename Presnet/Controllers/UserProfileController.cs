@@ -22,7 +22,7 @@ namespace Presnet.Controllers
             _userProfileRepository = UserProfileRepository;
         }
 
-        [HttpGet("{firebaseUserId}")]
+        [HttpGet("firebase/{firebaseUserId}")]
         public IActionResult GetByFirebaseUserId(string firebaseUserId)
         {
             var userProfile = _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
@@ -72,6 +72,7 @@ namespace Presnet.Controllers
             }
         }
 
+
         [HttpGet("{id}")]
         public IActionResult GetUserById(int id)
         {
@@ -103,6 +104,17 @@ namespace Presnet.Controllers
                 nameof(GetByFirebaseUserId), new { firebaseUserId = userProfile.firebaseUserId }, userProfile);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, UserProfile user)
+        {
+            if (id != user.id)
+            {
+                return BadRequest();
+            }
+
+            _userProfileRepository.Update(user);
+            return Ok(user);
+        }
 
         // Get the current user
         private UserProfile GetCurrentUserProfile()

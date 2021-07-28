@@ -11,5 +11,6 @@ namespace Presnet.Repositories
         List<UserProfile> GetAllFriends(int id);
         List<UserProfile> GetAllNonFriend(int id);
         UserProfile GetUserById(int id);
+        void Update(UserProfile userProfile);
     }
 }
