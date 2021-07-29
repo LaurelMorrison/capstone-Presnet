@@ -10,6 +10,9 @@ import AccountProfileForm from "./Account/AccountProfileForm";
 import EventPage from "./Events/EventPage";
 import EventEditForm from "./Events/EventEditForm";
 import EventForm from "./Events/EventForm";
+import UserWishList from "./Gifts/UserWishList";
+import GiftEditForm from "./Gifts/GiftEditForm";
+import GiftForm from "./Gifts/GiftForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -37,6 +40,18 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/Events/edit/:id(\d+)">
           {isLoggedIn ? <EventEditForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route exact path="/WishList">
+          {isLoggedIn ? <UserWishList /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/WishList/add" exact>
+          {isLoggedIn ? <GiftForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/WishList/edit/:id(\d+)">
+          {isLoggedIn ? <GiftEditForm /> : <Redirect to="/login" />}
         </Route>
 
         <Route exact path="/Friends">

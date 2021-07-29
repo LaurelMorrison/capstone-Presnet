@@ -1,0 +1,9 @@
+p {
+    font-family: 'Montserrat', sans-serif!important;
+}
+
+.h1, .h2, .h3 {
+    font-family: 'Open Sans', sans-serif!important;
+    padding: 15px;
+    line-height: normal!important;
+}

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
-    Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink
+    Collapse, Navbar, NavbarBrand, Nav, NavItem, NavLink
 } from 'reactstrap';
 import { logout } from "../../modules/authManager";
+import Logo from "../../Images/Logo.png";
 
 export default function Header({ isLoggedIn }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,15 +13,11 @@ export default function Header({ isLoggedIn }) {
     return (
         <div>
             <Navbar color="dark" dark expand="md">
-                <NavbarBrand tag={RRNavLink} to="/">Presnet</NavbarBrand>
-                <NavbarToggler onClick={toggle} />
+                <NavbarBrand tag={RRNavLink} to="/"><img className="logo" src={Logo} alt="Presnet Logo" /></NavbarBrand>
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
                         {isLoggedIn &&
                             <>
-                                <NavItem>
-                                    <NavLink tag={RRNavLink} to="/"> Home</NavLink>
-                                </NavItem>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/userProfile/account"> My Account</NavLink>
                                 </NavItem>
@@ -29,6 +26,9 @@ export default function Header({ isLoggedIn }) {
                                 </NavItem>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/Events"> Events</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/WishList"> Wish List</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <a aria-current="page" className="nav-link"

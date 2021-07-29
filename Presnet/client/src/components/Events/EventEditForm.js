@@ -12,7 +12,7 @@ const EventEditForm = () => {
         const value = evt.target.value;
         const key = evt.target.id;
 
-        const eventPost = { ...updateEvent };
+        const eventPost = { ...updatedEvent };
 
         eventPost[key] = value;
         setupdatedEvent(eventPost);
