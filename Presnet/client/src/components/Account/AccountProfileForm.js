@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { updateUser, GetUserById } from "../../modules/accountManager";
+import { updateUser, GetCurrentUserAccount } from "../../modules/accountManager";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { GetAllColors } from "../../modules/favoriteColorManager";
 import { GetAllSizes } from "../../modules/clothingSizeManager";
@@ -9,8 +9,8 @@ const AccountProfileForm = () => {
     const [editUser, setEditUser] = useState([]);
     const [favoriteColor, setFavoriteColors] = useState([]);
     const [clothingSize, setClothingSize] = useState([]);
-    const { id } = useParams();
     const history = useHistory();
+    const { id } = useParams();
 
     const handleInputChange = (evt) => {
         const value = evt.target.value;
@@ -52,17 +52,17 @@ const AccountProfileForm = () => {
             favoriteColorId: editUser.favoriteColorId
 
         };
-        updateUser(updatedUser).then((p) => {
-            history.push("/");
+        updateUser(updatedUser).then((u) => {
+            history.push("userProfile/account");
         });
 
     };
     useEffect(() => {
         getFavoriteColors();
         getClothingSizes();
-        GetUserById(id)
-            .then(p => {
-                setEditUser(p);
+        GetCurrentUserAccount()
+            .then(u => {
+                setEditUser(u);
             });
     }, [])
 

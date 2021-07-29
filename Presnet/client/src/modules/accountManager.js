@@ -47,7 +47,7 @@ export const GetAllUsers = () => {
         if (res.ok) {
           return res.json();
         } else {
-          throw new Error("An unknown error occorred while trying to fetching your friends");
+          throw new Error("An unknown error occorred while trying to fetching users");
         }
       });
     });
@@ -70,16 +70,33 @@ export const GetUserById = (id) => {
         });
       };
 
-
-      export const updateUser = (user) => {
+      export const GetCurrentUserAccount = () => {
         return getToken().then((token) => {
-          return fetch(`${baseUrl}/${user.id}`, {
+          return fetch(`${baseUrl}/account`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${ token }`
+            }
+          }).then(res => {
+            if (res.ok) {
+              return res.json();
+            } else {
+              throw new Error("An unknown error occorred while trying to fetch the account profile");
+            }
+          });
+        });
+      };
+
+
+      export const updateUser = (editUser) => {
+        return getToken().then((token) => {
+          return fetch(`${baseUrl}/${editUser.id}`, {
             method: "PUT",
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json"            
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(editUser)
           }).then(resp => {
             if (resp.ok) {
               return;

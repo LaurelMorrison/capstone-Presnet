@@ -20,9 +20,11 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT up.id, Up.firebaseUserId, up.firstName, up.lastName, up.email, up.address, up.createdTime, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId
+                        SELECT up.id, up.firebaseUserId, up.firstName, up.lastName, up.email, up.address, up.createdTime, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size, fc.color
                           FROM UserProfile up
-                         WHERE firebaseUserId = @firebaseUserId";
+                            LEFT JOIN clothingSize cs ON cs.id = up.clothingSizeId
+                            LEFT JOIN favoriteColor fc ON fc.id = up.favoriteColorId
+                         WHERE up.firebaseUserId = @firebaseUserId";
 
                     DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
 
@@ -43,7 +45,15 @@ namespace Presnet.Repositories
                             age = DbUtils.GetInt(reader, "age"),
                             shoeSize = DbUtils.GetInt(reader, "shoeSize"),
                             clothingSizeId = DbUtils.GetInt(reader, "clothingSizeId"),
-                            favoriteColorId = DbUtils.GetInt(reader, "favoriteColorId")
+                            favoriteColorId = DbUtils.GetInt(reader, "favoriteColorId"),
+                            ClothingSize = new ClothingSize()
+                            {
+                                size = reader.GetString(reader.GetOrdinal("size")),
+                            },
+                            FavoriteColor = new FavoriteColor()
+                            {
+                                color = reader.GetString(reader.GetOrdinal("color")),
+                            }
                         };
                     }
                     reader.Close();
@@ -88,7 +98,8 @@ namespace Presnet.Repositories
                     {
                         cmd.CommandText = @"
                             SELECT up.id, Up.firebaseUserId, up.firstName, up.lastName, up.email, up.address, up.createdTime, 
-                                   up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size as clothingSize, fc.color as favoriteColor
+                                   up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size as clothingSize, fc.color as favoriteColor,
+                                   , cs.id as sizeId, fc.id as colorId                            
                             FROM UserProfile up
                             LEFT JOIN clothingSize cs ON cs.id = up.clothingSizeId
                             LEFT JOIN favoriteColor fc ON fc.id = up.favoriteColorId
@@ -114,10 +125,12 @@ namespace Presnet.Repositories
                                 favoriteColorId = DbUtils.GetInt(reader, "favoriteColorId"),
                                 ClothingSize = new ClothingSize()
                                 {
-                                    size = reader.GetString(reader.GetOrdinal("clothingSize")),
+                                    id = DbUtils.GetInt(reader, "id"),
+                                    size = reader.GetString(reader.GetOrdinal("sizeId")),
                                 },
                                 FavoriteColor = new FavoriteColor()
                                 {
+                                    id = DbUtils.GetInt(reader, "colorId"),
                                     color = reader.GetString(reader.GetOrdinal("favoriteColor")),
                                 }
                             });
@@ -216,7 +229,7 @@ namespace Presnet.Repositories
                     using (var cmd = conn.CreateCommand())
                     {
                         cmd.CommandText = @"
-                          SELECT up.id, up.firstName, up.lastName, up.email, up.address, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size as clothingSize, fc.color as favoriteColor 
+                          SELECT up.id, up.firstName, up.firebaseUserId up.lastName, up.email, up.address, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size as clothingSize, fc.color as favoriteColor, cs.id as sizeId, fc.id as colorId
                           FROM userProfile up
                             LEFT JOIN clothingSize cs ON cs.id = up.clothingSizeId
                             LEFT JOIN favoriteColor fc ON fc.id = up.favoriteColorId
@@ -232,6 +245,7 @@ namespace Presnet.Repositories
                             user = new UserProfile()
                             {
                                 id = DbUtils.GetInt(reader, "id"),
+                                firebaseUserId = DbUtils.GetString(reader, "firebaseUserId"),
                                 firstName = DbUtils.GetString(reader, "firstName"),
                                 lastName = DbUtils.GetString(reader, "lastName"),
                                 email = DbUtils.GetString(reader, "email"),
@@ -242,10 +256,12 @@ namespace Presnet.Repositories
                                 favoriteColorId = DbUtils.GetInt(reader, "favoriteColorId"),
                                 ClothingSize = new ClothingSize()
                                 {
+                                    id = DbUtils.GetInt(reader, "sizeId"),
                                     size = reader.GetString(reader.GetOrdinal("clothingSize")),
                                 },
                                 FavoriteColor = new FavoriteColor()
                                 {
+                                    id = DbUtils.GetInt(reader, "colorId"),
                                     color = reader.GetString(reader.GetOrdinal("favoriteColor"))
                                 }
                             };
@@ -276,7 +292,7 @@ namespace Presnet.Repositories
                                              up.clothingSizeId = @clothingSizeId,
                                              up.favoriteColorId = @favoriteColorId,
                                              up.firebaseUserId = @firebaseUserId,
-                                             up.createdTime = @createdTime,
+                                             up.createdTime = @createdTime
                                             WHERE up.id = @id";
 
                     DbUtils.AddParameter(cmd, "@firstName", userProfile.firstName);

@@ -16,7 +16,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <Homepage /> : <Redirect to="/login" />}
         </Route>
 
-        <Route exact path="/userProfile/:id(\d+)">
+        <Route exact path="/userProfile/account">
           {isLoggedIn ? <MyAccount /> : <Redirect to="/login" />}
         </Route>
 

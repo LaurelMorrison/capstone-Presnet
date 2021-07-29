@@ -77,6 +77,7 @@ namespace Presnet.Controllers
         public IActionResult GetUserById(int id)
         {
             var user = _userProfileRepository.GetUserById(id);
+
             if (user == null)
             {
                 return NotFound();
@@ -116,18 +117,32 @@ namespace Presnet.Controllers
             return Ok(user);
         }
 
+        [HttpGet("account")]
+        public IActionResult GetUserProfileId()
+        {
+            var userProfile = GetCurrentUserProfile();
+            return Ok(userProfile);
+        }
+
+
+
         // Get the current user
+        private int GetCurrentUserProfileId()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userProfile = _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+            return userProfile.id;
+        }
+
+        private string GetCurrentFirebaseUserProfileId()
+        {
+            string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return id;
+        }
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            if (firebaseUserId != null)
-            {
-                return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
-            }
-            else
-            {
-                return null;
-            }
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

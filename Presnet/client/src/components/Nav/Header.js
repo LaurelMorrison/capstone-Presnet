@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
     Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink
 } from 'reactstrap';
 import { logout } from "../../modules/authManager";
+import { useParams } from "react-router";
+import { GetCurrentUserAccount } from "../../modules/accountManager"
 
 export default function Header({ isLoggedIn }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +24,7 @@ export default function Header({ isLoggedIn }) {
                                     <NavLink tag={RRNavLink} to="/"> Home</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/userProfile/${id}"> My Account</NavLink>
+                                    <NavLink tag={RRNavLink} to="/userProfile/account"> My Account</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/Friends"> Friends</NavLink>

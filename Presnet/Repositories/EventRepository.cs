@@ -1,0 +1,218 @@
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Presnet.models;
+using Presnet.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Presnet.Repositories
+{
+    public class EventRepository : BaseRepository, IEventRepository
+    {
+        public EventRepository(IConfiguration configuration) : base(configuration) { }
+
+        public List<Event> GetAllUserEvents(int userId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                         SELECT e.id, e.eventName, e.eventDetails, e.date, e.userId, up.firstName, up.lastName
+                         FROM event e
+                              LEFT JOIN userProfile up ON e.userId = up.id
+                         WHERE e.userId = 1 OR e.userId = @userId
+                         ORDER BY e.date DESC";
+
+                    DbUtils.AddParameter(cmd, "@userId", userId);
+                    var reader = cmd.ExecuteReader();
+
+                    var events = new List<Event>();
+
+                    while (reader.Read())
+                    {
+                        events.Add(new Event()
+                        {
+                            id = DbUtils.GetInt(reader, "id"),
+                            eventName = reader.GetString(reader.GetOrdinal("eventName")),
+                            eventDetails = reader.GetString(reader.GetOrdinal("eventDetails")),
+                            date = DbUtils.GetDateTime(reader, "date"),
+                            userId = DbUtils.GetInt(reader, "userId"),
+                            UserProfile = new UserProfile()
+                            {
+                                firstName = DbUtils.GetString(reader, "firstName"),
+                                lastName = DbUtils.GetString(reader, "lastName")
+                            }
+
+                        });
+                    }
+                    reader.Close();
+
+                    return events;
+                }
+            }
+        }
+
+        public List<Event> GetAllFriendsEvents(int userId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                         SELECT e.id, e.eventName, e.eventDetails, e.date, e.userId, up.firstName, up.lastName
+                         FROM event e
+                              LEFT JOIN userProfile up ON e.userId = up.id
+                         WHERE e.userId = 1 OR e.userId != @userId
+                         ORDER BY e.date DESC";
+                    DbUtils.AddParameter(cmd, "@userId", userId);
+
+                    var reader = cmd.ExecuteReader();
+
+                    var events = new List<Event>();
+
+                    while (reader.Read())
+                    {
+                        events.Add(new Event()
+                        {
+                            id = DbUtils.GetInt(reader, "id"),
+                            eventName = reader.GetString(reader.GetOrdinal("eventName")),
+                            eventDetails = reader.GetString(reader.GetOrdinal("eventDetails")),
+                            date = DbUtils.GetDateTime(reader, "date"),
+                            userId = DbUtils.GetInt(reader, "userId"),
+                            UserProfile = new UserProfile()
+                            {
+                                firstName = DbUtils.GetString(reader, "firstName"),
+                                lastName = DbUtils.GetString(reader, "lastName")
+                            }
+                        });
+                    }
+
+                    reader.Close();
+
+                    return events;
+                }
+            }
+        }
+
+        public Event GetEventById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                         SELECT e.id, e.eventName, e.eventDetails, e.date, e.userId, up.firstName, up.lastName
+                         FROM event e
+                              LEFT JOIN userProfile up ON e.userId = up.id
+                         WHERE e.id = @id";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    var reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        return new Event()
+                        {
+                            id = id,
+                            eventName = DbUtils.GetString(reader, "eventName"),
+                            eventDetails = DbUtils.GetString(reader, "eventDetails"),
+                            date = DbUtils.GetDateTime(reader, "date"),
+                            userId = DbUtils.GetInt(reader, "userId"),
+                            UserProfile = new UserProfile()
+                            {
+                                firstName = DbUtils.GetString(reader, "firstName"),
+                                lastName = DbUtils.GetString(reader, "lastName")
+                            }
+                        };
+                    }
+                    reader.Close();
+
+                    return null;
+                }
+            }
+        }
+
+
+        public void AddEvent(Event holiday)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+
+                {
+                    cmd.CommandText = @"
+                            INSERT INTO event (userId, eventName, eventDetails, date)
+                            OUTPUT Inserted.id
+                            VALUES (@userId, @eventName, @eventDetails, @date); ";
+                    cmd.Parameters.AddWithValue("@userId", holiday.userId);
+                    cmd.Parameters.AddWithValue("@eventName", holiday.eventName);
+                    cmd.Parameters.AddWithValue("@eventDetails", holiday.eventDetails);
+                    cmd.Parameters.AddWithValue("@date", holiday.date);
+
+                    int id = (int)cmd.ExecuteScalar();
+
+                    holiday.id = id;
+                }
+
+            }
+
+        }
+
+
+        public void DeleteEvent(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            DELETE Event                           
+                            WHERE id = @id
+                        ";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void UpdateEvent(Event holiday)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        UPDATE event 
+                            SET
+                                userId = @userId,
+                                eventName = @eventName,
+                                eventDetails = @eventDetails,
+                                date = @date
+                            WHERE Id = @id";
+
+                    DbUtils.AddParameter(cmd, "@userId", holiday.userId);
+                    DbUtils.AddParameter(cmd, "@eventName", holiday.eventName);
+                    DbUtils.AddParameter(cmd, "@eventDetails", holiday.eventDetails);
+                    DbUtils.AddParameter(cmd, "@date", holiday.date);
+
+                    DbUtils.AddParameter(cmd, "@id", holiday.id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+    }
+}
