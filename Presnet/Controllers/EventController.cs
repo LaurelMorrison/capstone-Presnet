@@ -27,8 +27,8 @@ namespace Presnet.Controllers
 
         }
 
-        [HttpGet]
-        public IActionResult GetAllUserEvents(int userId)
+        [HttpGet("userevents")]
+        public IActionResult GetAllUserEvents()
         {
             int currentUserProfileId = GetCurrentUserProfileId();
             var holidays = _eventRepository.GetAllUserEvents(currentUserProfileId);
@@ -40,10 +40,10 @@ namespace Presnet.Controllers
         }
 
         [HttpGet("friendevents")]
-        public IActionResult GetAllFriendsEvents(int friendId)
+        public IActionResult GetAllFriendsEvents(int userId)
         {
             int currentUserProfileId = GetCurrentUserProfileId();
-            var holidays = _eventRepository.GetAllFriendsEvents(friendId);
+            var holidays = _eventRepository.GetAllFriendsEvents(userId);
             if (holidays == null)
             {
                 return NotFound();
@@ -52,7 +52,7 @@ namespace Presnet.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetEventById(int id)
         {
             var holiday = _eventRepository.GetEventById(id);
             if (holiday == null)

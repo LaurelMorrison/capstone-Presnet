@@ -4,8 +4,6 @@ import {
     Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink
 } from 'reactstrap';
 import { logout } from "../../modules/authManager";
-import { useParams } from "react-router";
-import { GetCurrentUserAccount } from "../../modules/accountManager"
 
 export default function Header({ isLoggedIn }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +26,9 @@ export default function Header({ isLoggedIn }) {
                                 </NavItem>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/Friends"> Friends</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/Events"> Events</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <a aria-current="page" className="nav-link"

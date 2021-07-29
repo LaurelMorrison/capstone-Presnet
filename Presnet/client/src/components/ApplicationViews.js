@@ -7,6 +7,7 @@ import MyAccount from "./Account/MyAccount";
 import FriendPage from "./Friends/FriendPage";
 import FriendDetails from "./Friends/FriendDetail";
 import AccountProfileForm from "./Account/AccountProfileForm";
+import UserEventList from "./Events/UserEventList";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -22,6 +23,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/userprofile/edit/:id(\d+)">
           {isLoggedIn ? <AccountProfileForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route exact path="/Events">
+          {isLoggedIn ? <UserEventList /> : <Redirect to="/login" />}
         </Route>
 
         <Route exact path="/Friends">

@@ -64,10 +64,21 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                         SELECT e.id, e.eventName, e.eventDetails, e.date, e.userId, up.firstName, up.lastName
-                         FROM event e
-                              LEFT JOIN userProfile up ON e.userId = up.id
-                         WHERE e.userId = 1 OR e.userId != @userId
+                         SELECT e.eventName, e.eventDetails, e.date, up.firstName, up.lastName
+                         FROM userProfile up
+                              LEFT JOIN event e ON e.userId = up.id
+                              LEFT JOIN friend f ON f.userId = up.id
+                          WHERE up.id = 1 OR up.id IN (
+                                                SELECT f.friendId
+                                                FROM friend f
+                                                WHERE f.statusId = 1 AND f.userId = @userId
+                                                ) 
+ 
+                                                OR up.id IN (
+                                                SELECT f.userId
+                                                FROM friend f
+                                                WHERE f.statusId = 1 AND f.friendId = @userId
+                                                )
                          ORDER BY e.date DESC";
                     DbUtils.AddParameter(cmd, "@userId", userId);
 
@@ -79,12 +90,10 @@ namespace Presnet.Repositories
                     {
                         events.Add(new Event()
                         {
-                            id = DbUtils.GetInt(reader, "id"),
                             eventName = reader.GetString(reader.GetOrdinal("eventName")),
                             eventDetails = reader.GetString(reader.GetOrdinal("eventDetails")),
                             date = DbUtils.GetDateTime(reader, "date"),
-                            userId = DbUtils.GetInt(reader, "userId"),
-                            UserProfile = new UserProfile()
+                           UserProfile = new UserProfile()
                             {
                                 firstName = DbUtils.GetString(reader, "firstName"),
                                 lastName = DbUtils.GetString(reader, "lastName")

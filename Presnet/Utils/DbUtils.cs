@@ -34,6 +34,7 @@ namespace Presnet.Utils
         /// <returns>The value of the given column.</returns>
         public static int GetInt(SqlDataReader reader, string column)
         {
+
             return reader.GetInt32(reader.GetOrdinal(column));
         }
 
