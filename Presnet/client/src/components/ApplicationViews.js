@@ -7,7 +7,9 @@ import MyAccount from "./Account/MyAccount";
 import FriendPage from "./Friends/FriendPage";
 import FriendDetails from "./Friends/FriendDetail";
 import AccountProfileForm from "./Account/AccountProfileForm";
-import UserEventList from "./Events/UserEventList";
+import EventPage from "./Events/EventPage";
+import EventEditForm from "./Events/EventEditForm";
+import EventForm from "./Events/EventForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -26,7 +28,15 @@ export default function ApplicationViews({ isLoggedIn }) {
         </Route>
 
         <Route exact path="/Events">
-          {isLoggedIn ? <UserEventList /> : <Redirect to="/login" />}
+          {isLoggedIn ? <EventPage /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/events/add" exact>
+          {isLoggedIn ? <EventForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/Events/edit/:id(\d+)">
+          {isLoggedIn ? <EventEditForm /> : <Redirect to="/login" />}
         </Route>
 
         <Route exact path="/Friends">

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import { Spinner } from "reactstrap";
-import FriendList from "./FriendList";
 import { onLoginStatusChange } from "../../modules/authManager";
-import UserList from "./UserList";
+import UserEventList from "./UserEventList";
+import FriendEventList from "./FriendsEventList";
 
-function FriendPage() {
+function EventPage() {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
 
     useEffect(() => {
@@ -19,10 +19,10 @@ function FriendPage() {
   
     return (
       <>
-          <FriendList isLoggedIn={isLoggedIn} />
-          <UserList isLoggedIn={isLoggedIn} />
+          <UserEventList isLoggedIn={isLoggedIn} />
+          <FriendEventList isLoggedIn={isLoggedIn} />
       </>
     )
 };
 
-export default FriendPage;
+export default EventPage;

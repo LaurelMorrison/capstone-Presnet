@@ -24,7 +24,7 @@ namespace Presnet.Repositories
                          SELECT e.id, e.eventName, e.eventDetails, e.date, e.userId, up.firstName, up.lastName
                          FROM event e
                               LEFT JOIN userProfile up ON e.userId = up.id
-                         WHERE e.userId = 1 OR e.userId = @userId
+                         WHERE e.userId = @userId
                          ORDER BY e.date DESC";
 
                     DbUtils.AddParameter(cmd, "@userId", userId);
