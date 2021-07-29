@@ -31,6 +31,7 @@ namespace Presnet
         {
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<IEventRepository, EventRepository>();
+            services.AddTransient<IWishListRepository, WishListRepository>();
             services.AddTransient<IFavoriteColorRepository, FavoriteColorRepository>();
             services.AddTransient<IFriendRepository, FriendRepository>();
             services.AddTransient<IClothingSizeRepository, ClothingSizeRepository>();

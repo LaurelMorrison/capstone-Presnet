@@ -9,84 +9,71 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-
 namespace Presnet.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class EventController : ControllerBase
+    public class WishListController : ControllerBase
     {
-        private readonly IEventRepository _eventRepository;
+        private readonly IWishListRepository _wishListRepository;
         private readonly IUserProfileRepository _userProfileRepository;
 
-        public EventController(IEventRepository EventRepository, IUserProfileRepository UserProfileRepository)
+        public WishListController(IWishListRepository WishListRepository, IUserProfileRepository UserProfileRepository)
         {
-            _eventRepository = EventRepository;
+            _wishListRepository = WishListRepository;
             _userProfileRepository = UserProfileRepository;
-
         }
 
-        [HttpGet("userevents")]
-        public IActionResult GetAllUserEvents()
+
+        [HttpGet("wishlist")]
+        public IActionResult GetUsersWishList()
         {
             int currentUserProfileId = GetCurrentUserProfileId();
-            var holidays = _eventRepository.GetAllUserEvents(currentUserProfileId);
-            if (holidays == null)
+            var gifts = _wishListRepository.GetUserWishlist(currentUserProfileId);
+            if (gifts == null)
             {
                 return NotFound();
             }
-            return Ok(holidays);
-        }
-
-        [HttpGet("friendevents")]
-        public IActionResult GetAllFriendsEvents(int userId)
-        {
-            int currentUserProfileId = GetCurrentUserProfileId();
-            var holidays = _eventRepository.GetAllFriendsEvents(userId);
-            if (holidays == null)
-            {
-                return NotFound();
-            }
-            return Ok(holidays);
-        }
+            return Ok(gifts);
+        }        
 
         [HttpGet("{id}")]
         public IActionResult GetEventById(int id)
         {
-            var holiday = _eventRepository.GetEventById(id);
-            if (holiday == null)
+            var gift = _wishListRepository.GetGiftById(id);
+            if (gift == null)
             {
                 return NotFound();
             }
-            return Ok(holiday);
+            return Ok(gift);
         }
 
         [HttpPost]
-        public IActionResult CreateEvent(Event holiday)
+        public IActionResult AddGift(WishListItem gift)
         {
             var currentUserProfile = GetCurrentUserProfile();
-            holiday.userId = currentUserProfile.id;
+            gift.userId = currentUserProfile.id;
 
-            _eventRepository.AddEvent(holiday);
-            return CreatedAtAction(nameof(GetAllUserEvents), new { id = holiday.id }, holiday);
+            _wishListRepository.AddGift(gift);
+            return CreatedAtAction(nameof(GetUsersWishList), new { id = gift.id }, gift);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Event holiday)
+        public IActionResult Put(int id, WishListItem gift)
         {
-            if (id != holiday.id)
+            if (id != gift.id)
             {
                 return BadRequest();
             }
-            _eventRepository.UpdateEvent(holiday);
+            _wishListRepository.UpdateGift(gift);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _eventRepository.DeleteEvent(id);
+            _wishListRepository.DeleteGift(id);
             return NoContent();
         }
 
