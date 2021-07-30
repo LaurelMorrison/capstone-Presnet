@@ -93,14 +93,13 @@ namespace Presnet.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Delete(int id, Friend friend)
+        [HttpDelete("{friendId}")]
+        public IActionResult Delete(int friendId)
         {
-            if (id != friend.id)
-            {
-                return BadRequest();
-            }
-            _friendRepository.UpdateGift(friend);
+            var currentUser = GetCurrentUserProfile();
+
+
+            _friendRepository.DeleteFriend(currentUser.id, friendId);
             return NoContent();
         }
 

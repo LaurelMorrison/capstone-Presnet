@@ -299,7 +299,7 @@ namespace Presnet.Repositories
             }
         }
 
-        public void DeleteFriend(Friend friend)
+        public void DeleteFriend(int userId, int friendId)
         {
             using (SqlConnection conn = Connection)
             {
@@ -307,10 +307,14 @@ namespace Presnet.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"UPDATE Friend 
-                                        SET statusId=@statusId 
-                                        WHERE id=@id";
-                    cmd.Parameters.AddWithValue("@statusId", 2);
-                    cmd.Parameters.AddWithValue("@id", id);
+                                        SET 
+                                            statusId=2 
+                                        WHERE (
+                                        friendId = @userId or userId = @userId)
+                                        AND (friendId = @friendId or userId = @friendId)";
+
+                    DbUtils.AddParameter(cmd, "@userId", userId);
+                    DbUtils.AddParameter(cmd, "@friendId", friendId);
 
                     cmd.ExecuteNonQuery();
                 }

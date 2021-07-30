@@ -187,7 +187,8 @@ namespace Presnet.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"Select up.firstName, up.lastName, up.id
+                    cmd.CommandText = @"Select up.firstName, up.lastName, up.id, f.id as friendStatusId, 
+                                        f.statusId
                                         FROM userProfile up
                                         LEFT JOIN friend f ON f.userId = up.id
                                         WHERE up.id IN (
@@ -212,7 +213,12 @@ namespace Presnet.Repositories
                         {
                             id = DbUtils.GetInt(reader, "id"),
                             firstName = DbUtils.GetString(reader, "firstName"),
-                            lastName = DbUtils.GetString(reader, "lastName")
+                            lastName = DbUtils.GetString(reader, "lastName"),
+                            Friend = new Friend()
+                            {
+                                id = DbUtils.GetNullableInt(reader, "friendStatusId"),
+                                statusId = DbUtils.GetNullableInt(reader, "statusId")
+                            }
                         });
                     }
                     reader.Close();

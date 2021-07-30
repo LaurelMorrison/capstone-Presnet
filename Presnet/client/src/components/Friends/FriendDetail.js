@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Button } from "reactstrap";
 import { Link, useParams } from "react-router-dom";
 import { GetFriendById } from "../../modules/friendManager";
+import FriendEventList from "../Events/UserEventList";
 
 const FriendDetails = () => {
 
@@ -29,6 +30,7 @@ const FriendDetails = () => {
     }
 
     return (
+        <>
         <div>
             <Card className="m-4">
                 <h1>Let's celebrate {friend.friendProfile.firstName}</h1>
@@ -43,6 +45,10 @@ const FriendDetails = () => {
 
             </Card>
         </div>
+        <div>
+             <FriendEventList />
+        </div>
+        </>
     );
 };
 
