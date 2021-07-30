@@ -298,6 +298,24 @@ namespace Presnet.Repositories
                 }
             }
         }
+
+        public void DeleteFriend(Friend friend)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Friend 
+                                        SET statusId=@statusId 
+                                        WHERE id=@id";
+                    cmd.Parameters.AddWithValue("@statusId", 2);
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
 

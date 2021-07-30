@@ -81,7 +81,7 @@ namespace Presnet.Controllers
             return NoContent();
         }
 
-        // Accept Friend
+        // Reject Friend
         [HttpPut("reject/{id}")]
         public IActionResult RejectFriendRequest(int id, Friend friend)
         {
@@ -93,6 +93,16 @@ namespace Presnet.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Delete(int id, Friend friend)
+        {
+            if (id != friend.id)
+            {
+                return BadRequest();
+            }
+            _friendRepository.UpdateGift(friend);
+            return NoContent();
+        }
 
         private UserProfile GetCurrentUserProfile()
         {

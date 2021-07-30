@@ -114,7 +114,7 @@ namespace Presnet.Controllers
             }
 
             _userProfileRepository.Update(user);
-            return Ok(user);
+            return NoContent();
         }
 
         [HttpGet("account")]

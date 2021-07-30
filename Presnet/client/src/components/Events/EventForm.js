@@ -7,7 +7,7 @@ const EventForm = () => {
     const emptyEvent = {
         eventName: '',
         eventDetails: '',
-        eventDate: ''
+        date: 0
     };
 
     const [newEvent, setNewEvent] = useState(emptyEvent);
@@ -26,7 +26,6 @@ const EventForm = () => {
 
     const handleSave = (evt) => {
         evt.preventDefault();
-
         addEvent(newEvent).then((e) => {
             history.push("/events");
         });
@@ -50,9 +49,9 @@ const EventForm = () => {
                     onChange={handleInputChange} />
             </FormGroup>
             <FormGroup>
-                <Label for="eventDate">Date: </Label>
-                <Input type="date" name="eventDate" id="eventDate" placeholder="Date"
-                    value={newEvent.eventDate}
+                <Label for="date">Date: </Label>
+                <Input type="date" name="date" id="date" placeholder="Date"
+                    value={newEvent.date}
                     onChange={handleInputChange} />
             </FormGroup>
         

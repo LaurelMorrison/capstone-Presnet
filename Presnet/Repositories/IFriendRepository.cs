@@ -11,5 +11,6 @@ namespace Presnet.Repositories
         Friend GetFriendById(int friendId);
         void acceptFriend(int id);
         void RejectFriend(int id);
+        void DeleteFriend(Friend friend);
     }
 }

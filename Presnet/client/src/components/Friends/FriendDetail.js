@@ -39,11 +39,8 @@ const FriendDetails = () => {
                 <p className="text-left px-2">Shoe Size: {friend.friendProfile.shoeSize}</p>
                 <p className="text-left px-2">Favorite Color: {friend.favoriteColor.color}</p>
                 <p className="text-left px-2">Clothing Size: {friend.clothingSize.size}</p>
-                <Button className="b backtofriends"><Link className="a" to={`/friend`}>Back to Friend List</Link></Button>
-                {/* <p>{new Date(post.publishDateTime).toLocaleDateString()}</p> */}
-                    {/* <Button className="b addComment"><Link className="a" to={`/comment/${post.id}`}>Add Comment</Link></Button>
-                    <Button className="b viewComment"><Link className="a" to={`/comment/GetByPostId/${post.id}`}>View Comments</Link></Button>
-                    <Button className="b deletePost" onClick={deleteAFriend}>Delete Post</Button> */}
+                <Button className="b backtofriends"><Link className="a" to={`/friends`}>Back to Friend List</Link></Button>
+
             </Card>
         </div>
     );

@@ -42,6 +42,8 @@ const AccountProfileForm = () => {
         evt.preventDefault();
         const updatedUser = {
             id: editUser.id,
+            firebaseUserId: editUser.firebaseUserId,
+            createdTime: editUser.createdTime,
             firstName: editUser.firstName,
             lastName: editUser.lastName,
             address: editUser.address,
@@ -53,7 +55,7 @@ const AccountProfileForm = () => {
 
         };
         updateUser(updatedUser).then((u) => {
-            history.push("userProfile/account");
+            history.push("/userProfile/account");
         });
 
     };
@@ -107,7 +109,7 @@ const AccountProfileForm = () => {
             </FormGroup>
             <FormGroup>
                 <Label for="clothingSizeId">Size</Label>
-                <select value={editUser.clothingSizeId} name="clothingSizeId" id="categoclothingSizeIdryId" onChange={handleInputChange} className='form-control'>
+                <select value={editUser.clothingSizeId} name="clothingSizeId" id="clothingSizeId" onChange={handleInputChange} className='form-control'>
                     <option value="0">Select a Size</option>
                     {clothingSize.map(s => (
                         <option key={s.id} value={s.id}>{s.size}</option>
@@ -125,7 +127,7 @@ const AccountProfileForm = () => {
             </FormGroup>
 
             <Button className="btn btn-primary" onClick={handleUpdate}>Submit</Button>
-            <Button className="btn btn-primary" onClick={() => history.push(`/`)}>Cancel</Button>
+            <Button className="btn btn-primary" onClick={() => history.push(`/userProfile/account`)}>Cancel</Button>
         </Form>
     );
 

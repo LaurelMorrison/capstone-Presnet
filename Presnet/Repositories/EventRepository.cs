@@ -160,14 +160,12 @@ namespace Presnet.Repositories
                             INSERT INTO event (userId, eventName, eventDetails, date)
                             OUTPUT Inserted.id
                             VALUES (@userId, @eventName, @eventDetails, @date); ";
-                    cmd.Parameters.AddWithValue("@userId", holiday.userId);
-                    cmd.Parameters.AddWithValue("@eventName", holiday.eventName);
-                    cmd.Parameters.AddWithValue("@eventDetails", holiday.eventDetails);
-                    cmd.Parameters.AddWithValue("@date", holiday.date);
+                    DbUtils.AddParameter(cmd, "@userId", holiday.userId);
+                    DbUtils.AddParameter(cmd, "@eventName", holiday.eventName);
+                    DbUtils.AddParameter(cmd, "@eventDetails", holiday.eventDetails);
+                    DbUtils.AddParameter(cmd, "@date", holiday.date);
 
-                    int id = (int)cmd.ExecuteScalar();
-
-                    holiday.id = id;
+                    holiday.id = (int)cmd.ExecuteScalar();
                 }
 
             }

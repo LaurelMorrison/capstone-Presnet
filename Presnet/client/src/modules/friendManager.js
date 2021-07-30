@@ -32,10 +32,10 @@ export const GetFriendById = (friendId) => {
             })
         })};
 
-        export const deleteFriend = (friendId) => {
+        export const deleteFriend = (id) => {
           return getToken().then((token) => {
-              return fetch(`${baseUrl}/delete/${friendId}`, {
-                  method: "Delete",
+              return fetch(`${baseUrl}/${id}`, {
+                  method: "PUT",
                   headers: {
                       Authorization: `Bearer ${token}`,
                       "Content-Type": "application/json"

@@ -281,19 +281,19 @@ namespace Presnet.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"UPDATE UserProfile up
+                    cmd.CommandText = @"UPDATE UserProfile 
                                         
-                                        SET  up.firstName = @firstName, 
-                                             up.lastName = @lastName, 
-                                             up.address = @address, 
-                                             up.email = @email, 
-                                             up.age = @age, 
-                                             up.shoeSize = @shoeSize, 
-                                             up.clothingSizeId = @clothingSizeId,
-                                             up.favoriteColorId = @favoriteColorId,
-                                             up.firebaseUserId = @firebaseUserId,
-                                             up.createdTime = @createdTime
-                                            WHERE up.id = @id";
+                                        SET  firstName = @firstName, 
+                                             lastName = @lastName, 
+                                             address = @address, 
+                                             email = @email, 
+                                             age = @age, 
+                                             shoeSize = @shoeSize, 
+                                             clothingSizeId = @clothingSizeId,
+                                             favoriteColorId = @favoriteColorId,
+                                             firebaseUserId = @firebaseUserId,
+                                             createdTime = @createdTime
+                                            WHERE id = @id";
 
                     DbUtils.AddParameter(cmd, "@firstName", userProfile.firstName);
                     DbUtils.AddParameter(cmd, "@lastName", userProfile.lastName);
