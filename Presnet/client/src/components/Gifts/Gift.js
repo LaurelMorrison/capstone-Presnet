@@ -12,10 +12,10 @@ const Gift = ({ gift, handleDelete  }) => {
             </CardBody>
             <CardFooter className="text-center">
                     <Link to={`/wishlist/edit/${gift.id}`}>
-                        <Button className="btn btn-light">Edit</Button>
+                        <Button className="button">Edit</Button>
                     </Link>
                     <Link>
-                        <Button className="btn btn-light" onClick={() => handleDelete(gift.id)}>Delete</Button>
+                        <Button className="button" onClick={() => handleDelete(gift.id)}>Delete</Button>
                     </Link>
             </CardFooter>
         </Card>

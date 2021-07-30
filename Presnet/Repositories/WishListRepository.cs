@@ -105,13 +105,11 @@ namespace Presnet.Repositories
                             INSERT INTO wishListItem (userId, gift, giftURL)
                             OUTPUT Inserted.id
                             VALUES (@userId, @gift, @giftURL); ";
-                    cmd.Parameters.AddWithValue("@userId", gift.userId);
-                    cmd.Parameters.AddWithValue("@eventName", gift.gift);
-                    cmd.Parameters.AddWithValue("@eventDetails", gift.giftURL);
+                    DbUtils.AddParameter(cmd, "@userId", gift.userId);
+                    DbUtils.AddParameter(cmd, "@gift", gift.gift);
+                    DbUtils.AddParameter(cmd, "@giftURL", gift.giftURL);
 
-                    int id = (int)cmd.ExecuteScalar();
-
-                    gift.id = id;
+                    gift.id = (int)cmd.ExecuteScalar();
                 }
 
             }
@@ -151,12 +149,12 @@ namespace Presnet.Repositories
                             SET
                                 userId = @userId,
                                 gift = @gift,
-                                giftURL = @giftURL,
-                            WHERE Id = @id";
+                                giftURL = @giftURL
+                            WHERE id = @id";
 
                     DbUtils.AddParameter(cmd, "@userId", gift.userId);
-                    DbUtils.AddParameter(cmd, "@eventName", gift.gift);
-                    DbUtils.AddParameter(cmd, "@eventDetails", gift.giftURL);
+                    DbUtils.AddParameter(cmd, "@gift", gift.gift);
+                    DbUtils.AddParameter(cmd, "@giftURL", gift.giftURL);
 
                     DbUtils.AddParameter(cmd, "@id", gift.id);
 

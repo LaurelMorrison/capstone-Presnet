@@ -106,9 +106,6 @@ namespace Presnet.Utils
             return !IsDbNull(reader, column);
         }
 
-        /// <summary>
-        ///  Add a parameter to the given SqlCommand object and gracefully handle null values.
-        /// </summary>
         /// <param name="cmd">The command to which to add the parameter.</param>
         /// <param name="name">The name of the parameter.</param>
         /// <param name="value">The value of the parameter. May be null.</param>
@@ -122,6 +119,11 @@ namespace Presnet.Utils
             {
                 cmd.Parameters.AddWithValue(name, value);
             }
+        }
+
+        public static object ValueOrDBNull(object value)
+        {
+            return value ?? DBNull.Value;
         }
     }
 }

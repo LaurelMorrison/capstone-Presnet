@@ -1,20 +1,54 @@
 body {
   margin: 0;
   font-family: 'Assistant', 'Varela Round', tahoma, sans-serif;
+  /* background-image: url("/src/Images/background.jpeg"); */
+  background-repeat: repeat;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-p {
-  font-family: 'Varela Round', sans-serif;
-}
-
-.h1, .h2, .h3 {
-  font-family: 'Assistant', sans-serif;
-  padding: 15px;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.button{
+  color: #246D82;
+  border-color: #E8B4B0;
+  border-radius: 20px;
+  background-color: #F0EFEB;
+}
+
+.navBar{
+ background-color: #F0EFEB;
+ opacity: .95;
+ padding: 10px;
+}
+
+.nav-link{
+  color: #246D82!important;
+}
+
+.logo{
+  height: 70px;
+  padding: 10px;
+}
+
+.homepage1{
+  background-color: #F0EFEB;
+  opacity: .95;
+  margin: -18px 25px 0px 25px;
+  padding: 30px;
+  color: #246D82;
+}
+
+.homepage2{
+  background-color: #F0EFEB;
+  opacity: .98;
+}
+
+.homepageImage{
+  height: 400px;
+  border-top: #E8B4B0 solid 30px;
+  border-left: #E8B4B0 solid 30px;
 }

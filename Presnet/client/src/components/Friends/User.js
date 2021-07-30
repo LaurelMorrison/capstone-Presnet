@@ -10,7 +10,7 @@ const User = ({ user }) => {
     <Card>
           <CardBody>
             <p>{user.firstName}</p>
-          <Button className="b addFriend"><Link className="a" to={`/friend`}>Add friend</Link></Button>
+          <Button className="button"><Link className="a" to={`/friend`}>Add friend</Link></Button>
         </CardBody>
     </Card>
   );

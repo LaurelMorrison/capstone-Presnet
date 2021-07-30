@@ -8,7 +8,7 @@ const Friend = ({ friend }) => {
     <tr>
           <td><p>{friend.firstName}</p></td>
           <td>
-          <Button className="b friendDetails"><Link className="a" to={`/friend/getbyid/${friend.id}`}>Details</Link></Button>
+          <Button className="button"><Link className="a" to={`/friend/getbyid/${friend.id}`}>Details</Link></Button>
         </td>
     </tr>
   );

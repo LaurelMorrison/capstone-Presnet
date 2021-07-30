@@ -12,7 +12,7 @@ export default function Header({ isLoggedIn }) {
 
     return (
         <div>
-            <Navbar color="dark" dark expand="md">
+            <Navbar dark expand="md" className="navBar">
                 <NavbarBrand tag={RRNavLink} to="/"><img className="logo" src={Logo} alt="Presnet Logo" /></NavbarBrand>
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>

@@ -17,10 +17,10 @@ const Event = ({ event, handleDelete  }) => {
             </CardBody>
             <CardFooter className="text-center">
                     <Link to={`/events/edit/${event.id}`}>
-                        <Button className="btn btn-light">Edit</Button>
+                        <Button className="button">Edit</Button>
                     </Link>
                     <Link>
-                        <Button className="btn btn-light" onClick={() => handleDelete(event.id)}>Delete</Button>
+                        <Button className="button" onClick={() => handleDelete(event.id)}>Delete</Button>
                     </Link>
             </CardFooter>
         </Card>
