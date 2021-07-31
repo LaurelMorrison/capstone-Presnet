@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router } from "react-router-dom";
 import { Spinner } from "reactstrap";
 import FriendList from "./FriendList";
 import { onLoginStatusChange } from "../../modules/authManager";
 import UserList from "./UserList";
+import { Link } from "react-router-dom";
 
 function FriendPage() {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -21,6 +21,17 @@ function FriendPage() {
       <>
           <FriendList isLoggedIn={isLoggedIn} />
           <UserList isLoggedIn={isLoggedIn} />
+          <div>
+            <h1>
+            Add an Event
+            </h1>
+            <h3>
+            Have an exciting event coming up?
+            </h3>
+                <Link to={`/events/add`}>
+                    <button className="btn btn-secondary" >Add a New Event</button>
+                </Link>
+          </div>
       </>
     )
 };

@@ -46,7 +46,17 @@ const FriendDetails = () => {
             </Card>
         </div>
         <div>
+            <h1>{friend.friendProfile.firstName}'s Events</h1>
              <FriendEventList />
+        </div>
+        <div>
+        <div>
+            <h1>Wish List</h1>
+            <p>Need an idea on what to get? Check out their wish list to get the perfect gift!</p>
+            <Link to={`/wishList`}>
+                    <button className="btn btn-secondary" >Get an idea</button>
+                </Link>
+        </div>
         </div>
         </>
     );

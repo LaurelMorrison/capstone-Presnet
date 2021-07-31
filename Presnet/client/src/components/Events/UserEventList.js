@@ -26,7 +26,7 @@ const UserEventList = () => {
                     <h1>Your Events</h1>
                 </div>
                 <Link to={`/events/add`}>
-                    <button className="btn btn-secondary" >Add New Event</button>
+                    <button className="btn btn-secondary" >Add a New Event</button>
                 </Link>
                 <div className="container">
                     <div className="row m-5 ">

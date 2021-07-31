@@ -21,7 +21,7 @@ const UserList = () => {
              <Table>
              <thead>
                <tr>
-                    <th>Add a New Friends</th>
+                    <th>Grow Your Network</th>
                 </tr>
              </thead>
              <tbody>
