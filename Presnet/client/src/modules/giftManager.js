@@ -19,6 +19,22 @@ export const GetUserWishlist = () => {
     });
   };
 
+  export const GetFriendsWishlist = (friendId) => {
+    return getToken().then((token) => {
+      return fetch(`${baseUrl}/FriendWishlist/${friendId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("An unknown error occorred while trying to fetching your friend's wish list");
+        }
+      });
+    });
+  };
 
     export const GetGiftById = (id) => {
         return getToken().then((token) => {

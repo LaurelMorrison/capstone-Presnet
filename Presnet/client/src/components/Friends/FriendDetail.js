@@ -2,23 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Card, Button } from "reactstrap";
 import { Link, useParams } from "react-router-dom";
 import { GetFriendById } from "../../modules/friendManager";
-import FriendEventList from "../Events/UserEventList";
+// import FriendEventList from "../Events/UserEventList";
+import FriendWishList from "../Gifts/FriendWishList";
 
 const FriendDetails = () => {
 
     const [friend, setFriend] = useState();
-
     const { friendId } = useParams();
-
-    // const history = useHistory();
-
-    // const deleteAFriend = (event) => {
-    //     event.preventDefault()
-    //     const confirmDelete = window.confirm("Are you sure you would like to delete this friend?")
-    //     if (confirmDelete) {
-    //         deleteFriend(friend.id).then(() => {history.push('/friend')})
-    //     };
-    // }
 
     useEffect(() => {
         GetFriendById(friendId)
@@ -45,17 +35,15 @@ const FriendDetails = () => {
 
             </Card>
         </div>
-        <div>
+        {/* <div>
             <h1>{friend.friendProfile.firstName}'s Events</h1>
              <FriendEventList />
-        </div>
+        </div> */}
         <div>
         <div>
             <h1>Wish List</h1>
             <p>Need an idea on what to get? Check out their wish list to get the perfect gift!</p>
-            <Link to={`/wishList`}>
-                    <button className="btn btn-secondary" >Get an idea</button>
-                </Link>
+            {/* <FriendWishList /> */}
         </div>
         </div>
         </>

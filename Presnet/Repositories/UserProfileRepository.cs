@@ -149,8 +149,9 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            Select up.firstName, up.lastName, up.id
+                            Select up.firstName, up.lastName, up.id, f.statusId
                                 FROM userProfile up
+                                LEFT JOIN friend f ON f.friendId = up.id
                                 WHERE up.id != @id AND up.id != 1 AND up.id NOT IN (
                             SELECT f.friendId
                                 FROM friend f
@@ -158,7 +159,7 @@ namespace Presnet.Repositories
                                  ) AND up.id NOT IN (
                             SELECT f.userId
                                 FROM friend f
-                                WHERE (f.statusId = 1 OR f.statusId = 2) AND f.friendId = @id
+                                WHERE f.friendId = @id
                                   )";
                     DbUtils.AddParameter(cmd, "@id", id);
                     var reader = cmd.ExecuteReader();
@@ -170,7 +171,11 @@ namespace Presnet.Repositories
                         {
                             id = DbUtils.GetInt(reader, "id"),
                             firstName = DbUtils.GetString(reader, "firstName"),
-                            lastName = DbUtils.GetString(reader, "lastName")
+                            lastName = DbUtils.GetString(reader, "lastName"),
+                            Friend = new Friend()
+                            {
+                                statusId = DbUtils.GetNullableInt(reader, "statusId")
+                            }
                         });
                     }
                     reader.Close();
@@ -235,7 +240,7 @@ namespace Presnet.Repositories
                     using (var cmd = conn.CreateCommand())
                     {
                         cmd.CommandText = @"
-                          SELECT up.id, up.firstName, up.firebaseUserId up.lastName, up.email, up.address, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size as clothingSize, fc.color as favoriteColor, cs.id as sizeId, fc.id as colorId
+                          SELECT up.id, up.firstName, up.firebaseUserId, up.lastName, up.email, up.address, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size as clothingSize, fc.color as favoriteColor, cs.id as sizeId, fc.id as colorId
                           FROM userProfile up
                             LEFT JOIN clothingSize cs ON cs.id = up.clothingSizeId
                             LEFT JOIN favoriteColor fc ON fc.id = up.favoriteColorId
@@ -316,6 +321,47 @@ namespace Presnet.Repositories
 
 
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<UserProfile> Search(string criterion)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    var sql = @"
+                            SELECT up.id, up.firstName, up.lastName, up.email, up.address, up.age, 
+                                   up.shoeSize, up.clothingSizeId, up.favoriteColorId
+                            FROM userProfile up
+                           WHERE up.firstName LIKE @Criterion OR up.lastName LIKE @Criterion";
+
+                    cmd.CommandText = sql;
+                    DbUtils.AddParameter(cmd, "@Criterion", $"%{criterion}%");
+                    var reader = cmd.ExecuteReader();
+
+                    var users = new List<UserProfile>();
+                    while (reader.Read())
+                    {
+                        users.Add(new UserProfile()
+                        {
+                            id = DbUtils.GetInt(reader, "id"),
+                            firstName = DbUtils.GetString(reader, "firstName"),
+                            lastName = DbUtils.GetString(reader, "lastName"),
+                            email = DbUtils.GetString(reader, "email"),
+                            address = DbUtils.GetString(reader, "address"),
+                            age = DbUtils.GetInt(reader, "age"),
+                            shoeSize = DbUtils.GetInt(reader, "shoeSize"),
+                            clothingSizeId = DbUtils.GetInt(reader, "clothingSizeId"),
+                            favoriteColorId = DbUtils.GetInt(reader, "favoriteColorId")                        
+                        });
+                    }
+
+                    reader.Close();
+
+                    return users;
                 }
             }
         }

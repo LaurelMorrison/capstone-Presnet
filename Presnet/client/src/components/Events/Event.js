@@ -9,7 +9,7 @@ const Event = ({ event, handleDelete  }) => {
 
   return (
       <>
-        <Card className="col-s-1 m-4 p-1">
+        <Card className="eventCard p-1">
             <CardBody className="card-content">
                 <p>{event.eventName}</p>
                 <p>{event.eventDetails}</p>

@@ -19,9 +19,9 @@ const Friend = ({ friend, setIsDeleted, isDeleted }) => {
 
   return (
     <tr>
-          <td><p>{friend.firstName}</p></td>
+          <td><p>{friend.fullName}</p></td>
           <td>
-          <Button className="button"><Link className="a" to={`/friend/getbyid/${friend.id}`}>Details</Link></Button>
+          <Button className="button" to={`/friend/getbyid/${friend.id}`}>Details</Button>
           <Button className="button" onClick={() =>handleDelete(friend.id)}>Unfriend</Button>
         </td>
     </tr>

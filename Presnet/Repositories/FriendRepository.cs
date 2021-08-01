@@ -13,7 +13,7 @@ namespace Presnet.Repositories
     {
         public FriendRepository(IConfiguration configuration) : base(configuration) { }
 
-        public void AddFriend(Friend friend)
+        public Friend AddFriend(Friend friend)
         {
             using (SqlConnection conn = Connection)
             {
@@ -27,11 +27,12 @@ namespace Presnet.Repositories
                             VALUES (@userId, @friendId, @statusId); ";
                     cmd.Parameters.AddWithValue("@userId", friend.userId);
                     cmd.Parameters.AddWithValue("@friendId", friend.friendId);
-                    cmd.Parameters.AddWithValue("@statusId", friend.statusId);
+                    cmd.Parameters.AddWithValue("@statusId", 3);
 
                     int id = (int)cmd.ExecuteScalar();
 
                     friend.id = id;
+                    return friend;
                 }
 
             }
@@ -111,18 +112,11 @@ namespace Presnet.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT f.id, f.userId, f.friendId, f.statusId, fs.status, 
-                                             up.firstName as UserName, fup.firstName as FriendFirstName, fup.id as FriendId, 
-                                             fup.lastName as FriendLastName, fup.email as FriendEmail, fup.address as FriendAddess, 
-                                             fup.age as FriendAge, fup.shoeSize as FriendShoeSize, fup.clothingSizeId as FriendClothingSizeId, 
-                                             fup.favoriteColorId as FriendColorId, cs.size as FriendClothingSize, fc.color as FriendFavoriteColor
+                    cmd.CommandText = @"SELECT f.id, f.userId, f.friendId, f.statusId,
+                                             up.firstName, up.lastName
                                         FROM friend f
-                                        LEFT JOIN friendStatus fs ON fs.id = f.statusId
                                         LEFT JOIN userProfile up ON up.id = f.userId
-                                        LEFT JOIN userProfile fup ON fup.id = f.friendId
-                                        LEFT JOIN clothingSize cs ON cs.id = fup.clothingSizeId
-                                        LEFT JOIN favoriteColor fc ON fc.id = fup.favoriteColorId
-                                        WHERE status = 'pending' AND f.friendId = @id ";
+                                        WHERE statusId = 3 AND f.friendId = @id ";
                     DbUtils.AddParameter(cmd, "@id", id);
                     var reader = cmd.ExecuteReader();
 
@@ -130,115 +124,18 @@ namespace Presnet.Repositories
 
                     while (reader.Read())
                     {
-                        if (reader.IsDBNull(reader.GetOrdinal("PostId")))
-                        {
                             friends.Add(new Friend()
                             {
                                 id = DbUtils.GetInt(reader, "id"),
                                 userId = DbUtils.GetInt(reader, "userId"),
                                 friendId = DbUtils.GetInt(reader, "friendId"),
                                 statusId = DbUtils.GetInt(reader, "statusId"),
-                                FriendStatus = new FriendStatus()
-                                {
-                                    status = reader.GetString(reader.GetOrdinal("status")),
-                                },
                                 UserProfile = new UserProfile()
                                 {
-                                    firstName = DbUtils.GetString(reader, "UserName"),
-                                },
-                                FriendProfile = new UserProfile()
-                                {
-                                    firstName = DbUtils.GetString(reader, "FriendFirstName"),
-                                    lastName = DbUtils.GetString(reader, "FriendLastName"),
-                                    email = DbUtils.GetString(reader, "FriendEmail"),
-                                    address = DbUtils.GetString(reader, "FriendAddess"),
-                                    age = DbUtils.GetInt(reader, "FriendAge"),
-                                    shoeSize = DbUtils.GetInt(reader, "FriendShoeSize"),
-                                    clothingSizeId = DbUtils.GetInt(reader, "FriendClothingSizeId"),
-                                    favoriteColorId = DbUtils.GetInt(reader, "FriendColorId")
-                                },
-                                ClothingSize = new ClothingSize()
-                                {
-                                    size = reader.GetString(reader.GetOrdinal("FriendClothingSize")),
-                                },
-                                FavoriteColor = new FavoriteColor()
-                                {
-                                    color = reader.GetString(reader.GetOrdinal("FriendFavoriteColor")),
+                                    firstName = DbUtils.GetString(reader, "firstName"),
+                                    lastName = DbUtils.GetString(reader, "lastName")
                                 }
                             });
-                        }
-                    }
-
-                    reader.Close();
-
-                    return friends;
-                }
-            }
-        }
-
-        public List<Friend> GetAllRequested(int id)
-        {
-            using (SqlConnection conn = Connection)
-            {
-                conn.Open();
-                using (SqlCommand cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"SELECT f.id, f.userId, f.friendId, f.statusId, fs.status, 
-                                             up.firstName as UserName, fup.firstName as FriendFirstName, fup.id as FriendId, 
-                                             fup.lastName as FriendLastName, fup.email as FriendEmail, fup.address as FriendAddess, 
-                                             fup.age as FriendAge, fup.shoeSize as FriendShoeSize, fup.clothingSizeId as FriendClothingSizeId, 
-                                             fup.favoriteColorId as FriendColorId, cs.size as FriendClothingSize, fc.color as FriendFavoriteColor
-                                        FROM friend f
-                                        LEFT JOIN friendStatus fs ON fs.id = f.statusId
-                                        LEFT JOIN userProfile up ON up.id = f.userId
-                                        LEFT JOIN userProfile fup ON fup.id = f.friendId
-                                        LEFT JOIN clothingSize cs ON cs.id = fup.clothingSizeId
-                                        LEFT JOIN favoriteColor fc ON fc.id = fup.favoriteColorId
-                                        WHERE status = 'pending' AND f.userId = @id ";
-                    DbUtils.AddParameter(cmd, "@id", id);
-                    var reader = cmd.ExecuteReader();
-
-                    var friends = new List<Friend>();
-
-                    while (reader.Read())
-                    {
-                        if (reader.IsDBNull(reader.GetOrdinal("PostId")))
-                        {
-                            friends.Add(new Friend()
-                            {
-                                id = DbUtils.GetInt(reader, "id"),
-                                userId = DbUtils.GetInt(reader, "userId"),
-                                friendId = DbUtils.GetInt(reader, "friendId"),
-                                statusId = DbUtils.GetInt(reader, "statusId"),
-                                FriendStatus = new FriendStatus()
-                                {
-                                    status = reader.GetString(reader.GetOrdinal("status")),
-                                },
-                                UserProfile = new UserProfile()
-                                {
-                                    firstName = DbUtils.GetString(reader, "UserName"),
-                                },
-                                FriendProfile = new UserProfile()
-                                {
-                                    firstName = DbUtils.GetString(reader, "FriendFirstName"),
-                                    lastName = DbUtils.GetString(reader, "FriendLastName"),
-                                    email = DbUtils.GetString(reader, "FriendEmail"),
-                                    address = DbUtils.GetString(reader, "FriendAddess"),
-                                    age = DbUtils.GetInt(reader, "FriendAge"),
-                                    shoeSize = DbUtils.GetInt(reader, "FriendShoeSize"),
-                                    clothingSizeId = DbUtils.GetInt(reader, "FriendClothingSizeId"),
-                                    favoriteColorId = DbUtils.GetInt(reader, "FriendColorId")
-                                },
-                                ClothingSize = new ClothingSize()
-                                {
-                                    size = reader.GetString(reader.GetOrdinal("FriendClothingSize")),
-                                },
-                                FavoriteColor = new FavoriteColor()
-                                {
-                                    color = reader.GetString(reader.GetOrdinal("FriendFavoriteColor")),
-                                }
-                            });
-                        }
                     }
 
                     reader.Close();
@@ -256,13 +153,9 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            UPDATE friendStatus fs
-                            SET fs.status = 1
-                            FROM friend f
-                              LEFT JOIN friendStatus fs ON fs.id = f.statusId
-                              LEFT JOIN userProfile up ON up.id = f.userId
-                              LEFT JOIN userProfile fup ON fup.id = f.friendId
-                            WHERE f.friendId = @id
+                            UPDATE friend 
+                            SET statusId = 1
+                            WHERE id = @id
                         ";
 
                     DbUtils.AddParameter(cmd, "@id", id);
@@ -275,20 +168,15 @@ namespace Presnet.Repositories
 
         public void RejectFriend(int id)
         {
-            using (var conn = Connection)
+            using (SqlConnection conn = Connection)
             {
                 conn.Open();
-
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            UPDATE friendStatus fs
-                            SET fs.status = 2
-                            FROM friend f
-                              LEFT JOIN friendStatus fs ON fs.id = f.statusId
-                              LEFT JOIN userProfile up ON up.id = f.userId
-                              LEFT JOIN userProfile fup ON fup.id = f.friendId
-                            WHERE f.friendId = @id
+                            UPDATE friend 
+                            SET statusId = 2
+                            WHERE id = @id
                         ";
 
                     DbUtils.AddParameter(cmd, "@id", id);

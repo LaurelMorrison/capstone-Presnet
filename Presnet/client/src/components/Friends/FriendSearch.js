@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Table } from "reactstrap";
-import { searchUsers } from "../../modules/accountManager";
+import { searchUsers, GetNonFriends } from "../../modules/accountManager";
+import User from "./User"
+import { addFriend } from "../../modules/friendManager";
 
-const FriendList = () => {
+const FriendSearch = () => {
     const [users, setUsers] = useState([]);
     const [search, setSearch] = useState([])
 
-
-
-    const getNonFriends = () => {
-        getAllFriends().then(users => setUsers(users));
+    const getUserList = () => {
+        GetNonFriends().then(users => setUsers(users));
     }
 
-    const searchUsers = (event) => {
+    const initFriendRequest = async(user) => {
+        await addFriend(user.id)
+        getUserList();
+      }
+
+    const handleInputChange = (event) => {
+        const newSearch = {...search}
+        let selectedVal = event.target.value
+        newSearch[event.target.id] = selectedVal
+        setSearch(newSearch)
+    }
+
+    const searchAllUsers = (event) => {
         event.preventDefault()
         console.log(search.searchparam)
         searchUsers(search.searchparam,true)
@@ -23,7 +35,7 @@ const FriendList = () => {
       }
 
     useEffect(() => {
-        getNonFriends();
+        getUserList();
     }, [])
 
     return (
@@ -38,14 +50,14 @@ const FriendList = () => {
                 type="text"
                 id="searchparam"
                 placeholder="Search users"
-                name="s"
+                name="search"
                 onChange={handleInputChange}
             />
-           <button type="submit" onClick={searchUsers}>Search</button>
+           <button type="submit" onClick={searchAllUsers}>Search</button>
         </form>
            <div className="row justify-content-center">
                  {users.map((user) => (
-                <User user={user} key={user.id} />
+                <User user={user} key={user.id} initFriendRequest={initFriendRequest}/>
                    ))}
            </div>
       </div>
@@ -53,4 +65,4 @@ const FriendList = () => {
    )
 };
 
-export default FriendList;
+export default FriendSearch;

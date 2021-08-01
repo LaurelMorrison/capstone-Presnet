@@ -53,41 +53,46 @@ export default function Register() {
 }, []) 
 
   return (
-    <Form onSubmit={registerClick}>
+    <Form onSubmit={registerClick} className="registerForm">
+      <div className="loginHeader">
+        <h1>Register an Account</h1>
+        <p>We are all about personal touches, so let us know a bit about you!</p>
+      </div>
       <fieldset>
-        <FormGroup>
+        <FormGroup className="loginBox">
           <Label htmlFor="firstName">First Name:</Label>
           <Input id="firstName" type="text" autoFocus onChange={e => setFirstName(e.target.value)} />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="loginBox">
         <Label htmlFor="lastName">Last Name:</Label>
           <Input id="lastName" type="text" autoFocus onChange={e => setLastName(e.target.value)} />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="loginBox">
           <Label for="email">Email:</Label>
           <Input id="email" type="text" onChange={e => setEmail(e.target.value)} />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="loginBox">
           <Label for="password">Password:</Label>
           <Input id="password" type="password" onChange={e => setPassword(e.target.value)} />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="loginBox">
           <Label for="confirmPassword">Confirm Password:</Label>
           <Input id="confirmPassword" type="password" onChange={e => setConfirmPassword(e.target.value)} />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="loginBox"> 
         <Label htmlFor="address">Address:</Label>
           <Input id="adress" type="text" autoFocus onChange={e => setAddress(e.target.value)} />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="loginBox">
           <Label for="age">Age:</Label>
           <Input id="age" type="text" onChange={e => setAge(e.target.value)} />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="loginBox">
           <Label for="shoeSize">Shoe Size:</Label>
           <Input id="shoeSize" type="text" onChange={e => setShoeSize(e.target.value)} />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="loginBox">
+        <Label for="clothingSizeId">Select your clothing size:</Label>
              <Input
                 type="select"
                 value={clothingSizeId}
@@ -103,7 +108,8 @@ export default function Register() {
                   ))}
               </Input>
         </FormGroup>  
-        <FormGroup>
+        <FormGroup className="loginBox">
+        <Label for="favoriteColorId">Pick your favorite color:</Label>
              <Input
                 type="select"
                 value={favoriteColorId}
@@ -120,7 +126,9 @@ export default function Register() {
               </Input>
         </FormGroup>         
         <FormGroup>
-          <Button>Register</Button>
+          <div className="buttonBox">
+           <Button className="button">Register</Button>
+          </div>
         </FormGroup>
       </fieldset>
     </Form>

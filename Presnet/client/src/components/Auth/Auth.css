@@ -1,0 +1,37 @@
+.login{
+    margin: 50px 80px 50px 80px;
+    padding: 30px;
+    background-color: #F0F0E6;
+    color: #D08C6C;
+    border: #246D82 solid 5px;
+    border-radius: 6px;
+    line-height: 2em;
+    opacity: .98;
+}
+
+.registerCallout{
+    text-align: center;
+}
+
+.loginBox{
+    margin: 10px;
+}
+
+.loginHeader{
+    text-align: center;
+}
+
+a{
+    color: #246D82!important;
+}
+
+.registerForm{
+    margin: 50px 80px 50px 80px;
+    padding: 30px;
+    background-color: #F0F0E6;
+    color: #246D82;
+    border: #E8B4B0 solid 5px;
+    border-radius: 6px;
+    line-height: 2em;
+    opacity: .98; 
+}

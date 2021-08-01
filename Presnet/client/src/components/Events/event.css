@@ -1,0 +1,24 @@
+.eventHeader{
+    margin: 10px;
+}
+
+.eventCard1{
+    color: #246D82;
+    padding-top: 15px;
+}
+
+.eventCard{
+    padding: 5px!important;
+    margin-top: 17px!important;
+    margin-bottom: 10px;
+    background-color: #F0F0E6!important;
+    width: 80%
+}
+
+.card-body{
+    padding: .5rem!important;
+}
+
+card-footer{
+    text-align: right!important;
+}

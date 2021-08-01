@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { useHistory, Link } from "react-router-dom";
 import { login } from "../../modules/authManager";
+import "./Auth.css"
 
 export default function Login() {
   const history = useHistory();
@@ -17,22 +18,27 @@ export default function Login() {
   };
 
   return (
-    <Form onSubmit={loginSubmit}>
+    <Form onSubmit={loginSubmit} className="login">
+      <div className="loginHeader">
+        <h1>Let's start this party!</h1>
+      </div>
       <fieldset>
-        <FormGroup>
+        <FormGroup  className="loginBox">
           <Label for="email">Email</Label>
           <Input id="email" type="text" autoFocus onChange={e => setEmail(e.target.value)} />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className="loginBox">
           <Label for="password">Password</Label>
           <Input id="password" type="password" onChange={e => setPassword(e.target.value)} />
         </FormGroup>
         <FormGroup>
-          <Button>Login</Button>
+          <div className="buttonBox">
+          <Button className="button">Login</Button>
+          </div>
         </FormGroup>
-        <em>
+        <div className="registerCallout">
           Not registered? <Link to="register">Register</Link>
-        </em>
+        </div>
       </fieldset>
     </Form>
   );

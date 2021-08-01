@@ -12,5 +12,6 @@ namespace Presnet.Repositories
         List<UserProfile> GetAllNonFriend(int id);
         UserProfile GetUserById(int id);
         void Update(UserProfile userProfile);
+        List<UserProfile> Search(string criterion);
     }
 }

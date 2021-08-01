@@ -85,6 +85,12 @@ namespace Presnet.Controllers
             return Ok(user);
         }
 
+        [HttpGet("search")]
+        public IActionResult Search(string query)
+        {
+            return Ok(_userProfileRepository.Search(query));
+        }
+
         [HttpGet("DoesUserExist/{firebaseUserId}")]
         public IActionResult DoesUserExist(string firebaseUserId)
         {

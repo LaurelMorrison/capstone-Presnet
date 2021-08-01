@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
-    Collapse, Navbar, NavbarBrand, Nav, NavItem, NavLink
+    Collapse, Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler
 } from 'reactstrap';
 import { logout } from "../../modules/authManager";
 import Logo from "../../Images/Logo.png";
@@ -12,8 +12,9 @@ export default function Header({ isLoggedIn }) {
 
     return (
         <div>
-            <Navbar dark expand="md" className="navBar">
+            <Navbar light expand="md" className="navBar">
                 <NavbarBrand tag={RRNavLink} to="/"><img className="logo" src={Logo} alt="Presnet Logo" /></NavbarBrand>
+                <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
                         {isLoggedIn &&

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { GetAllUserEvents, deleteEvent } from "../../modules/eventManager";
 import { Link } from "react-router-dom";
 import Event from "./Event"
+import "./event.css";
+import { Container, Row, Col } from "reactstrap";
 
 const UserEventList = () => {
     const [events, setEvents] = useState([]);
@@ -21,21 +23,23 @@ const UserEventList = () => {
 
     return (
         <>
-        <div className="container">
-        <div className="header m-2 p-2 ">
+        <Container>
+        <Row className="eventCard1 justify-content-left">
+             <div className="eventHeader ">
                     <h1>Your Events</h1>
                 </div>
                 <Link to={`/events/add`}>
-                    <button className="btn btn-secondary" >Add a New Event</button>
+                    <button className="button" >Add a New Event</button>
                 </Link>
-                <div className="container">
-                    <div className="row m-5 ">
+        </Row>
+        <Row className="eventCard2" >
+                    <div className="eventMap ">
                     {events?.map((event) => (
                         <Event event={event} key={event.id} handleDelete={handleDelete}/>
                     ))}
                     </div>
-                </div>
-            </div>
+        </Row>
+         </Container>
         </>
     )
 };

@@ -26,9 +26,11 @@ namespace Presnet.Controllers
 
 
         [HttpGet("pending")]
-        public IActionResult GetPending(int id)
+        public IActionResult GetPending()
         {
-            var friends = _friendRepository.GetAllPending(id);
+            var user = GetCurrentUserProfile();
+
+            var friends = _friendRepository.GetAllPending(user.id);
             if (friends == null)
             {
                 return NotFound();
@@ -36,16 +38,6 @@ namespace Presnet.Controllers
             return Ok(friends);
         }
 
-        [HttpGet("requested")]
-        public IActionResult GetRequested(int id)
-        {
-            var friends = _friendRepository.GetAllRequested(id);
-            if (friends == null)
-            {
-                return NotFound();
-            }
-            return Ok(friends);
-        }
 
         [HttpGet("getbyid/{friendId}")]
         public IActionResult GetFriendById(int friendId)
@@ -58,37 +50,30 @@ namespace Presnet.Controllers
             return Ok(friend);
         }
 
-        //[HttpPost]
-        //public IActionResult addFriend(Friend friend)
-        //{
-        //    var currentUserProfile = GetCurrentUserProfile();
-        //    friend.userId = currentUserProfile.id;
-        //    friend.statusId = 3;
+        [HttpPost("{friendId}")]
+        public IActionResult addFriend(int friendId)
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            Friend friend = new Friend();
+            friend.userId = currentUserProfile.id;
+            friend.friendId = friendId; 
 
-        //    _friendRepository.AddFriend(friend);
-        //    return CreatedAtAction(nameof(GetAll), new { id = friend.id }, friend);
-        //}
+            Friend returnedFriend = _friendRepository.AddFriend(friend);
+            return Ok(returnedFriend.id);
+        }
 
         // Accept Friend
         [HttpPut("accept/{id}")]
-        public IActionResult AcceptFriendRequest(int id, Friend friend)
+        public IActionResult AcceptFriendRequest(int id)
         {
-            if (id != friend.id)
-            {
-                return BadRequest();
-            }
             _friendRepository.acceptFriend(id);
             return NoContent();
         }
 
         // Reject Friend
         [HttpPut("reject/{id}")]
-        public IActionResult RejectFriendRequest(int id, Friend friend)
+        public IActionResult RejectFriendRequest(int id)
         {
-            if (id != friend.id)
-            {
-                return BadRequest();
-            }
             _friendRepository.RejectFriend(id);
             return NoContent();
         }

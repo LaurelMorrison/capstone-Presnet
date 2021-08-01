@@ -23,7 +23,7 @@ function App() {
     <Router>
         <Header isLoggedIn={isLoggedIn} />
         <ApplicationViews isLoggedIn={isLoggedIn} />
-        {/* <Footer isLoggedIn={isLoggedIn} /> */}
+        <Footer isLoggedIn={isLoggedIn} />
     </Router>
   );
 }

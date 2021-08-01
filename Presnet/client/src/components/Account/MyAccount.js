@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button } from "reactstrap";
 import { Link, useParams } from "react-router-dom";
 import { GetCurrentUserAccount, GetUserById } from "../../modules/accountManager";
 import UserEventList from "../Events/UserEventList";
+import "./Account.css";
+import { Container, Row, Col, Card, Button } from "reactstrap";
+import account from "../../Images/account.jpeg";
 
 const MyAccount = () => {
 
     const [user, setUser] = useState();
-
-    // const history = useHistory();
-
-    // const deleteAFriend = (event) => {
-    //     event.preventDefault()
-    //     const confirmDelete = window.confirm("Are you sure you would like to delete this friend?")
-    //     if (confirmDelete) {
-    //         deleteFriend(friend.id).then(() => {history.push('/friend')})
-    //     };
-    // }
 
     useEffect(() => {
       GetCurrentUserAccount()
@@ -29,29 +21,44 @@ const MyAccount = () => {
 
     return (
         <>
-        <div>
-            <Card className="m-4">
+        <Container>
+        <Row className="justify-content-center" xs lg = "12">
+            <Card className="userCard">
                 <h1>Hello, {user.firstName}!</h1>
-                <p className="text-left px-2">Name: {user.fullName}</p>
-                <p className="text-left px-2">Email: {user.email}</p>
-                <p className="text-left px-2">Address: {user.address}</p>
-                <p className="text-left px-2">Age: {user.age}</p>
-                <p className="text-left px-2">Shoe Size: {user.shoeSize}</p>
-                <p className="text-left px-2">Favorite Color: {user.favoriteColor.color}</p>
-                <p className="text-left px-2">Clothing Size: {user.clothingSize.size}</p>
-                <Button className="b editUser"><Link className="a" to={`/userprofile/edit/${user.id}`}>Edit Profile</Link></Button>
+                <ul>
+                <li className="text-left px-2">Name: {user.fullName}</li>
+                <li className="text-left px-2">Email: {user.email}</li>
+                <li className="text-left px-2">Address: {user.address}</li>
+                <li className="text-left px-2">Age: {user.age}</li>
+                <li className="text-left px-2">Shoe Size: {user.shoeSize}</li>
+                <li className="text-left px-2">Favorite Color: {user.favoriteColor.color}</li>
+                <li className="text-left px-2">Clothing Size: {user.clothingSize.size}</li>
+                </ul>
+                <div className="buttonBox">
+                <button className="button" to={`/userprofile/edit/${user.id}`}>Edit Profile</button>
+                </div>
             </Card>
-        </div>
-        <div>
-            <UserEventList />
-        </div>
-        <div>
+        </Row>
+        <Row className="account2 justify-content-center">
+             <Col xs lg="6">
+             <div className="AccountImageBox">
+                 <img className="accountImage" src={account} />
+                 </div>
+            </Col>
+            <Col xs lg="6">
+                 <UserEventList />
+            </Col>
+        </Row>
+        <Row className="account3 justify-content-center">
             <h1>Your Wish List</h1>
             <p>Have a gift idea? Let your loved ones know, build a wish list to give them a hint at what to get you!</p>
-            <Link to={`/wishList`}>
-                    <button className="btn btn-secondary" >Your Wish List</button>
+            <div className="buttonBox">
+                <Link to={`/wishList`}>
+                    <button className="button" >Your Wish List</button>
                 </Link>
-        </div>
+            </div>
+        </Row>
+        </Container>
         </>
     );
 };

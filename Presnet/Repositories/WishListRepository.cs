@@ -21,7 +21,7 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                         SELECT wl.id, wl.gift, wl.giftURL, wl.userId, up.firstName, up.lastName
+                         SELECT wl.id, wl.gift, wl.giftURL, wl.userId, up.firstName, up.lastName, up.id
                          FROM wishListItem wl
                               LEFT JOIN userProfile up ON wl.userId = up.id
                          WHERE wl.userId = @userId";
@@ -41,6 +41,7 @@ namespace Presnet.Repositories
                             userId = DbUtils.GetInt(reader, "userId"),
                             UserProfile = new UserProfile()
                             {
+                                id = DbUtils.GetInt(reader, "id"),
                                 firstName = DbUtils.GetString(reader, "firstName"),
                                 lastName = DbUtils.GetString(reader, "lastName")
                             }

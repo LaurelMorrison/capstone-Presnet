@@ -36,7 +36,18 @@ namespace Presnet.Controllers
                 return NotFound();
             }
             return Ok(gifts);
-        }        
+        }
+
+        [HttpGet("FriendWishlist/{friendId}")]
+        public IActionResult GetFriendsWishList(int friendId)
+        {
+            var gifts = _wishListRepository.GetUserWishlist(friendId);
+            if (gifts == null)
+            {
+                return NotFound();
+            }
+            return Ok(gifts);
+        }
 
         [HttpGet("{id}")]
         public IActionResult GetEventById(int id)

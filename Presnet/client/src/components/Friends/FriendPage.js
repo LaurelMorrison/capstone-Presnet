@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Spinner } from "reactstrap";
 import FriendList from "./FriendList";
 import { onLoginStatusChange } from "../../modules/authManager";
-import UserList from "./UserList";
+import FriendSearch from "./FriendSearch";
 import { Link } from "react-router-dom";
 
 function FriendPage() {
@@ -20,7 +20,7 @@ function FriendPage() {
     return (
       <>
           <FriendList isLoggedIn={isLoggedIn} />
-          <UserList isLoggedIn={isLoggedIn} />
+          <FriendSearch isLoggedIn={isLoggedIn} />
           <div>
             <h1>
             Add an Event

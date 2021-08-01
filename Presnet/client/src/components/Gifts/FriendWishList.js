@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { GetUserWishlist } from "../../modules/giftManager";
+import { GetFriendsWishlist } from "../../modules/giftManager";
 import FriendGift from "./FriendGift"
+import { Link, useParams } from "react-router-dom";
+import { GetFriendById } from "../../modules/friendManager";
 
 const FriendWishList = () => {
     const [gifts, setGifts] = useState([]);
+    const { friendId } = useParams();
 
-    const getYourEvents = () => {
-        GetUserWishlist().then(events => setGifts(events));
+    const getFriendWishList = () => {
+        GetFriendsWishlist().then(gifts => setGifts(gifts));
     }
 
     useEffect(() => {
-        getYourEvents();
-    }, [])
+        GetFriendById(friendId)
+        getFriendWishList(friendId);
+    }, [friendId])
 
     return (
         <>
