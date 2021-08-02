@@ -5,6 +5,8 @@ import { GetAllFriends } from "../../modules/accountManager";
 import FriendRequest from "./FriendRequest";
 import { GetFriendRequest, acceptFriendRequest, rejectFriendRequest } from "../../modules/friendManager"
 import { GetFriendsEvents } from "../../modules/eventManager";
+import { Container, Row, Col, Card, Button } from "reactstrap";
+import "./friend.css"
 
 const FriendList = () => {
     const [friends, setFriends] = useState([]);
@@ -38,9 +40,9 @@ const FriendList = () => {
 
     return (
         <>
-        <div className="container">
-         <div className="row justify-content-center">
-             <h1>Friend List</h1>
+         <Container>
+            <Row className="friendList justify-content-center" xs lg = "12">
+             <h1 className="friendListHeader">Friend List</h1>
              <Table>
              <tbody>
                     {friends?.map((friend) => (
@@ -49,14 +51,11 @@ const FriendList = () => {
 
                 </tbody>
             </Table>
-            </div>
-        <div className="row justify-content-center">
+            </Row>
+            <br />
+            <Row className="friendRequests justify-content-center">
+            <h1 className="friendRequestHeader">Friend Requests</h1>
              <Table>
-             <thead>
-               <tr>
-                    <th>Friends</th>
-                </tr>
-             </thead>
              <tbody>
                     {friendRequests?.map((friendRequest) => (
                         <FriendRequest friendRequest={friendRequest} key={friendRequest.Id} acceptFriendAndRefresh={acceptFriendAndRefresh} rejectFriendAndRefresh={rejectFriendAndRefresh} />
@@ -64,8 +63,8 @@ const FriendList = () => {
 
                 </tbody>
             </Table>
-            </div>
-        </div>
+            </Row>
+        </Container>
         </>
     )
 };

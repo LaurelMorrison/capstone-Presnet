@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { GetUserWishlist, deleteGift } from "../../modules/giftManager";
 import { Link } from "react-router-dom";
 import Gift from "./Gift"
+import "./Gift.css";
+import { Container, Row, Col, Card, Button } from "reactstrap";
 
 const UserGiftList = () => {
     const [gifts, setGifts] = useState([]);
@@ -21,12 +23,11 @@ const UserGiftList = () => {
 
     return (
         <>
-        <div className="container">
-        <div className="header m-2 p-2 ">
+        <Container className="userWishList">
+        <Row className="justify-content-center" xs lg = "12">
                 <h1>Your Wish List</h1>
-                </div>
                 <Link to={`/wishList/add`}>
-                    <button className="btn btn-secondary" >Add New Gift</button>
+                    <button className="button" >Add New Gift</button>
                 </Link>
                 <div className="container">
                     <div className="row m-5 ">
@@ -35,7 +36,8 @@ const UserGiftList = () => {
                     ))}
                     </div>
                 </div>
-            </div>
+                </Row>
+        </Container>
         </>
     )
 };

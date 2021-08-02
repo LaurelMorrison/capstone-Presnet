@@ -1,0 +1,78 @@
+.friendList{
+    margin: 0px!important;
+    padding: 30px;
+    background-color: #F0F0E6;
+    color: #246D82;
+    line-height: 2em;
+    opacity: .98;
+}
+
+.friendSearch{
+    padding: 30px;
+    background-color: #F0F0E6;
+    color: #246D82;
+    line-height: 2em;
+    opacity: .98;  
+}
+
+.friendRequests{
+    margin: 10px 0px 30px 0px!important;
+    padding: 20px;
+    background-color: #F0F0E6;
+    color: #246D82;
+    border: #E8B4B0 solid 3px;
+    border-radius: 5px;
+    line-height: 2em;
+    opacity: .98;
+}
+
+.friendCard{
+    color: #246D82;
+}
+
+.friendListHeader{
+    margin-bottom: 20px;
+}
+
+.friendRequestHeader{
+    color: #D08C6C;
+    margin-bottom: 20px;
+}
+
+.friendRequestCard{
+    padding: 5px!important;
+    margin-top: 17px!important;
+    margin-bottom: 10px;
+    background-color: #F0F0E6!important;
+    width: 50%;
+    color: #246D82
+}
+
+#searchparam{
+    margin: 10px;
+    border-radius: 5px;
+    color: #246D82!important;
+    margin-bottom: 20px;
+}
+
+.pendingRequest{
+    color: #246D82
+}
+
+.card-body{
+    padding: .5rem!important;
+}
+
+.cardFooter{
+    display: flex;
+    justify-content:flex-end!important;
+}
+
+.eventCallout{
+    opacity: .95;
+    margin: 0px!important;
+    padding: 50px 50px 50px 30px!important;
+    background-color: #246D82;
+    line-height: 2em;
+    color: #F0F0E6
+}

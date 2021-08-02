@@ -51,6 +51,18 @@ namespace Presnet.Controllers
             return Ok(holidays);
         }
 
+        [HttpGet("upcomingevents")]
+        public IActionResult GetUpcomingEvents(int userId)
+        {
+            int currentUserProfileId = GetCurrentUserProfileId();
+            var holidays = _eventRepository.GetAllUpcomingEvents(userId);
+            if (holidays == null)
+            {
+                return NotFound();
+            }
+            return Ok(holidays);
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetEventById(int id)
         {

@@ -36,6 +36,23 @@ export const GetAllUserEvents = () => {
     });
   };
 
+  export const GetUpcomingEvents = () => {
+    return getToken().then((token) => {
+      return fetch(`${baseUrl}/upcomingevents`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("An unknown error occorred while trying to fetching your upcoming events.");
+        }
+      });
+    });
+  };
+
 export const GetEventById = (id) => {
         return getToken().then((token) => {
           return fetch(`${baseUrl}/${id}`, {

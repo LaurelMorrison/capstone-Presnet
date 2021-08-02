@@ -25,7 +25,7 @@ namespace Presnet.Repositories
                          FROM event e
                               LEFT JOIN userProfile up ON e.userId = up.id
                          WHERE e.userId = @userId
-                         ORDER BY e.date DESC";
+                         ORDER BY e.date ASC";
 
                     DbUtils.AddParameter(cmd, "@userId", userId);
                     var reader = cmd.ExecuteReader();
@@ -79,7 +79,7 @@ namespace Presnet.Repositories
                                                 FROM friend f
                                                 WHERE f.statusId = 1 AND f.friendId = @userId
                                                 )
-                         ORDER BY e.date DESC";
+                         ORDER BY e.date ASC";
                     DbUtils.AddParameter(cmd, "@userId", userId);
 
                     var reader = cmd.ExecuteReader();
@@ -94,6 +94,58 @@ namespace Presnet.Repositories
                             eventDetails = reader.GetString(reader.GetOrdinal("eventDetails")),
                             date = DbUtils.GetDateTime(reader, "date"),
                            UserProfile = new UserProfile()
+                            {
+                                firstName = DbUtils.GetString(reader, "firstName"),
+                                lastName = DbUtils.GetString(reader, "lastName")
+                            }
+                        });
+                    }
+
+                    reader.Close();
+
+                    return events;
+                }
+            }
+        }
+
+        public List<Event> GetAllUpcomingEvents(int userId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                         SELECT e.eventName, e.eventDetails, e.date, up.firstName, up.lastName
+                         FROM userProfile up
+                              LEFT JOIN event e ON e.userId = up.id
+                              LEFT JOIN friend f ON f.userId = up.id
+                          WHERE e.userId = @userId OR up.id = 1 OR up.id IN (
+                                                SELECT f.friendId
+                                                FROM friend f
+                                                WHERE f.statusId = 1 AND f.userId = @userId
+                                                ) 
+ 
+                                                OR up.id IN (
+                                                SELECT f.userId
+                                                FROM friend f
+                                                WHERE f.statusId = 1 AND f.friendId = @userId
+                                                )
+                         ORDER BY e.date ASC";
+                    DbUtils.AddParameter(cmd, "@userId", userId);
+
+                    var reader = cmd.ExecuteReader();
+
+                    var events = new List<Event>();
+
+                    while (reader.Read())
+                    {
+                        events.Add(new Event()
+                        {
+                            eventName = reader.GetString(reader.GetOrdinal("eventName")),
+                            eventDetails = reader.GetString(reader.GetOrdinal("eventDetails")),
+                            date = DbUtils.GetDateTime(reader, "date"),
+                            UserProfile = new UserProfile()
                             {
                                 firstName = DbUtils.GetString(reader, "firstName"),
                                 lastName = DbUtils.GetString(reader, "lastName")

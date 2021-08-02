@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Table } from "reactstrap";
+import { Table } from "reactstrap";
+import { Container, Row, Card, Button } from "reactstrap";
 import { searchUsers, GetNonFriends } from "../../modules/accountManager";
 import User from "./User"
 import { addFriend } from "../../modules/friendManager";
@@ -40,12 +41,12 @@ const FriendSearch = () => {
 
     return (
         <>
-        <div>
-        <h2>Add a new friend</h2>
-        <form action="/" method="get">
-            <label htmlFor="header-search">
-                <span className="visually-hidden">Search for Friends</span>
-            </label>
+         <Container className="friendSearch">
+        <Row className="justify-content-center" xs lg = "12">
+        <h1>Add New Friends</h1>
+        </Row>
+        <Row className="justify-content-center">
+         <form action="/" method="get">
             <input
                 type="text"
                 id="searchparam"
@@ -53,14 +54,17 @@ const FriendSearch = () => {
                 name="search"
                 onChange={handleInputChange}
             />
-           <button type="submit" onClick={searchAllUsers}>Search</button>
+           <button className="button" type="submit" onClick={searchAllUsers}>Search</button>
         </form>
-           <div className="row justify-content-center">
+        <Table>
+             <tbody>
                  {users.map((user) => (
                 <User user={user} key={user.id} initFriendRequest={initFriendRequest}/>
                    ))}
-           </div>
-      </div>
+                </tbody>
+            </Table>
+           </Row>
+        </Container>
    </>
    )
 };

@@ -9,6 +9,7 @@ namespace Presnet.Repositories
         void DeleteEvent(int id);
         List<Event> GetAllFriendsEvents(int userId);
         List<Event> GetAllUserEvents(int userId);
+        List<Event> GetAllUpcomingEvents(int userId);
         Event GetEventById(int id);
         void UpdateEvent(Event holiday);
     }

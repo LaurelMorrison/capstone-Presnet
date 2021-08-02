@@ -3,6 +3,7 @@ import homepage from "../../Images/homepage.png";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 import "./Home.css";
+import UpcomingEventList from "../Events/UpcomingEventList";
 
 const Homepage = () => {
 
@@ -15,15 +16,16 @@ const Homepage = () => {
          <h1>Give Thoughtful Gifts.</h1>
       </Row>
       <Row className="homepage2">
-      <Col xs lg="6">
+      <Col xs lg="4">
         <div className="homepageImageBox">
         <img className="homepageImage" src={homepage} />
         </div>
         </Col>
-        <Col xs lg="6">
+        <Col xs lg="8">
         <div className="homepage2">
         <h1>Upcoming Events</h1>
         <div>
+          <UpcomingEventList />
         </div>
         </div>
       </Col>
