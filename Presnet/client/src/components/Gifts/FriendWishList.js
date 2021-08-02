@@ -21,9 +21,6 @@ const FriendWishList = () => {
     return (
         <>
         <div className="container">
-        <div className="header m-2 p-2 ">
-            <h1>Friend's Gift List</h1>
-        </div>
             <div className="container">
                 <div className="row m-5 ">
                     {gifts?.map((gift) => (

@@ -3,7 +3,8 @@ import { Button } from "reactstrap";
 
 const User = ({ user, initFriendRequest }) => {
 
-  const friendStatus = user.friend.statusId
+  const friendStatus = user.friend?user.friend.statusId : 0; 
+
 
   return (
     <tr>
