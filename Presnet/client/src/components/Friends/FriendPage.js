@@ -20,9 +20,11 @@ function FriendPage() {
   
     return (
       <>
+        <Container>
+        <Row className="justify-content-center" xs lg = "12">
           <FriendList isLoggedIn={isLoggedIn} />
           <FriendSearch isLoggedIn={isLoggedIn} />
-          <Container>
+          </Row>
              <Row className="eventCallout justify-content-center" xs lg = "12">
             <h1>
             Add an Event
@@ -31,7 +33,7 @@ function FriendPage() {
             Have an exciting event or reason to celebrate coming up? Let your loved ones know, so they can cheer you on and be there for you!
             </p>
                 <div className="buttonBox">
-                    <button className="button" to={`/events/add`}>Add a New Event</button>
+                    <Button className="button"><Link to={`/events`}>Add a New Event</Link></Button>
                 </div>
                 </Row>
         </Container>
