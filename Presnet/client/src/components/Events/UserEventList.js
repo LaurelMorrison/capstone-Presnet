@@ -3,7 +3,7 @@ import { GetAllUserEvents, deleteEvent } from "../../modules/eventManager";
 import { Link } from "react-router-dom";
 import Event from "./Event"
 import "./event.css";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row } from "reactstrap";
 
 const UserEventList = () => {
     const [events, setEvents] = useState([]);

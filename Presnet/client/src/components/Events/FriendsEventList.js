@@ -5,12 +5,12 @@ import FriendEvent from "./FriendEvent"
 const FriendEventList = () => {
     const [events, setEvents] = useState([]);
 
-    const getYourEvents = () => {
+    const getFriendEvents = () => {
         GetFriendsEvents().then(events => setEvents(events));
     }
 
     useEffect(() => {
-        getYourEvents();
+        getFriendEvents();
     }, [])
 
     return (
@@ -21,9 +21,11 @@ const FriendEventList = () => {
         </div>
             <div className="container">
                 <div className="row m-5 ">
-                    {events?.map((event) => (
+                {!events.length ? ("<p>You have no upcoming friend events.</p>"): (
+                    events?.map((event) => ( 
                         <FriendEvent event={event} key={event.id} />
-                    ))}
+                    ))
+                )}
                 </div>
             </div>
         </div>

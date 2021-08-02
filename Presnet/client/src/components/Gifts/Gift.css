@@ -18,3 +18,14 @@
 .space{
     margin-right: 10px;
 }
+
+.giftForm{
+    margin: 50px 80px 50px 80px;
+    padding: 30px;
+    background-color: #F0F0E6;
+    color: #246D82;
+    border: #E8B4B0 solid 5px;
+    border-radius: 6px;
+    line-height: 2em;
+    opacity: .98;     
+}

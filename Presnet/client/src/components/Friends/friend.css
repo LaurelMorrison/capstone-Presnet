@@ -8,9 +8,11 @@
 }
 
 .friendSearch{
-    padding: 30px;
+    padding: 40px;
     background-color: #F0F0E6;
     color: #246D82;
+    margin-left: 35px;
+    margin-right: 35px;
     line-height: 2em;
     opacity: .98;  
 }
@@ -75,4 +77,24 @@
     background-color: #246D82;
     line-height: 2em;
     color: #F0F0E6
+}
+
+.friendsWishListCallout{
+    margin: 30px!important;
+    padding: 20px;
+    background-color: #F0F0E6;
+    color: #D08C6C;
+    border: #246D82 solid 3px;
+    border-radius: 5px;
+    line-height: 2em;
+    opacity: .98;
+} 
+
+.friendsEventCallout{
+    opacity: .95;
+    margin: 0px!important;
+    padding: 50px 50px 50px 30px!important;
+    background-color: #246D82;
+    line-height: 2em;
+    color: #F0F0E6  
 }

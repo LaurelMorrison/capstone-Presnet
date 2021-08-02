@@ -10,7 +10,7 @@ const Homepage = () => {
   return (
     <>
       <Container >
-      <Row className="homepage1 justify-content-center" xs lg = "12">
+      <Row className="homepage1 justify-content-center" >
          <h1>Track Birthdays.</h1>
          <h1>Make a Wish List.</h1>
          <h1>Give Thoughtful Gifts.</h1>
@@ -18,7 +18,7 @@ const Homepage = () => {
       <Row className="homepage2">
       <Col xs lg="4">
         <div className="homepageImageBox">
-        <img className="homepageImage" src={homepage} />
+        <img className="homepageImage" src={homepage} alt="floating gifts" />
         </div>
         </Col>
         <Col xs lg="8">

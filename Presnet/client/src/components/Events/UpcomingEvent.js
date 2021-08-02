@@ -1,6 +1,4 @@
 import React from "react";
-import { Card, CardBody, Button, CardFooter } from "reactstrap";
-import { Link } from "react-router-dom";
 
 const UpcomingEvent = ({ event  }) => {
 

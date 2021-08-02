@@ -1,8 +1,8 @@
 import React from "react";
 import { Button } from "reactstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { deleteFriend } from "../../modules/friendManager";
-import { GetUserWishlist } from "../../modules/giftManager";
 
 const Friend = ({ friend, setIsDeleted, isDeleted }) => {
   const history = useHistory();
@@ -21,7 +21,7 @@ const Friend = ({ friend, setIsDeleted, isDeleted }) => {
     <tr>
           <td><p className="friendCard">{friend.fullName}</p></td>
           <td>
-          <Button className="button space" to={`/friend/getbyid/${friend.id}`}>Details</Button>
+          <Link to={`/friend/getbyid/${friend.id}`}><Button className="button space">Details</Button></Link>
           <Button className="button" onClick={() =>handleDelete(friend.id)}>Unfriend</Button>
         </td>
     </tr>

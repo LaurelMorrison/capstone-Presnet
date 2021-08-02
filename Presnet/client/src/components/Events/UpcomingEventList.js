@@ -9,11 +9,9 @@ const UpcomingEventList = () => {
     const [upcomingevents, setUpcomingEvents] = useState([]);
 
     const getUpcomingEvents = () => {
-        GetUpcomingEvents().then(upcomingevents => setUpcomingEvents(upcomingevents));
+        GetUpcomingEvents().then(upcomingevents => setUpcomingEvents(upcomingevents.slice(0,5)));
     }
 
-    const upcomingEvents = getUpcomingEvents();
-    // console.log(upcomingEvents.slice(0,5))
 
     useEffect(() => {
         getUpcomingEvents();

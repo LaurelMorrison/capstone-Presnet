@@ -22,3 +22,14 @@
 card-footer{
     text-align: right!important;
 }
+
+.eventEditForm{
+    margin: 50px 80px 50px 80px;
+    padding: 30px;
+    background-color: #F0F0E6;
+    color: #D08C6C;
+    border: #246D82 solid 5px;
+    border-radius: 6px;
+    line-height: 2em;
+    opacity: .98;    
+}

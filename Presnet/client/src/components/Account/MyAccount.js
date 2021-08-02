@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { GetCurrentUserAccount, GetUserById } from "../../modules/accountManager";
+import { Link } from "react-router-dom";
+import { GetCurrentUserAccount } from "../../modules/accountManager";
 import UserEventList from "../Events/UserEventList";
 import "./Account.css";
 import { Container, Row, Col, Card, Button } from "reactstrap";
@@ -22,7 +22,7 @@ const MyAccount = () => {
     return (
         <>
         <Container>
-        <Row className="justify-content-center" xs lg = "12">
+        <Row className="justify-content-center">
             <Card className="userCard">
                 <h1>Hello, {user.firstName}!</h1>
                 <ul>
@@ -35,14 +35,14 @@ const MyAccount = () => {
                 <li className="text-left px-2">Clothing Size: {user.clothingSize.size}</li>
                 </ul>
                 <div className="buttonBox">
-                <button className="button" to={`/userprofile/edit/${user.id}`}>Edit Profile</button>
+                <Link to={`/userprofile/edit/${user.id}`}><Button className="button">Edit Profile</Button></Link>
                 </div>
             </Card>
         </Row>
         <Row className="account2 justify-content-center">
              <Col xs lg="6">
              <div className="AccountImageBox">
-                 <img className="accountImage" src={account} />
+                 <img className="accountImage" src={account} alt="celebration present"/>
                  </div>
             </Col>
             <Col xs lg="6">

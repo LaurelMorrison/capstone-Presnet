@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody, Button, CardFooter } from "reactstrap";
+import { Card, CardBody, CardFooter } from "reactstrap";
 import "./friend.css"
 
 const FriendRequest = ({friendRequest, acceptFriendAndRefresh, rejectFriendAndRefresh}) => {

@@ -4,7 +4,7 @@ import FriendList from "./FriendList";
 import { onLoginStatusChange } from "../../modules/authManager";
 import FriendSearch from "./FriendSearch";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Card, Button } from "reactstrap";
+import { Container, Row, Button } from "reactstrap";
 
 function FriendPage() {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -21,11 +21,11 @@ function FriendPage() {
     return (
       <>
         <Container>
-        <Row className="justify-content-center" xs lg = "12">
+        <Row className="justify-content-center"  lg = "12">
           <FriendList isLoggedIn={isLoggedIn} />
           <FriendSearch isLoggedIn={isLoggedIn} />
           </Row>
-             <Row className="eventCallout justify-content-center" xs lg = "12">
+             <Row className="eventCallout justify-content-center" lg = "12">
             <h1>
             Add an Event
             </h1>

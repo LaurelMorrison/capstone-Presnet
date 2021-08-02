@@ -4,8 +4,7 @@ import Friend from "./Friend"
 import { GetAllFriends } from "../../modules/accountManager";
 import FriendRequest from "./FriendRequest";
 import { GetFriendRequest, acceptFriendRequest, rejectFriendRequest } from "../../modules/friendManager"
-import { GetFriendsEvents } from "../../modules/eventManager";
-import { Container, Row, Col, Card, Button } from "reactstrap";
+import { Container, Row } from "reactstrap";
 import "./friend.css"
 
 const FriendList = () => {
@@ -41,7 +40,7 @@ const FriendList = () => {
     return (
         <>
          <Container>
-            <Row className="friendList justify-content-center" xs lg = "12">
+            <Row className="friendList justify-content-center">
              <h1 className="friendListHeader">Friend List</h1>
              <Table>
              <tbody>

@@ -40,10 +40,10 @@ namespace Presnet.Controllers
         }
 
         [HttpGet("friendevents")]
-        public IActionResult GetAllFriendsEvents(int userId)
+        public IActionResult GetAllFriendsEvents()
         {
             int currentUserProfileId = GetCurrentUserProfileId();
-            var holidays = _eventRepository.GetAllFriendsEvents(userId);
+            var holidays = _eventRepository.GetAllFriendsEvents(currentUserProfileId);
             if (holidays == null)
             {
                 return NotFound();
@@ -52,10 +52,10 @@ namespace Presnet.Controllers
         }
 
         [HttpGet("upcomingevents")]
-        public IActionResult GetUpcomingEvents(int userId)
+        public IActionResult GetUpcomingEvents()
         {
             int currentUserProfileId = GetCurrentUserProfileId();
-            var holidays = _eventRepository.GetAllUpcomingEvents(userId);
+            var holidays = _eventRepository.GetAllUpcomingEvents(currentUserProfileId);
             if (holidays == null)
             {
                 return NotFound();

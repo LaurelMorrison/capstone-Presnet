@@ -69,45 +69,45 @@ const AccountProfileForm = () => {
     }, [])
 
     return (
-        <Form>
-            <h2>Edit Post</h2>
-            <FormGroup>
+        <Form className="accountEdit">
+            <h2>Edit Profile</h2>
+            <FormGroup className="formBox">
                 <Label for="firstName">First Name:</Label>
                 <Input type="text" name="firstName" id="firstName" placeholder="firstName"
                     value={editUser.firstName}
                     onChange={handleInputChange} />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="lastName">Last Name:</Label>
                 <Input type="text" name="lastName" id="lastName" placeholder="lastName"
                     value={editUser.lastName}
                     onChange={handleInputChange} />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="address">Address:</Label>
                 <Input type="text" name="address" id="address" placeholder="address"
                     value={editUser.address}
                     onChange={handleInputChange} />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="email">Email:</Label>
                 <Input type="text" name="email" id="email" placeholder="email"
                     value={editUser.email}
                     onChange={handleInputChange} />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="age">Age:</Label>
                 <Input type="text" name="age" id="age" placeholder="age"
                     value={editUser.age}
                     onChange={handleInputChange} />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="shoeSize">Shoe Size:</Label>
                 <Input type="text" name="shoeSize" id="shoeSize" placeholder="shoeSize"
                     value={editUser.shoeSize}
                     onChange={handleInputChange} />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="clothingSizeId">Size</Label>
                 <select value={editUser.clothingSizeId} name="clothingSizeId" id="clothingSizeId" onChange={handleInputChange} className='form-control'>
                     <option value="0">Select a Size</option>
@@ -116,7 +116,7 @@ const AccountProfileForm = () => {
                     ))}
                 </select>
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="favoriteColorId">Favorite Color</Label>
                 <select value={editUser.favoriteColorId} name="favoriteColorId" id="favoriteColorId" onChange={handleInputChange} className='form-control'>
                     <option value="0">Select a Color</option>
@@ -125,9 +125,10 @@ const AccountProfileForm = () => {
                     ))}
                 </select>
             </FormGroup>
-
-            <Button className="btn btn-primary" onClick={handleUpdate}>Submit</Button>
-            <Button className="btn btn-primary" onClick={() => history.push(`/userProfile/account`)}>Cancel</Button>
+            <div className="buttonBox">
+            <Button className="button space" onClick={handleUpdate}>Submit</Button>
+            <Button className="button" onClick={() => history.push(`/userProfile/account`)}>Cancel</Button>
+            </div>
         </Form>
     );
 

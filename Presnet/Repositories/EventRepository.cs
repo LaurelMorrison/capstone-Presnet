@@ -64,20 +64,20 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                         SELECT e.eventName, e.eventDetails, e.date, up.firstName, up.lastName
+                         SELECT e.eventName, e.eventDetails, e.date, up.firstName, up.lastName, up.id, e.id, e.userId
                          FROM userProfile up
                               LEFT JOIN event e ON e.userId = up.id
                               LEFT JOIN friend f ON f.userId = up.id
                           WHERE up.id = 1 OR up.id IN (
                                                 SELECT f.friendId
                                                 FROM friend f
-                                                WHERE f.statusId = 1 AND f.userId = @userId
+                                                WHERE f.statusId = 1 AND f.userId = @userId AND e.eventName is not null
                                                 ) 
  
                                                 OR up.id IN (
                                                 SELECT f.userId
                                                 FROM friend f
-                                                WHERE f.statusId = 1 AND f.friendId = @userId
+                                                WHERE f.statusId = 1 AND f.friendId = @userId AND e.eventName is not null
                                                 )
                          ORDER BY e.date ASC";
                     DbUtils.AddParameter(cmd, "@userId", userId);
@@ -93,14 +93,17 @@ namespace Presnet.Repositories
                             eventName = reader.GetString(reader.GetOrdinal("eventName")),
                             eventDetails = reader.GetString(reader.GetOrdinal("eventDetails")),
                             date = DbUtils.GetDateTime(reader, "date"),
-                           UserProfile = new UserProfile()
+                            id = DbUtils.GetInt(reader, "id"),
+                            userId = DbUtils.GetInt(reader, "userId"),
+                            UserProfile = new UserProfile()
                             {
+                                id = DbUtils.GetInt(reader, "id"),
                                 firstName = DbUtils.GetString(reader, "firstName"),
                                 lastName = DbUtils.GetString(reader, "lastName")
                             }
-                        });
+                        }); 
+                        //}
                     }
-
                     reader.Close();
 
                     return events;
@@ -116,21 +119,22 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                         SELECT e.eventName, e.eventDetails, e.date, up.firstName, up.lastName
+                         SELECT e.eventName, e.eventDetails, e.date, up.firstName, e.id
                          FROM userProfile up
                               LEFT JOIN event e ON e.userId = up.id
                               LEFT JOIN friend f ON f.userId = up.id
                           WHERE e.userId = @userId OR up.id = 1 OR up.id IN (
                                                 SELECT f.friendId
                                                 FROM friend f
-                                                WHERE f.statusId = 1 AND f.userId = @userId
+                                                WHERE f.statusId = 1 AND f.userId = @userId AND e.eventName is not null 
                                                 ) 
- 
                                                 OR up.id IN (
                                                 SELECT f.userId
                                                 FROM friend f
-                                                WHERE f.statusId = 1 AND f.friendId = @userId
+                                                WHERE f.statusId = 1 AND f.friendId = @userId AND e.eventName is not null
                                                 )
+                          Group By e.eventName, e.eventDetails, e.date, up.firstName, e.id
+                          Having e.id > 1
                          ORDER BY e.date ASC";
                     DbUtils.AddParameter(cmd, "@userId", userId);
 
@@ -145,10 +149,10 @@ namespace Presnet.Repositories
                             eventName = reader.GetString(reader.GetOrdinal("eventName")),
                             eventDetails = reader.GetString(reader.GetOrdinal("eventDetails")),
                             date = DbUtils.GetDateTime(reader, "date"),
+                            id = DbUtils.GetInt(reader, "id"),
                             UserProfile = new UserProfile()
                             {
-                                firstName = DbUtils.GetString(reader, "firstName"),
-                                lastName = DbUtils.GetString(reader, "lastName")
+                                firstName = DbUtils.GetString(reader, "firstName")
                             }
                         });
                     }

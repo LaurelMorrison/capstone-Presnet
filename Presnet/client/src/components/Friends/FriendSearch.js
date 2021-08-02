@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Table } from "reactstrap";
-import { Container, Row, Card, Button } from "reactstrap";
 import { searchUsers, GetNonFriends } from "../../modules/accountManager";
 import User from "./User"
 import { addFriend } from "../../modules/friendManager";
@@ -41,11 +39,8 @@ const FriendSearch = () => {
 
     return (
         <>
-         <Container className="friendSearch">
-        <Row className="justify-content-center" xs lg = "12">
+        <div className="friendSearch">
         <h1>Add New Friends</h1>
-        </Row>
-        <Row className="justify-content-center">
          <form action="/" method="get">
             <input
                 type="text"
@@ -63,8 +58,7 @@ const FriendSearch = () => {
                    ))}
                 </tbody>
             </Table>
-           </Row>
-        </Container>
+        </div>
    </>
    )
 };

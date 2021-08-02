@@ -38,26 +38,27 @@ const GiftEditForm = () => {
             .then(g => {
                 setupdatedGift(g);
             });
-    }, [])
+    }, [id])
 
     return (
-        <Form>
+        <Form className="giftForm">
             <h2>Edit Gift</h2>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="gift">Gift</Label>
                 <Input type="text" name="gift" id="gift" placeholder="gift"
                     value={updatedGift.gift}
                     onChange={handleInputChange} />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="giftURL">Gift URL</Label>
                 <Input type="text" name="giftURL" id="giftURL" placeholder="URL for gift"
                     value={updatedGift.giftURL}
                     onChange={handleInputChange} />
             </FormGroup>
-
-            <Button className="btn btn-primary" onClick={handleUpdate}>Submit</Button>
-            <Button className="btn btn-primary" onClick={() => history.push(`/userProfile/account`)}>Cancel</Button>
+            <div className="buttonBox">
+            <Button className="button" onClick={handleUpdate}>Submit</Button>
+            <Button className="button" onClick={() => history.push(`/userProfile/account`)}>Cancel</Button>
+            </div>
         </Form>
     );
 

@@ -19,9 +19,7 @@ const Event = ({ event, handleDelete  }) => {
                     <Link to={`/events/edit/${event.id}`}>
                         <Button className="button">Edit</Button>
                     </Link>
-                    <Link>
-                        <Button className="button" onClick={() => handleDelete(event.id)}>Delete</Button>
-                    </Link>
+                    <Button className="button" onClick={() => handleDelete(event.id)}>Delete</Button>
             </CardFooter>
         </Card>
 

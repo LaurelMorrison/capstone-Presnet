@@ -1,7 +1,5 @@
 import React from "react";
-import { Button, CardFooter } from "reactstrap";
-import { Link } from "react-router-dom";
-import { Card, CardBody } from "reactstrap";
+import { Button } from "reactstrap";
 
 const User = ({ user, initFriendRequest }) => {
 

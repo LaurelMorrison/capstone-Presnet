@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router } from "react-router-dom";
 import { Spinner } from "reactstrap";
 import { onLoginStatusChange } from "../../modules/authManager";
 import UserEventList from "./UserEventList";

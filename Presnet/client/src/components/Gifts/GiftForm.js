@@ -34,24 +34,24 @@ const GiftForm = () => {
 
 
     return (
-        <Form>
+        <Form className="giftForm">
             <h2>Add a gift to your wish list:</h2>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="gift">Gift: </Label>
                 <Input type="text" name="gift" id="gift" placeholder="Gift"
                     value={newGift.gift}
                     onChange={handleInputChange} />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="giftURL">Reference URL: </Label>
                 <Input type="text" name="giftURL" id="giftURL" placeholder="URL for gift"
                     value={newGift.giftURL}
                     onChange={handleInputChange} />
             </FormGroup>
-
-            <Button className="btn btn-primary" onClick={handleSave}>Add Gift</Button>
-            <Button className="btn btn-primary" onClick={() => history.push(`/userProfile/account`)}>Cancel</Button>
-
+            <div className="buttonBox">
+            <Button className="button" onClick={handleSave}>Add Gift</Button>
+            <Button className="button" onClick={() => history.push(`/userProfile/account`)}>Cancel</Button>
+            </div>
         </Form>
     );
 };
