@@ -54,7 +54,7 @@ const EventForm = () => {
                     value={newEvent.date}
                     onChange={handleInputChange} />
             </FormGroup>
-        
+
 
             <Button className="button" onClick={handleSave}>Submit</Button>
             <Button className="button" onClick={() => history.push(`/events`)}>Cancel</Button>

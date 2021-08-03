@@ -16,14 +16,14 @@ function App() {
 
 
   if (isLoggedIn === null) {
-    return <Spinner className="app-spinner dark"/>;
+    return <Spinner className="app-spinner dark" />;
   }
 
   return (
     <Router>
-        <Header isLoggedIn={isLoggedIn} />
-        <ApplicationViews isLoggedIn={isLoggedIn} />
-        <Footer isLoggedIn={isLoggedIn} />
+      <Header isLoggedIn={isLoggedIn} />
+      <ApplicationViews isLoggedIn={isLoggedIn} />
+      <Footer isLoggedIn={isLoggedIn} />
     </Router>
   );
 }

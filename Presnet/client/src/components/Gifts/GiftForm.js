@@ -49,8 +49,8 @@ const GiftForm = () => {
                     onChange={handleInputChange} />
             </FormGroup>
             <div className="buttonBox">
-            <Button className="button" onClick={handleSave}>Add Gift</Button>
-            <Button className="button" onClick={() => history.push(`/wishList`)}>Cancel</Button>
+                <Button className="button" onClick={handleSave}>Add Gift</Button>
+                <Button className="button" onClick={() => history.push(`/wishList`)}>Cancel</Button>
             </div>
         </Form>
     );

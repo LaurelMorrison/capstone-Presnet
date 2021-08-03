@@ -12,13 +12,13 @@ const FriendSearch = () => {
         GetNonFriends().then(users => setUsers(users));
     }
 
-    const initFriendRequest = async(user) => {
+    const initFriendRequest = async (user) => {
         await addFriend(user.id)
         getUserList();
-      }
+    }
 
     const handleInputChange = (event) => {
-        const newSearch = {...search}
+        const newSearch = { ...search }
         let selectedVal = event.target.value
         newSearch[event.target.id] = selectedVal
         setSearch(newSearch)
@@ -27,11 +27,11 @@ const FriendSearch = () => {
     const searchAllUsers = (event) => {
         event.preventDefault()
         console.log(search.searchparam)
-        searchUsers(search.searchparam,true)
-        .then(response => {
-            setUsers(response)
-        })
-      }
+        searchUsers(search.searchparam, true)
+            .then(response => {
+                setUsers(response)
+            })
+    }
 
     useEffect(() => {
         getUserList();
@@ -39,28 +39,28 @@ const FriendSearch = () => {
 
     return (
         <>
-        <div className="friendSearch">
-        <h1>Add New Friends</h1>
-         <form action="/" method="get">
-            <input
-                type="text"
-                id="searchparam"
-                placeholder="Search users"
-                name="search"
-                onChange={handleInputChange}
-            />
-           <button className="button" type="submit" onClick={searchAllUsers}>Search</button>
-        </form>
-        <Table>
-             <tbody>
-                 {users.map((user) => (
-                <User user={user} key={user.id} initFriendRequest={initFriendRequest}/>
-                   ))}
-                </tbody>
-            </Table>
-        </div>
-   </>
-   )
+            <div className="friendSearch">
+                <h1>Add New Friends</h1>
+                <form action="/" method="get">
+                    <input
+                        type="text"
+                        id="searchparam"
+                        placeholder="Search users"
+                        name="search"
+                        onChange={handleInputChange}
+                    />
+                    <button className="button" type="submit" onClick={searchAllUsers}>Search</button>
+                </form>
+                <Table>
+                    <tbody>
+                        {users.map((user) => (
+                            <User user={user} key={user.id} initFriendRequest={initFriendRequest} />
+                        ))}
+                    </tbody>
+                </Table>
+            </div>
+        </>
+    )
 };
 
 export default FriendSearch;
