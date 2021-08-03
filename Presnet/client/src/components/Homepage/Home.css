@@ -23,7 +23,10 @@
     line-height: 2em;
     opacity: .98;
 }
-  
+
+.notificationBadge{
+  background-color: #246D82!important;
+}
 .homepage4{
   opacity: .95;
   margin: 0px!important;
