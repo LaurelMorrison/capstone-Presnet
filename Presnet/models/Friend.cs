@@ -8,8 +8,8 @@ namespace Presnet.models
     public class Friend
     {
         public int? id { get; set; }
-        public int userId { get; set; }
-        public int friendId { get; set; }
+        public int? userId { get; set; }
+        public int? friendId { get; set; }
         public int? statusId { get; set; }
         public UserProfile UserProfile { get; set; }
         public UserProfile FriendProfile { get; set; }

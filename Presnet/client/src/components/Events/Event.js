@@ -15,9 +15,9 @@ const Event = ({ event, handleDelete  }) => {
                 <p>{event.eventDetails}</p>
                 <p>{createDateTime}</p>
             </CardBody>
-            <CardFooter className="text-center">
+            <CardFooter className="buttonBox">
                     <Link to={`/events/edit/${event.id}`}>
-                        <Button className="button">Edit</Button>
+                        <Button className="button space">Edit</Button>
                     </Link>
                     <Button className="button" onClick={() => handleDelete(event.id)}>Delete</Button>
             </CardFooter>

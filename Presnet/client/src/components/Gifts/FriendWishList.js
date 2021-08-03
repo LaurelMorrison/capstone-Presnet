@@ -21,13 +21,11 @@ const FriendWishList = () => {
     return (
         <>
         <div className="container">
-            <div className="container">
-                <div className="row m-5 ">
-                    {gifts?.map((gift) => (
+        {!gifts.length ? (<div className="noGiftsMessage">Your friend currently doesnt have any gifts listed, remind them to build a list so you know what to get them!</div>): (
+                    gifts?.map((gift) => (
                         <FriendGift gift={gift} key={gift.id} />
-                    ))}
-                </div>
-            </div>
+                    ))
+        )}
         </div>
         </>
     )

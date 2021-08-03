@@ -34,21 +34,21 @@ const EventForm = () => {
 
 
     return (
-        <Form>
+        <Form className="eventEditForm">
             <h2>Add a New Event</h2>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="eventName">Event Name: </Label>
                 <Input type="text" name="eventName" id="eventName" placeholder="Name"
                     value={newEvent.eventName}
                     onChange={handleInputChange} />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="eventDetails">Details: </Label>
                 <Input type="text" name="eventDetails" id="eventDetails" placeholder="Details"
                     value={newEvent.eventDetails}
                     onChange={handleInputChange} />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="formBox">
                 <Label for="date">Date: </Label>
                 <Input type="date" name="date" id="date" placeholder="Date"
                     value={newEvent.date}
@@ -56,8 +56,8 @@ const EventForm = () => {
             </FormGroup>
         
 
-            <Button className="btn btn-primary" onClick={handleSave}>Submit</Button>
-            <Button className="btn btn-primary" onClick={() => history.push(`/events`)}>Cancel</Button>
+            <Button className="button" onClick={handleSave}>Submit</Button>
+            <Button className="button" onClick={() => history.push(`/events`)}>Cancel</Button>
 
         </Form>
     );

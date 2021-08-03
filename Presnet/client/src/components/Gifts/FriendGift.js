@@ -1,18 +1,19 @@
 import React from "react";
 import { Card, CardBody, } from "reactstrap";
 import { Link } from "react-router-dom";
+import { ExternalLink } from 'react-external-link';
 
 const FriendGift = ({ gift }) => {
 
   return (
-      <>
-        <Card className="col-s-1 m-4 p-1">
-            <CardBody className="card-content">
-                <p><Link to={`${gift.giftURL}`}>{gift.gift}</Link></p>
-            </CardBody>
-        </Card>
+    <>
+      <ul>
+        <li>
+          <ExternalLink href={`${gift.giftURL}`}><p>{gift.gift}</p></ExternalLink>
+        </li>
+      </ul>
 
-      </>
+    </>
   );
 };
 

@@ -33,3 +33,8 @@ card-footer{
     line-height: 2em;
     opacity: .98;    
 }
+
+.noEventsMessage{
+    margin-top: 15px;
+    color: #246D82;
+}

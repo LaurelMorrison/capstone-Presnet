@@ -23,21 +23,23 @@ const UserGiftList = () => {
 
     return (
         <>
-        <Container className="userWishList">
-        <Row className="justify-content-center" >
-                <h1>Your Wish List</h1>
-                <Link to={`/wishList/add`}>
-                    <button className="button" >Add New Gift</button>
-                </Link>
-                <div className="container">
-                    <div className="row m-5 ">
-                    {gifts?.map((gift) => (
-                        <Gift gift={gift} key={gift.id} handleDelete={handleDelete}/>
-                    ))}
+            <Container className="userWishList">
+                <Row className="justify-content-center" >
+                    <h1>Your Wish List</h1>
+                    <Link to={`/wishList/add`}>
+                        <button className="button" >Add New Gift</button>
+                    </Link>
+                    <div className="container">
+                        <div className="row m-5 ">
+                            {!gifts.length ? (<div className="noGiftsMessage">You currently dont have any gifts on your wishlist, add some today!</div>) : (
+                                gifts?.map((gift) => (
+                                    <Gift gift={gift} key={gift.id} handleDelete={handleDelete} />
+                                ))
+                            )}
+                        </div>
                     </div>
-                </div>
                 </Row>
-        </Container>
+            </Container>
         </>
     )
 };

@@ -24,18 +24,18 @@ const AccountProfileForm = () => {
 
     const getFavoriteColors = () => {
         return GetAllColors()
-        .then(colorsFromAPI => {
-            setFavoriteColors(colorsFromAPI)
-        })
-      }   
-    
-      const getClothingSizes = () => {
+            .then(colorsFromAPI => {
+                setFavoriteColors(colorsFromAPI)
+            })
+    }
+
+    const getClothingSizes = () => {
         return GetAllSizes()
-        .then(sizesFromAPI => {
-            setClothingSize(sizesFromAPI)
-         })
-      }   
-    
+            .then(sizesFromAPI => {
+                setClothingSize(sizesFromAPI)
+            })
+    }
+
 
 
     const handleUpdate = (evt) => {
@@ -126,8 +126,8 @@ const AccountProfileForm = () => {
                 </select>
             </FormGroup>
             <div className="buttonBox">
-            <Button className="button space" onClick={handleUpdate}>Submit</Button>
-            <Button className="button" onClick={() => history.push(`/userProfile/account`)}>Cancel</Button>
+                <Button className="button space" onClick={handleUpdate}>Submit</Button>
+                <Button className="button" onClick={() => history.push(`/userProfile/account`)}>Cancel</Button>
             </div>
         </Form>
     );

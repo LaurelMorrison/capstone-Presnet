@@ -33,10 +33,12 @@ const UserEventList = () => {
                 </Link>
         </Row>
         <Row className="eventCard2" >
-                    <div className="eventMap ">
-                    {events?.map((event) => (
+                    <div className="eventMap ">                
+                    {!events.length ? (<div className="noEventsMessage">You currently don't have any events, add an event today!</div>): (
+                    events?.map((event) => (
                         <Event event={event} key={event.id} handleDelete={handleDelete}/>
-                    ))}
+                    ))
+                    )}
                     </div>
         </Row>
          </Container>

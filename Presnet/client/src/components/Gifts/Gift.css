@@ -29,3 +29,8 @@
     line-height: 2em;
     opacity: .98;     
 }
+
+.noGiftsMessage{
+    margin-top: 15px;
+    color: #246D82;
+}

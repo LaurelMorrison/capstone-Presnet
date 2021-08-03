@@ -50,7 +50,7 @@ const GiftForm = () => {
             </FormGroup>
             <div className="buttonBox">
             <Button className="button" onClick={handleSave}>Add Gift</Button>
-            <Button className="button" onClick={() => history.push(`/userProfile/account`)}>Cancel</Button>
+            <Button className="button" onClick={() => history.push(`/wishList`)}>Cancel</Button>
             </div>
         </Form>
     );

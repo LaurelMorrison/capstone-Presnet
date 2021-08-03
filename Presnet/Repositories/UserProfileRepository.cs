@@ -99,11 +99,15 @@ namespace Presnet.Repositories
                         cmd.CommandText = @"
                             SELECT up.id, Up.firebaseUserId, up.firstName, up.lastName, up.email, up.address, up.createdTime, 
                                    up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size as clothingSize, fc.color as favoriteColor,
-                                   , cs.id as sizeId, fc.id as colorId                            
+                                   cs.id as sizeId, fc.id as colorId                            
                             FROM UserProfile up
                             LEFT JOIN clothingSize cs ON cs.id = up.clothingSizeId
                             LEFT JOIN favoriteColor fc ON fc.id = up.favoriteColorId
-                            ORDER BY firstName";
+                            Group By up.id, Up.firebaseUserId, up.firstName, up.lastName, up.email, up.address, up.createdTime, 
+                                   up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size, fc.color,
+                                   cs.id, fc.id 
+                          Having up.id > 1
+                         ORDER BY up.firstName";
 
                         var reader = cmd.ExecuteReader();
 
@@ -149,10 +153,10 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            Select up.firstName, up.lastName, up.id, f.statusId
+                            Select distinct up.firstName, up.lastName, up.id, f.statusId, f.friendId, f.userId
                                 FROM userProfile up
                                 LEFT JOIN friend f ON f.friendId = up.id
-                                WHERE up.id != @id AND up.id != 1 AND up.id NOT IN (
+                                WHERE up.id != @id AND up.id != 1 AND (up.id NOT IN (
                             SELECT f.friendId
                                 FROM friend f
                                 WHERE (f.statusId = 1 OR f.statusId = 2) AND f.UserId = @id
@@ -160,7 +164,8 @@ namespace Presnet.Repositories
                             SELECT f.userId
                                 FROM friend f
                                 WHERE f.friendId = @id
-                                  )";
+                                  )) AND (f.friendId = @id OR f.userId = @id OR f.userId is null)                         
+                         ORDER BY up.firstName";
                     DbUtils.AddParameter(cmd, "@id", id);
                     var reader = cmd.ExecuteReader();
 
@@ -192,11 +197,10 @@ namespace Presnet.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"Select up.firstName, up.lastName, up.id, f.id as friendStatusId, 
-                                        f.statusId
+                    cmd.CommandText = @"Select distinct up.firstName, up.lastName, up.id, f.statusId
                                         FROM userProfile up
-                                        LEFT JOIN friend f ON f.userId = up.id
-                                        WHERE up.id IN (
+                                        JOIN friend f ON f.userId = up.id OR f.friendId = up.id
+                                        WHERE (up.id IN (
                                                 SELECT f.friendId
                                                 FROM friend f
                                                 WHERE f.statusId = 1 AND f.userId = @id
@@ -205,8 +209,11 @@ namespace Presnet.Repositories
                                                 OR up.id IN (
                                                 SELECT f.userId
                                                 FROM friend f
-                                                WHERE f.statusId = 1 AND f.friendId = @id
-                                                )";
+                                                WHERE f.statusId = 1 AND f.friendId = @id 
+                                                ))
+                                                AND f.statusId = 1 AND (
+                                                f.friendId = @id OR f.userId = @id)
+                                                ORDER BY up.firstName";
 
                     DbUtils.AddParameter(cmd, "@id", id);
                     var reader = cmd.ExecuteReader();
@@ -221,7 +228,6 @@ namespace Presnet.Repositories
                             lastName = DbUtils.GetString(reader, "lastName"),
                             Friend = new Friend()
                             {
-                                id = DbUtils.GetNullableInt(reader, "friendStatusId"),
                                 statusId = DbUtils.GetNullableInt(reader, "statusId")
                             }
                         });
@@ -325,7 +331,7 @@ namespace Presnet.Repositories
             }
         }
 
-        public List<UserProfile> Search(string criterion)
+        public List<UserProfile> Search(string criterion, int id)
         {
             using (var conn = Connection)
             {
@@ -333,13 +339,17 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     var sql = @"
-                            SELECT up.id, up.firstName, up.lastName, up.email, up.address, up.age, 
-                                   up.shoeSize, up.clothingSizeId, up.favoriteColorId
+                            SELECT distinct up.id, up.firstName, up.lastName, up.email, up.address, up.age, 
+                                   up.shoeSize, up.clothingSizeId, up.favoriteColorId, f.friendId, f.userId, f.statusId
                             FROM userProfile up
-                           WHERE up.firstName LIKE @Criterion OR up.lastName LIKE @Criterion";
+                            LEFT JOIN friend f on up.id = f.userId OR up.id = f.friendId
+                           WHERE (up.firstName LIKE @Criterion OR up.lastName LIKE @Criterion) AND (f.statusId = 2 OR f.statusId =3 or f.statusId is null)
+                           AND (f.friendId = @id or f.userId = @id or f.userId is null) AND (up.id != @id)
+                         ORDER BY up.firstName";
 
                     cmd.CommandText = sql;
                     DbUtils.AddParameter(cmd, "@Criterion", $"%{criterion}%");
+                    DbUtils.AddParameter(cmd, "@id", id);
                     var reader = cmd.ExecuteReader();
 
                     var users = new List<UserProfile>();
@@ -355,7 +365,13 @@ namespace Presnet.Repositories
                             age = DbUtils.GetInt(reader, "age"),
                             shoeSize = DbUtils.GetInt(reader, "shoeSize"),
                             clothingSizeId = DbUtils.GetInt(reader, "clothingSizeId"),
-                            favoriteColorId = DbUtils.GetInt(reader, "favoriteColorId")                        
+                            favoriteColorId = DbUtils.GetInt(reader, "favoriteColorId"),
+                            Friend = new Friend()
+                            {
+                                userId = DbUtils.GetNullableInt(reader, "userId"),
+                                friendId = DbUtils.GetNullableInt(reader, "friendId"),
+                                statusId = DbUtils.GetNullableInt(reader, "statusId")
+                            }
                         });
                     }
 
