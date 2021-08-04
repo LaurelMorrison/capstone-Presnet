@@ -15,22 +15,22 @@ namespace Presnet
     public class Program
     {
         static void Main(string[] args)
-        { 
+        {
             DotEnv.Load();
             var envVars = DotEnv.Read();
 
-            string accountSid = envVars["TWILIO_ACCOUNT_SID"];
-            string authToken = envVars["TWILIO_AUTH_TOKEN"];
+            //string accountSid = envVars["TWILIO_ACCOUNT_SID"];
+            //string authToken = envVars["TWILIO_AUTH_TOKEN"];
 
-            TwilioClient.Init(accountSid, authToken);
+            //TwilioClient.Init(accountSid, authToken);
 
-            var message = MessageResource.Create(
-                body: "Join Earth's mightiest heroes. Like Kevin Bacon.",
-                from: new Twilio.Types.PhoneNumber("+12673100869"),
-                to: new Twilio.Types.PhoneNumber("+18045485318")
-            );
+            //var message = MessageResource.Create(
+            //    body: "Join Earth's mightiest heroes. Like Kevin Bacon.",
+            //    from: new Twilio.Types.PhoneNumber("+"),
+            //    to: new Twilio.Types.PhoneNumber("+")
+            //);
 
-            Console.WriteLine(message.Sid);
+            //Console.WriteLine(message.Sid);
 
             CreateHostBuilder(args).Build().Run();
 
