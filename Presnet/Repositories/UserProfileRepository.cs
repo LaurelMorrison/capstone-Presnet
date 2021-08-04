@@ -153,9 +153,9 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            Select distinct up.firstName, up.lastName, up.id
+                              Select up.firstName, up.lastName, up.id, f.statusId
                                 FROM userProfile up
-                                LEFT JOIN friend f ON f.friendId = up.id
+                                LEFT JOIN friend f ON f.friendId = up.id AND f.userId = @id
                                 WHERE up.id != @id AND up.id != 1 AND (up.id NOT IN (
                             SELECT f.friendId
                                 FROM friend f
@@ -164,8 +164,8 @@ namespace Presnet.Repositories
                                  AND up.id NOT IN (
                             SELECT f.userId
                                 FROM friend f
-                                WHERE (f.statusId = 1 OR f.statusId = 2) AND f.friendId = @id
-                                  )) OR (f.friendId = @id AND f.userId = @id) AND up.id != 1 
+                                WHERE f.friendId = @id
+                                  ))                         
                          ORDER BY up.firstName";
                     DbUtils.AddParameter(cmd, "@id", id);
                     var reader = cmd.ExecuteReader();

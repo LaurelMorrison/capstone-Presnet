@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
-    Collapse, Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Badge
+    Collapse, Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Badge,
 } from 'reactstrap';
 import { logout } from "../../modules/authManager";
 import Logo from "../../Images/Logo.png";
