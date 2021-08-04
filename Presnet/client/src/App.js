@@ -6,6 +6,7 @@ import Header from "./components/Nav/Header";
 import Footer from "./components/Nav/Footer";
 import ApplicationViews from "./components/ApplicationViews";
 import { onLoginStatusChange } from "./modules/authManager";
+import { FriendRequestProvider } from "./modules/useFriendRequest";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -21,9 +22,11 @@ function App() {
 
   return (
     <Router>
-      <Header isLoggedIn={isLoggedIn} />
-      <ApplicationViews isLoggedIn={isLoggedIn} />
-      <Footer isLoggedIn={isLoggedIn} />
+      <FriendRequestProvider>
+        <Header isLoggedIn={isLoggedIn} />
+        <ApplicationViews isLoggedIn={isLoggedIn} />
+        <Footer isLoggedIn={isLoggedIn} />
+      </FriendRequestProvider>
     </Router>
   );
 }

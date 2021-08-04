@@ -20,7 +20,7 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT up.id, up.firebaseUserId, up.firstName, up.lastName, up.email, up.address, up.createdTime, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size, fc.color
+                        SELECT up.id, up.firebaseUserId, up.firstName, up.lastName, up.email, up.mobilePhone, up.address, up.createdTime, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size, fc.color
                           FROM UserProfile up
                             LEFT JOIN clothingSize cs ON cs.id = up.clothingSizeId
                             LEFT JOIN favoriteColor fc ON fc.id = up.favoriteColorId
