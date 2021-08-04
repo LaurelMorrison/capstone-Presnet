@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
     Collapse, Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Badge
 } from 'reactstrap';
 import { logout } from "../../modules/authManager";
 import Logo from "../../Images/Logo.png";
-import { GetFriendRequest} from "../../modules/friendManager"
+import { useFriendRequests} from "../../modules/useFriendRequest";
 
 export default function Header({ isLoggedIn }) {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
+    const {countFriendRequests} = useFriendRequests();
 
-    const countFriendRequests = GetFriendRequest().length;
 
     return (
         <div>
@@ -26,7 +26,9 @@ export default function Header({ isLoggedIn }) {
                                     <NavLink tag={RRNavLink} to="/userProfile/account"> My Account</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/Friends" > Friends <Badge className="notificationBadge">{countFriendRequests}</Badge></NavLink>
+                                    <NavLink tag={RRNavLink} to="/Friends" > Friends 
+                                    {!!countFriendRequests&&<Badge className="notificationBadge">{countFriendRequests}</Badge>}
+                                    </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/Events"> Events</NavLink>

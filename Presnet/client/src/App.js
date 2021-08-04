@@ -6,6 +6,7 @@ import Header from "./components/Nav/Header";
 import Footer from "./components/Nav/Footer";
 import ApplicationViews from "./components/ApplicationViews";
 import { onLoginStatusChange } from "./modules/authManager";
+import { FriendRequestProvider } from "./modules/useFriendRequest";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -16,14 +17,16 @@ function App() {
 
 
   if (isLoggedIn === null) {
-    return <Spinner className="app-spinner dark"/>;
+    return <Spinner className="app-spinner dark" />;
   }
 
   return (
     <Router>
+      <FriendRequestProvider>
         <Header isLoggedIn={isLoggedIn} />
         <ApplicationViews isLoggedIn={isLoggedIn} />
         <Footer isLoggedIn={isLoggedIn} />
+      </FriendRequestProvider>
     </Router>
   );
 }

@@ -3,38 +3,35 @@ import { Table } from "reactstrap";
 import Friend from "./Friend"
 import { GetAllFriends } from "../../modules/accountManager";
 import FriendRequest from "./FriendRequest";
-import { GetFriendRequest, acceptFriendRequest, rejectFriendRequest } from "../../modules/friendManager"
+import { acceptFriendRequest, rejectFriendRequest } from "../../modules/friendManager"
 import { Container, Row } from "reactstrap";
 import "./friend.css"
+import { useFriendRequests} from "../../modules/useFriendRequest";
 
 const FriendList = () => {
     const [friends, setFriends] = useState([]);
-    const [friendRequests, setFriendRequests] = useState([]);
+    const {friendRequests, loadFriendRequests} = useFriendRequests();
     const [isDeleted, setIsDeleted] = useState(false);
 
     const getFriends = () => {
         GetAllFriends().then(friends => setFriends(friends));
     }
 
-    const getFriendRequests = () => {
-        GetFriendRequest().then(friendRequests => setFriendRequests(friendRequests));
-    }
-
     const acceptFriendAndRefresh = async (friendRequestId) => {
         await acceptFriendRequest(friendRequestId)
         getFriends();
-        getFriendRequests();
+        loadFriendRequests();
     }
 
     const rejectFriendAndRefresh = async (friendRequestId) => {
         await rejectFriendRequest(friendRequestId)
         getFriends();
-        getFriendRequests();
+        loadFriendRequests();
     }
 
     useEffect(() => {
         getFriends();
-        getFriendRequests();
+        loadFriendRequests();
     }, [isDeleted])
 
     return (
