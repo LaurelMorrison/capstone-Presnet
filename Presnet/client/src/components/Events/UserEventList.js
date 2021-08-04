@@ -23,25 +23,25 @@ const UserEventList = () => {
 
     return (
         <>
-        <Container>
-        <Row className="eventCard1 justify-content-left">
-             <div className="eventHeader ">
-                    <h1>Your Events</h1>
-                </div>
-                <Link to={`/events/add`}>
-                    <button className="button" >Add a New Event</button>
-                </Link>
-        </Row>
-        <Row className="eventCard2" >
-                    <div className="eventMap ">                
-                    {!events.length ? (<div className="noEventsMessage">You currently don't have any events, add an event today!</div>): (
-                    events?.map((event) => (
-                        <Event event={event} key={event.id} handleDelete={handleDelete}/>
-                    ))
-                    )}
+            <Container>
+                <Row className="eventCard1 justify-content-left">
+                    <div className="eventHeader ">
+                        <h1>Your Events</h1>
                     </div>
-        </Row>
-         </Container>
+                    <Link to={`/events/add`}>
+                        <button className="button" >Add a New Event</button>
+                    </Link>
+                </Row>
+                <Row className="eventCard2" >
+                    <div className="eventMap ">
+                        {!events.length ? (<div className="noEventsMessage">You currently don't have any events, add an event today!</div>) : (
+                            events?.map((event) => (
+                                <Event event={event} key={event.id} handleDelete={handleDelete} />
+                            ))
+                        )}
+                    </div>
+                </Row>
+            </Container>
         </>
     )
 };

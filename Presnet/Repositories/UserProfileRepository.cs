@@ -20,7 +20,7 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT up.id, up.firebaseUserId, up.firstName, up.lastName, up.email, up.address, up.createdTime, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size, fc.color
+                        SELECT up.id, up.firebaseUserId, up.firstName, up.lastName, up.email, up.mobilePhone, up.address, up.createdTime, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size, fc.color
                           FROM UserProfile up
                             LEFT JOIN clothingSize cs ON cs.id = up.clothingSizeId
                             LEFT JOIN favoriteColor fc ON fc.id = up.favoriteColorId
@@ -160,7 +160,8 @@ namespace Presnet.Repositories
                             SELECT f.friendId
                                 FROM friend f
                                 WHERE (f.statusId = 1 OR f.statusId = 2) AND f.UserId = @id
-                                 ) AND up.id NOT IN (
+                                 )
+                                 AND up.id NOT IN (
                             SELECT f.userId
                                 FROM friend f
                                 WHERE f.friendId = @id
@@ -179,7 +180,7 @@ namespace Presnet.Repositories
                             lastName = DbUtils.GetString(reader, "lastName"),
                             Friend = new Friend()
                             {
-                                statusId = DbUtils.GetNullableInt(reader, "statusId")
+                                id = DbUtils.GetNullableInt(reader, "id")
                             }
                         });
                     }

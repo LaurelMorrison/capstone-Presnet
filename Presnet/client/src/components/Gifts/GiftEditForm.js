@@ -56,8 +56,8 @@ const GiftEditForm = () => {
                     onChange={handleInputChange} />
             </FormGroup>
             <div className="buttonBox">
-            <Button className="button" onClick={handleUpdate}>Submit</Button>
-            <Button className="button" onClick={() => history.push(`/wishList`)}>Cancel</Button>
+                <Button className="button" onClick={handleUpdate}>Submit</Button>
+                <Button className="button" onClick={() => history.push(`/wishList`)}>Cancel</Button>
             </div>
         </Form>
     );
