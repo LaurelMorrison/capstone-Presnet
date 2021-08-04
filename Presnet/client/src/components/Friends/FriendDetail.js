@@ -21,31 +21,31 @@ const FriendDetails = () => {
 
     return (
         <>
-        <div>
-            <Card className="userCard m-4">
-                <h1>Let's celebrate {friend.friendProfile.firstName}</h1>
-                <p className="text-left px-2">Name: {friend.friendProfile.fullName}</p>
-                <p className="text-left px-2">Email: {friend.friendProfile.email}</p>
-                <p className="text-left px-2">Address: {friend.friendProfile.address}</p>
-                <p className="text-left px-2">Age: {friend.friendProfile.age}</p>
-                <p className="text-left px-2">Shoe Size: {friend.friendProfile.shoeSize}</p>
-                <p className="text-left px-2">Favorite Color: {friend.favoriteColor.color}</p>
-                <p className="text-left px-2">Clothing Size: {friend.clothingSize.size}</p>
-                <Link className="a" to={`/friends`}><Button className="button">Back to Friend List</Button></Link>
+            <div>
+                <Card className="userCard m-4">
+                    <h1>Let's celebrate {friend.friendProfile.firstName}</h1>
+                    <p className="text-left px-2">Name: {friend.friendProfile.fullName}</p>
+                    <p className="text-left px-2">Email: {friend.friendProfile.email}</p>
+                    <p className="text-left px-2">Address: {friend.friendProfile.address}</p>
+                    <p className="text-left px-2">Age: {friend.friendProfile.age}</p>
+                    <p className="text-left px-2">Shoe Size: {friend.friendProfile.shoeSize}</p>
+                    <p className="text-left px-2">Favorite Color: {friend.favoriteColor.color}</p>
+                    <p className="text-left px-2">Clothing Size: {friend.clothingSize.size}</p>
+                    <Link className="a" to={`/friends`}><Button className="button">Back to Friend List</Button></Link>
 
-            </Card>
-        </div>
-        {/* <div className="friendsEventCallout">
+                </Card>
+            </div>
+            {/* <div className="friendsEventCallout">
             <h1>{friend.friendProfile.firstName}'s Events</h1>
              <FriendEventList />
         </div> */}
-        <div>
-        <div className="friendsWishListCallout">
-            <h1>Wish List</h1>
-            <p>Need an idea on what to get? Check out their wish list to get the perfect gift!</p>
-            <FriendWishList />
-        </div>
-        </div>
+            <div>
+                <div className="friendsWishListCallout">
+                    <h1>Wish List</h1>
+                    <p>Need an idea on what to get? Check out their wish list to get the perfect gift!</p>
+                    <FriendWishList />
+                </div>
+            </div>
         </>
     );
 };

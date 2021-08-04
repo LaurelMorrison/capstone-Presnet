@@ -73,12 +73,12 @@ const EventEditForm = () => {
             <FormGroup className="formBox">
                 <Label for="date">Date</Label>
                 <Input type="date" name="date" id="date" placeholder="date"
-                    defaultValue={momentDateFixer(updatedEvent)} value={updatedEvent.date} 
-                    format="YYYY-MM-DD" onChange={handleDate}  />
+                    defaultValue={momentDateFixer(updatedEvent)} value={updatedEvent.date}
+                    format="YYYY-MM-DD" onChange={handleDate} />
             </FormGroup>
             <div className="buttonBox">
-            <Button className="button" onClick={handleUpdate}>Submit</Button>
-            <Button className="button" onClick={() => history.push(`/events`)}>Cancel</Button>
+                <Button className="button" onClick={handleUpdate}>Submit</Button>
+                <Button className="button" onClick={() => history.push(`/events`)}>Cancel</Button>
             </div>
         </Form>
     );
