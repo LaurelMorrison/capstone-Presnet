@@ -8,7 +8,7 @@ const Gift = ({ gift, handleDelete  }) => {
       <>
         <Card className="giftCard col-s-1 m-4 p-1">
             <CardBody className="card-content">
-                <p><Link to={`${gift.giftURL}`}>{gift.gift}</Link></p>
+                <p><a href={`${gift.giftURL}`} target="_blank">{gift.gift}</a></p>
             </CardBody>
             <CardFooter className="cardFooter text-center">
                     <Link to={`/wishlist/edit/${gift.id}`}>

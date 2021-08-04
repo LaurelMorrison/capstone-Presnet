@@ -5,23 +5,23 @@ import UserEventList from "./UserEventList";
 import FriendEventList from "./FriendsEventList";
 
 function EventPage() {
-    const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
 
-    useEffect(() => {
-      onLoginStatusChange(setIsLoggedIn);
-    }, []);
-  
-  
-    if (isLoggedIn === null) {
-      return <Spinner className="app-spinner dark"/>;
-    }
-  
-    return (
-      <>
-          <UserEventList isLoggedIn={isLoggedIn} />
-          <FriendEventList isLoggedIn={isLoggedIn} />
-      </>
-    )
+  useEffect(() => {
+    onLoginStatusChange(setIsLoggedIn);
+  }, []);
+
+
+  if (isLoggedIn === null) {
+    return <Spinner className="app-spinner dark" />;
+  }
+
+  return (
+    <>
+      <UserEventList isLoggedIn={isLoggedIn} />
+      <FriendEventList isLoggedIn={isLoggedIn} />
+    </>
+  )
 };
 
 export default EventPage;

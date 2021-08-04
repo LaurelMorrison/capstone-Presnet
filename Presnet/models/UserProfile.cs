@@ -27,6 +27,11 @@ namespace Presnet.models
         [MaxLength(255)]
         public string email { get; set; }
 
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [MaxLength(50)]
+        public string mobilePhone { get; set; }
+
         public string address { get; set; }
         public DateTime createdTime { get; set; }
         public int age { get; set; }

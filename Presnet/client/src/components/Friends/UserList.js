@@ -16,23 +16,23 @@ const UserList = () => {
 
     return (
         <>
-        <div className="container">
-            <div className="row justify-content-center">
-             <Table>
-             <thead>
-               <tr>
-                    <th>Grow Your Network</th>
-                </tr>
-             </thead>
-             <tbody>
-                    {users?.map((user) => (
-                        <User user={user} key={user.Id} />
-                    ))}
+            <div className="container">
+                <div className="row justify-content-center">
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>Grow Your Network</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users?.map((user) => (
+                                <User user={user} key={user.Id} />
+                            ))}
 
-                </tbody>
-            </Table>
+                        </tbody>
+                    </Table>
+                </div>
             </div>
-        </div>
         </>
     )
 };

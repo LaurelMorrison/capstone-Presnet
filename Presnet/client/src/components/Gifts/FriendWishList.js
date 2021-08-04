@@ -13,20 +13,21 @@ const FriendWishList = () => {
     }
 
     useEffect(() => {
-        if (friendId){
+        if (friendId) {
             console.log(friendId);
-        getFriendWishList(friendId);}
+            getFriendWishList(friendId);
+        }
     }, [friendId])
 
     return (
         <>
-        <div className="container">
-        {!gifts.length ? (<div className="noGiftsMessage">Your friend currently doesnt have any gifts listed, remind them to build a list so you know what to get them!</div>): (
+            <div className="container">
+                {!gifts.length ? (<div className="noGiftsMessage">Your friend currently doesnt have any gifts listed, remind them to build a list so you know what to get them!</div>) : (
                     gifts?.map((gift) => (
                         <FriendGift gift={gift} key={gift.id} />
                     ))
-        )}
-        </div>
+                )}
+            </div>
         </>
     )
 };

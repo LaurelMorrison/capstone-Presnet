@@ -9,7 +9,7 @@ const UpcomingEventList = () => {
     const [upcomingevents, setUpcomingEvents] = useState([]);
 
     const getUpcomingEvents = () => {
-        GetUpcomingEvents().then(upcomingevents => setUpcomingEvents(upcomingevents.slice(0,5)));
+        GetUpcomingEvents().then(upcomingevents => setUpcomingEvents(upcomingevents.slice(0, 5)));
     }
 
 
@@ -19,26 +19,26 @@ const UpcomingEventList = () => {
 
     return (
         <>
-        <Container>
-        <Row className="eventCard2" >
-            <Table>
-                 <thead>
-                    <tr>
-                    <th>Event</th>
-                    <th>Date</th>
-                    <th>Friend</th>
-                    <th>Details</th>
-                    </tr>
-                </thead>
+            <Container>
+                <Row className="eventCard2" >
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Date</th>
+                                <th>Friend</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
 
-                <tbody>
-                    {upcomingevents?.map((event) => (
-                        <UpcomingEvent event={event} key={event.id} />
-                    ))}
-                </tbody>
-            </Table>
-        </Row>
-         </Container>
+                        <tbody>
+                            {upcomingevents?.map((event) => (
+                                <UpcomingEvent event={event} key={event.id} />
+                            ))}
+                        </tbody>
+                    </Table>
+                </Row>
+            </Container>
         </>
     )
 };

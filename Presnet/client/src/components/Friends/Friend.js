@@ -10,20 +10,20 @@ const Friend = ({ friend, setIsDeleted, isDeleted }) => {
   const handleDelete = (id) => {
     console.log(friend)
     if (window.confirm('Are you sure you want to unfriend?')) {
-        deleteFriend(id).then(() => {
-            setIsDeleted(!isDeleted)
-            history.push(`/friends`);
-        });
+      deleteFriend(id).then(() => {
+        setIsDeleted(!isDeleted)
+        history.push(`/friends`);
+      });
     }
-}
+  }
 
   return (
     <tr>
-          <td><p className="friendCard">{friend.fullName}</p></td>
-          <td>
-          <Link to={`/friend/getbyid/${friend.id}`}><Button className="button space">Details</Button></Link>
-          <Button className="button" onClick={() =>handleDelete(friend.id)}>Unfriend</Button>
-        </td>
+      <td><p className="friendCard">{friend.fullName}</p></td>
+      <td>
+        <Link to={`/friend/getbyid/${friend.id}`}><Button className="button space">Details</Button></Link>
+        <Button className="button" onClick={() => handleDelete(friend.id)}>Unfriend</Button>
+      </td>
     </tr>
   );
 };
