@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
-    Collapse, Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler
+    Collapse, Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Badge,
 } from 'reactstrap';
 import { logout } from "../../modules/authManager";
 import Logo from "../../Images/Logo.png";
@@ -23,7 +23,7 @@ export default function Header({ isLoggedIn }) {
                                     <NavLink tag={RRNavLink} to="/userProfile/account"> My Account</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/Friends"> Friends</NavLink>
+                                    <NavLink tag={RRNavLink} to="/Friends"> Friends <Badge>1</Badge></NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/Events"> Events</NavLink>

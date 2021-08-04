@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using dotenv.net;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace Presnet
 {
@@ -13,7 +16,24 @@ namespace Presnet
     {
         static void Main(string[] args)
         { 
+            DotEnv.Load();
+            var envVars = DotEnv.Read();
+
+            string accountSid = envVars["TWILIO_ACCOUNT_SID"];
+            string authToken = envVars["TWILIO_AUTH_TOKEN"];
+
+            TwilioClient.Init(accountSid, authToken);
+
+            var message = MessageResource.Create(
+                body: "Join Earth's mightiest heroes. Like Kevin Bacon.",
+                from: new Twilio.Types.PhoneNumber("+12673100869"),
+                to: new Twilio.Types.PhoneNumber("+18045485318")
+            );
+
+            Console.WriteLine(message.Sid);
+
             CreateHostBuilder(args).Build().Run();
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
