@@ -7,10 +7,10 @@ const UpcomingEvent = ({ event }) => {
 
   return (
     <>
-      <tr>
+      <tr className="upcomingEventTable">
         <td><p>{event.eventName}</p></td>
         <td><p>{createDateTime}</p></td>
-        <td>{event.userId === 1 ? ("") : (
+        <td>{event.userId == 1 ? ("") : (
         <p>{event.userProfile.firstName}</p>)}</td>
         <td><p>{event.eventDetails}</p></td>
       </tr>

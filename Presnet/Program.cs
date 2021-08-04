@@ -16,8 +16,11 @@ namespace Presnet
     {
         static void Main(string[] args)
         {
-            DotEnv.Load();
-            var envVars = DotEnv.Read();
+
+            CreateHostBuilder(args).Build().Run();
+
+            //    DotEnv.Load();
+            //    var envVars = DotEnv.Read();
 
             //string accountSid = envVars["TWILIO_ACCOUNT_SID"];
             //string authToken = envVars["TWILIO_AUTH_TOKEN"];
@@ -31,8 +34,6 @@ namespace Presnet
             //);
 
             //Console.WriteLine(message.Sid);
-
-            CreateHostBuilder(args).Build().Run();
 
         }
 

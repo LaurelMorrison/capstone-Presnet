@@ -44,10 +44,9 @@ code {
 }
 
 .footer{
-  background-color: #F0F0E6;
+  background-color: #D08C6C;
   opacity: .95;
-  color: #246D82;
-  position: fixed;
+  color: #F0F0E6;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -66,4 +65,26 @@ code {
 
 .navbar-light .navbar-toggler{
   border: none!important;
+}
+
+tbody, td, tfoot, th, thead, tr {
+  border-color: #F0CCC6!important;
+ border-style: solid;
+ text-overflow: ellipsis; 
+}
+
+p{
+  text-overflow: ellipsis!important; 
+  overflow: hidden;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .homepageImage1 {
+    position: relative!important;
+  }
+
+  .homepageImage2 {
+    display: none!important;
+  }
 }

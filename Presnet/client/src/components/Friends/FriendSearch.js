@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "reactstrap";
+import { Table, Container, Row  } from "reactstrap";
 import { searchUsers, GetNonFriends } from "../../modules/accountManager";
 import User from "./User"
 import { addFriend } from "../../modules/friendManager";
@@ -39,6 +39,8 @@ const FriendSearch = () => {
 
     return (
         <>
+        <Container>
+                <Row className="friendList justify-content-center">
             <div className="friendSearch">
                 <h1>Add New Friends</h1>
                 <form action="/" method="get">
@@ -58,7 +60,10 @@ const FriendSearch = () => {
                         ))}
                     </tbody>
                 </Table>
+                
             </div>
+            </Row>
+            </Container>
         </>
     )
 };
