@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
 import { updateUser, GetCurrentUserAccount } from "../../modules/accountManager";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { GetAllColors } from "../../modules/favoriteColorManager";
@@ -10,7 +10,6 @@ const AccountProfileForm = () => {
     const [favoriteColor, setFavoriteColors] = useState([]);
     const [clothingSize, setClothingSize] = useState([]);
     const history = useHistory();
-    const { id } = useParams();
 
     const handleInputChange = (evt) => {
         const value = evt.target.value;
@@ -48,6 +47,7 @@ const AccountProfileForm = () => {
             lastName: editUser.lastName,
             address: editUser.address,
             email: editUser.email,
+            mobilePhone: editUser.mobilePhone,
             age: editUser.age,
             shoeSize: editUser.shoeSize,
             clothingSizeId: editUser.clothingSizeId,
@@ -93,6 +93,12 @@ const AccountProfileForm = () => {
                 <Label for="email">Email:</Label>
                 <Input type="text" name="email" id="email" placeholder="email"
                     value={editUser.email}
+                    onChange={handleInputChange} />
+            </FormGroup>
+            <FormGroup className="formBox">
+                <Label for="mobilePhone">Mobile Phone:</Label>
+                <Input type="tel" name="mobilePhone" id="mobilePhone" placeholder="mobilePhone"
+                    value={editUser.mobilePhone}
                     onChange={handleInputChange} />
             </FormGroup>
             <FormGroup className="formBox">

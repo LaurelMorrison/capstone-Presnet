@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Container, Row  } from "reactstrap";
+import { Table, Container, Row } from "reactstrap";
 import { searchUsers, GetNonFriends } from "../../modules/accountManager";
 import User from "./User"
 import { addFriend } from "../../modules/friendManager";
@@ -39,30 +39,32 @@ const FriendSearch = () => {
 
     return (
         <>
-        <Container>
+            <Container>
                 <Row className="friendList justify-content-center">
-            <div className="friendSearch">
-                <h1>Add New Friends</h1>
-                <form action="/" method="get">
-                    <input
-                        type="text"
-                        id="searchparam"
-                        placeholder="Search users"
-                        name="search"
-                        onChange={handleInputChange}
-                    />
-                    <button className="button" type="submit" onClick={searchAllUsers}>Search</button>
-                </form>
-                <Table>
-                    <tbody>
-                        {users.map((user) => (
-                            <User user={user} key={user.id} initFriendRequest={initFriendRequest} />
-                        ))}
-                    </tbody>
-                </Table>
-                
-            </div>
-            </Row>
+                    <div className="friendSearch">
+                        <h1>Add New Friends</h1>
+                        <form action="/" method="get">
+                            <input
+                                type="text"
+                                id="searchparam"
+                                placeholder="Search users"
+                                name="search"
+                                onChange={handleInputChange}
+                            />
+                            <button className="button" type="submit" onClick={searchAllUsers}>Search</button>
+                        </form>
+                        <Table>
+                            <tbody>
+                                {!users.length ? ("No matches, try another name.") : (
+                                    users.map((user) => (
+                                        <User user={user} key={user.id} initFriendRequest={initFriendRequest} />
+                                    ))
+                                )}
+                            </tbody>
+                        </Table>
+
+                    </div>
+                </Row>
             </Container>
         </>
     )

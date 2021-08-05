@@ -9,9 +9,9 @@ const FriendEvent = ({ event }) => {
 
   return (
     <>
-      <Card className="eventCard p-1">
+      <Card className="friendEventCard p-1">
         <CardBody className="card-content">
-          <p>{event.eventName}</p>
+          <h5>{event.eventName}</h5>
           {event.userId === 1 ? ("") : (
             <p><Link to={`/friend/getbyid/${event.userId}`}>{event.userProfile.firstName}</Link></p>)}
           <p>{event.eventDetails}</p>

@@ -25,10 +25,11 @@ const UserList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {users?.map((user) => (
-                                <User user={user} key={user.Id} />
-                            ))}
-
+                            {!users.length ? ("No new users available.") : (
+                                users?.map((user) => (
+                                    <User user={user} key={user.Id} />
+                                ))
+                            )}
                         </tbody>
                     </Table>
                 </div>

@@ -33,6 +33,7 @@ const MyAccount = () => {
                             <li className="text-left px-2">Name: {user.fullName}</li>
                             <li className="text-left px-2">Email: {user.email}</li>
                             <li className="text-left px-2">Address: {user.address}</li>
+                            <li className="text-left px-2">Mobile Phone: {user.mobilePhone}</li>
                             <li className="text-left px-2">Age: {user.age}</li>
                             <li className="text-left px-2">Shoe Size: {user.shoeSize}</li>
                             <li className="text-left px-2">Favorite Color: {user.favoriteColor.color}</li>

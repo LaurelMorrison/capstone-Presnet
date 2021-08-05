@@ -71,9 +71,9 @@ namespace Presnet.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO UserProfile (firebaseUserId, firstName, lastName, email, up.mobilePhone, address, createdTime, age, shoeSize, clothingSizeId, favoriteColorId)
+                    cmd.CommandText = @"INSERT INTO UserProfile (firebaseUserId, firstName, lastName, email, mobilePhone, address, createdTime, age, shoeSize, clothingSizeId, favoriteColorId)
                                         OUTPUT INSERTED.ID
-                                        VALUES (@firebaseUserId, @firstName, @lastName, @email, @address, @createdTime, @age, @shoeSize, @clothingSizeId, @favoriteColorId)";
+                                        VALUES (@firebaseUserId, @firstName, @lastName, @email, @mobilePhone, @address, @createdTime, @age, @shoeSize, @clothingSizeId, @favoriteColorId)";
                     DbUtils.AddParameter(cmd, "@firebaseUserId", userProfile.firebaseUserId);
                     DbUtils.AddParameter(cmd, "@firstName", userProfile.firstName);
                     DbUtils.AddParameter(cmd, "@lastName", userProfile.lastName);
@@ -156,7 +156,7 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                              Select up.firstName, up.lastName, up.id, f.statusId
+                              Select distinct up.firstName, up.lastName, up.id, f.statusId
                                 FROM userProfile up
                                 LEFT JOIN friend f ON f.friendId = up.id AND f.userId = @id
                                 WHERE up.id != @id AND up.id != 1 AND (up.id NOT IN (
@@ -183,7 +183,7 @@ namespace Presnet.Repositories
                             lastName = DbUtils.GetString(reader, "lastName"),
                             Friend = new Friend()
                             {
-                                id = DbUtils.GetNullableInt(reader, "id")
+                                statusId = DbUtils.GetNullableInt(reader, "statusId")
                             }
                         });
                     }

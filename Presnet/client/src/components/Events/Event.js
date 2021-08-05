@@ -11,7 +11,7 @@ const Event = ({ event, handleDelete }) => {
         <>
             <Card className="eventCard p-1">
                 <CardBody className="card-content">
-                    <p>{event.eventName}</p>
+                    <h5>{event.eventName}</h5>
                     <p>{event.eventDetails}</p>
                     <p>{createDateTime}</p>
                 </CardBody>

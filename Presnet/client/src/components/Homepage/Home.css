@@ -28,7 +28,10 @@
 
 .notificationBadge{
   background-color: #246D82!important;
+  margin-left: 5px!important;
+  padding: 5px 10px!important;
 }
+
 .homepage4{
   opacity: .95;
   margin: 0px;

@@ -43,21 +43,23 @@ const FriendList = () => {
                         <tbody>
                             {!friends.length ? ("You dont have any friends yet, add some today!") : (
                             friends?.map((friend) => (
-                                <Friend friend={friend} key={friend.Id} setIsDeleted={setIsDeleted} isDeleted={isDeleted} />
+                                <Friend friend={friend} key={`friend-${friend.id}`} setIsDeleted={setIsDeleted} isDeleted={isDeleted} />
                             ))
                             )}
 
                         </tbody>
                     </Table>
                 </Row>
+                </Container>
                 <br />
+                <Container>
                 {!friendRequests.length ? (<br />) : (
                 <Row className="friendRequests justify-content-center">
                     <h1 className="friendRequestHeader">Friend Requests</h1>
                     <Table>
                         <tbody>
                             {friendRequests?.map((friendRequest) => (
-                                <FriendRequest friendRequest={friendRequest} key={friendRequest.Id} acceptFriendAndRefresh={acceptFriendAndRefresh} rejectFriendAndRefresh={rejectFriendAndRefresh} />
+                                <FriendRequest friendRequest={friendRequest} key={`friendRequest-${friendRequest.id}`} acceptFriendAndRefresh={acceptFriendAndRefresh} rejectFriendAndRefresh={rejectFriendAndRefresh} />
                             ))}
 
                         </tbody>

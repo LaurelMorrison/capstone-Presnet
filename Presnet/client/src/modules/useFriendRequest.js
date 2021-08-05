@@ -3,7 +3,7 @@ import { GetFriendRequest } from "./friendManager";
 
 export const FriendRequestContext = createContext({})
 
-export const FriendRequestProvider = (props) => {
+export const FriendRequestProvider = ({ isLoggedIn, ...rest }) => {
     const [countFriendRequests, setCountFriendRequests] = useState(0);
     const [friendRequests, setFriendRequests] = useState([]);
 
@@ -15,8 +15,12 @@ export const FriendRequestProvider = (props) => {
             });
     }, [])
 
-    useEffect(() => { loadFriendRequests() }, [loadFriendRequests])
+    useEffect(() => {
+        if (isLoggedIn) {
+            loadFriendRequests()
+        }
+    }, [loadFriendRequests, isLoggedIn])
     const friendRequestDataValue = useMemo(() => ({ countFriendRequests, friendRequests, loadFriendRequests }), [countFriendRequests, friendRequests, loadFriendRequests])
-    return <FriendRequestContext.Provider value={friendRequestDataValue} {...props} />
+    return <FriendRequestContext.Provider value={friendRequestDataValue} {...rest} />
 }
 export const useFriendRequests = () => useContext(FriendRequestContext)
