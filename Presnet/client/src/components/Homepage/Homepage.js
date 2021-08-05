@@ -1,5 +1,6 @@
 import React from "react";
 import homepage from "../../Images/homepage.png";
+import homeBackground from "../../Images/homeBackground.png";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 import "./Home.css";
@@ -18,12 +19,13 @@ const Homepage = () => {
         <Row className="homepage2">
           <Col xs lg="4">
             <div className="homepageImageBox">
-              <img className="homepageImage" src={homepage} alt="floating gifts" />
+              <img className="homepageImage1" src={homepage} alt="floating gifts" />
+              <img className="homepageImage2" src={homeBackground} alt="floating gifts" />
             </div>
           </Col>
           <Col xs lg="8">
             <div className="homepage2">
-              <h1>Upcoming Events</h1>
+              <h1 className="homepage2Header">Upcoming Events</h1>
               <div>
                 <UpcomingEventList />
               </div>

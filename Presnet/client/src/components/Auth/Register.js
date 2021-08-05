@@ -12,6 +12,7 @@ export default function Register() {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
+  const [mobilePhone, setMobilePhone] = useState();
   const [address, setAddress] = useState();
   const [age, setAge] = useState();
   const [clothingSizeId, setclothingSizeId] = useState();
@@ -27,7 +28,7 @@ export default function Register() {
     if (password && password !== confirmPassword) {
       alert("Passwords don't match. Do better.");
     } else {
-      const userProfile = { firstName, lastName, email, address, age, favoriteColorId, clothingSizeId, shoeSize };
+      const userProfile = { firstName, lastName, email, mobilePhone, address, age, favoriteColorId, clothingSizeId, shoeSize };
       register(userProfile, password)
         .then(() => history.push("/"));
     }
@@ -82,6 +83,10 @@ export default function Register() {
         <FormGroup className="loginBox"> 
         <Label htmlFor="address">Address:</Label>
           <Input id="adress" type="text" autoFocus onChange={e => setAddress(e.target.value)} />
+        </FormGroup>
+        <FormGroup className="loginBox"> 
+        <Label htmlFor="mobilePhone">Mobile Phone:</Label>
+          <Input id="mobilePhone" type="tel" autoFocus onChange={e => setMobilePhone(e.target.value)} />
         </FormGroup>
         <FormGroup className="loginBox">
           <Label for="age">Age:</Label>

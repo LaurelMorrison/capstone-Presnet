@@ -6,7 +6,7 @@ const FriendGift = ({ gift }) => {
     <>
       <ul>
         <li>
-          <p><a href={`${gift.giftURL}`} target="_blank">{gift.gift}</a></p>
+          <p><a href={`${gift.giftURL}`} target="_blank" rel="noreferrer">{gift.gift}</a></p>
         </li>
       </ul>
 

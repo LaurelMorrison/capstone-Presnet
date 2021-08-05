@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Spinner } from "reactstrap";
 import { onLoginStatusChange } from "../../modules/authManager";
 import UserEventList from "./UserEventList";
 import FriendEventList from "./FriendsEventList";
+import { Container, Row, Col, Spinner } from "reactstrap";
+import events from "../../Images/events1.jpeg";
+import eventsBackground from "../../Images/eventsBackground.png";
 
 function EventPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -18,8 +20,19 @@ function EventPage() {
 
   return (
     <>
-      <UserEventList isLoggedIn={isLoggedIn} />
-      <FriendEventList isLoggedIn={isLoggedIn} />
+      <Container>
+        <Row className="justify-content-center" lg="12">
+          <UserEventList isLoggedIn={isLoggedIn} />
+        </Row>
+
+        <Row className="justify-content-center" lg="12">
+            <FriendEventList isLoggedIn={isLoggedIn} />
+          {/* <div className="eventImageBox">
+              <img className="eventImage1" src={events} alt="celebratory event" />
+              <img className="eventImage2" src={eventsBackground} alt="celebratory event" />
+            </div> */}
+        </Row>
+      </Container>
     </>
   )
 };

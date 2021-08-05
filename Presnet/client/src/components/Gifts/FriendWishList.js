@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { GetFriendsWishlist } from "../../modules/giftManager";
 import FriendGift from "./FriendGift"
 import { useParams } from "react-router-dom";
-import { GetFriendById } from "../../modules/friendManager";
 
 const FriendWishList = () => {
     const [gifts, setGifts] = useState([]);

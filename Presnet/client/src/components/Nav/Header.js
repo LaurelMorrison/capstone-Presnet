@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
     Collapse, Navbar, NavbarBrand, Nav, NavItem, NavLink, NavbarToggler, Badge,

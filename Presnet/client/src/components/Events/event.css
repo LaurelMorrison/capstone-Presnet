@@ -4,7 +4,7 @@
 
 .eventCard1{
     color: #246D82;
-    padding-top: 15px;
+    padding: 15px 0px 15px 0px;
 }
 
 .eventCard{
@@ -13,6 +13,14 @@
     margin-bottom: 10px;
     background-color: #F0F0E6!important;
     width: 80%
+}
+
+.friendEventCard{
+    padding: 5px!important;
+    margin-top: 17px!important;
+    margin-bottom: 10px;
+    background-color: #F0F0E6!important;
+    width: 50%   
 }
 
 .card-body{
@@ -37,4 +45,36 @@ card-footer{
 .noEventsMessage{
     margin-top: 15px;
     color: #246D82;
+}
+
+.userEventSection{
+    margin: 0px!important;
+    padding: 30px!important;
+    background-color: #F0F0E6;
+    color: #246D82;
+    line-height: 2em;
+    opacity: .98;    
+}
+
+.friendEventSection{
+    margin: 35px 0px 20px 0px!important;
+    padding: 30px!important;
+    background-color: #F0F0E6;
+    color: #246D82;
+    line-height: 2em;
+    opacity: .98;    
+}
+
+.eventImage1{
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 10px;
+    height: 420px;
+    z-index: 20;
+  }
+
+.eventImage2{
+    position: absolute;
+    height: 420px;
+    z-index: 10;
 }

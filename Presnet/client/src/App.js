@@ -22,7 +22,7 @@ function App() {
 
   return (
     <Router>
-      <FriendRequestProvider>
+      <FriendRequestProvider isLoggedIn={isLoggedIn}>
         <Header isLoggedIn={isLoggedIn} />
         <ApplicationViews isLoggedIn={isLoggedIn} />
         <Footer isLoggedIn={isLoggedIn} />

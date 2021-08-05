@@ -22,7 +22,7 @@ const UpcomingEventList = () => {
             <Container>
                 <Row className="eventCard2" >
                     <Table>
-                        <thead>
+                        <thead className="upcomingEventTable">
                             <tr>
                                 <th>Event</th>
                                 <th>Date</th>

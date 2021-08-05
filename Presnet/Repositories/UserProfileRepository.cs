@@ -40,6 +40,7 @@ namespace Presnet.Repositories
                             firstName = DbUtils.GetString(reader, "firstName"),
                             lastName = DbUtils.GetString(reader, "lastName"),
                             email = DbUtils.GetString(reader, "email"),
+                            mobilePhone = DbUtils.GetString(reader, "mobilePhone"),
                             address = DbUtils.GetString(reader, "address"),
                             createdTime = DbUtils.GetDateTime(reader, "createdTime"),
                             age = DbUtils.GetInt(reader, "age"),
@@ -70,13 +71,14 @@ namespace Presnet.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO UserProfile (firebaseUserId, firstName, lastName, email, address, createdTime, age, shoeSize, clothingSizeId, favoriteColorId)
+                    cmd.CommandText = @"INSERT INTO UserProfile (firebaseUserId, firstName, lastName, email, mobilePhone, address, createdTime, age, shoeSize, clothingSizeId, favoriteColorId)
                                         OUTPUT INSERTED.ID
-                                        VALUES (@firebaseUserId, @firstName, @lastName, @email, @address, @createdTime, @age, @shoeSize, @clothingSizeId, @favoriteColorId)";
+                                        VALUES (@firebaseUserId, @firstName, @lastName, @email, @mobilePhone, @address, @createdTime, @age, @shoeSize, @clothingSizeId, @favoriteColorId)";
                     DbUtils.AddParameter(cmd, "@firebaseUserId", userProfile.firebaseUserId);
                     DbUtils.AddParameter(cmd, "@firstName", userProfile.firstName);
                     DbUtils.AddParameter(cmd, "@lastName", userProfile.lastName);
                     DbUtils.AddParameter(cmd, "@email", userProfile.email);
+                    DbUtils.AddParameter(cmd, "@mobilePhone", userProfile.mobilePhone);
                     DbUtils.AddParameter(cmd, "@address", userProfile.address);
                     DbUtils.AddParameter(cmd, "@createdTime", DateTime.Now);
                     DbUtils.AddParameter(cmd, "@age", userProfile.age);
@@ -97,7 +99,7 @@ namespace Presnet.Repositories
                     using (var cmd = conn.CreateCommand())
                     {
                         cmd.CommandText = @"
-                            SELECT up.id, Up.firebaseUserId, up.firstName, up.lastName, up.email, up.address, up.createdTime, 
+                            SELECT up.id, Up.firebaseUserId, up.firstName, up.lastName, up.email, up.mobilePhone, up.address, up.createdTime, 
                                    up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size as clothingSize, fc.color as favoriteColor,
                                    cs.id as sizeId, fc.id as colorId                            
                             FROM UserProfile up
@@ -121,6 +123,7 @@ namespace Presnet.Repositories
                                 firstName = DbUtils.GetString(reader, "firstName"),
                                 lastName = DbUtils.GetString(reader, "lastName"),
                                 email = DbUtils.GetString(reader, "email"),
+                                mobilePhone = DbUtils.GetString(reader, "mobilePhone"),
                                 address = DbUtils.GetString(reader, "address"),
                                 createdTime = DbUtils.GetDateTime(reader, "createdTime"),
                                 age = DbUtils.GetInt(reader, "age"),
@@ -153,7 +156,7 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                              Select up.firstName, up.lastName, up.id, f.statusId
+                              Select distinct up.firstName, up.lastName, up.id, f.statusId
                                 FROM userProfile up
                                 LEFT JOIN friend f ON f.friendId = up.id AND f.userId = @id
                                 WHERE up.id != @id AND up.id != 1 AND (up.id NOT IN (
@@ -180,7 +183,7 @@ namespace Presnet.Repositories
                             lastName = DbUtils.GetString(reader, "lastName"),
                             Friend = new Friend()
                             {
-                                id = DbUtils.GetNullableInt(reader, "id")
+                                statusId = DbUtils.GetNullableInt(reader, "statusId")
                             }
                         });
                     }
@@ -247,7 +250,7 @@ namespace Presnet.Repositories
                     using (var cmd = conn.CreateCommand())
                     {
                         cmd.CommandText = @"
-                          SELECT up.id, up.firstName, up.firebaseUserId, up.lastName, up.email, up.address, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size as clothingSize, fc.color as favoriteColor, cs.id as sizeId, fc.id as colorId
+                          SELECT up.id, up.firstName, up.firebaseUserId, up.lastName, up.email, up.mobilePhone, up.address, up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId, cs.size as clothingSize, fc.color as favoriteColor, cs.id as sizeId, fc.id as colorId
                           FROM userProfile up
                             LEFT JOIN clothingSize cs ON cs.id = up.clothingSizeId
                             LEFT JOIN favoriteColor fc ON fc.id = up.favoriteColorId
@@ -267,6 +270,7 @@ namespace Presnet.Repositories
                                 firstName = DbUtils.GetString(reader, "firstName"),
                                 lastName = DbUtils.GetString(reader, "lastName"),
                                 email = DbUtils.GetString(reader, "email"),
+                                mobilePhone = DbUtils.GetString(reader, "mobilePhone"),
                                 address = DbUtils.GetString(reader, "address"),
                                 age = DbUtils.GetInt(reader, "age"),
                                 shoeSize = DbUtils.GetInt(reader, "shoeSize"),
@@ -305,6 +309,7 @@ namespace Presnet.Repositories
                                              lastName = @lastName, 
                                              address = @address, 
                                              email = @email, 
+                                             mobilePhone = @mobilePhone,
                                              age = @age, 
                                              shoeSize = @shoeSize, 
                                              clothingSizeId = @clothingSizeId,
@@ -317,6 +322,7 @@ namespace Presnet.Repositories
                     DbUtils.AddParameter(cmd, "@lastName", userProfile.lastName);
                     DbUtils.AddParameter(cmd, "@address", userProfile.address);
                     DbUtils.AddParameter(cmd, "@email", userProfile.email);
+                    DbUtils.AddParameter(cmd, "@mobilePhone", userProfile.mobilePhone);
                     DbUtils.AddParameter(cmd, "@age", userProfile.age);
                     DbUtils.AddParameter(cmd, "@shoeSize", userProfile.shoeSize);
                     DbUtils.AddParameter(cmd, "@clothingSizeId", userProfile.clothingSizeId);
@@ -340,7 +346,7 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     var sql = @"
-                            SELECT distinct up.id, up.firstName, up.lastName, up.email, up.address, up.age, 
+                            SELECT distinct up.id, up.firstName, up.lastName, up.email, up.mobilePhone, up.address, up.age, 
                                    up.shoeSize, up.clothingSizeId, up.favoriteColorId, f.friendId, f.userId, f.statusId
                             FROM userProfile up
                             LEFT JOIN friend f on up.id = f.userId OR up.id = f.friendId
@@ -362,6 +368,7 @@ namespace Presnet.Repositories
                             firstName = DbUtils.GetString(reader, "firstName"),
                             lastName = DbUtils.GetString(reader, "lastName"),
                             email = DbUtils.GetString(reader, "email"),
+                            mobilePhone = DbUtils.GetString(reader, "mobilePhone"),
                             address = DbUtils.GetString(reader, "address"),
                             age = DbUtils.GetInt(reader, "age"),
                             shoeSize = DbUtils.GetInt(reader, "shoeSize"),
