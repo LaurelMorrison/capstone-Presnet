@@ -8,7 +8,6 @@ const Friend = ({ friend, setIsDeleted, isDeleted }) => {
   const history = useHistory();
 
   const handleDelete = (id) => {
-    console.log(friend)
     if (window.confirm('Are you sure you want to unfriend?')) {
       deleteFriend(id).then(() => {
         setIsDeleted(!isDeleted)

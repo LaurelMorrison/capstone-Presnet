@@ -3,6 +3,7 @@ body {
   font-family: 'Assistant', 'Varela Round', tahoma, sans-serif;
   background-image: url("/src/Images/background5.png");
   background-repeat: repeat;
+  padding-bottom: 40px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -49,6 +50,7 @@ code {
   color: #F0F0E6;
   left: 0;
   bottom: 0;
+  position: fixed;
   width: 100%;
   height: 40px;
   display: flex;
@@ -76,6 +78,10 @@ tbody, td, tfoot, th, thead, tr {
 p{
   text-overflow: ellipsis!important; 
   overflow: hidden;
+}
+
+a.nav-link:hover{
+  color:#D08C6C!important;
 }
 
 

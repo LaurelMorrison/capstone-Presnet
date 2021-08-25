@@ -108,21 +108,3 @@ export const updateUser = (editUser) => {
     });
   });
 }
-
-export const searchUsers = (criteria) => {
-  return getToken().then((token) => {
-
-    return fetch(`${baseUrl}/Search?query=${criteria}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    }).then(resp => {
-      if (resp.ok) {
-        return resp.json();
-      } else {
-        throw new Error("An unknown error occurred while trying to search for friends.");
-      }
-    });
-  });
-};

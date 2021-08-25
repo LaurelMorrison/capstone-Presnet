@@ -30,7 +30,6 @@ const EventEditForm = () => {
     const handleDate = (evt) => {
         evt.preventDefault();
         let eventPost = { ...updatedEvent };
-        console.log(evt.target.value)
         let editDate = evt.target.value
         eventPost[evt.target.id] = editDate
         setupdatedEvent(eventPost)
@@ -66,7 +65,7 @@ const EventEditForm = () => {
             </FormGroup>
             <FormGroup className="formBox">
                 <Label for="eventDetails">Event Details</Label>
-                <Input type="text" name="eventDetails" id="eventDetails" placeholder="eventDetails"
+                <Input type="textarea" name="eventDetails" id="eventDetails" placeholder="eventDetails"
                     value={updatedEvent.eventDetails}
                     onChange={handleInputChange} />
             </FormGroup>

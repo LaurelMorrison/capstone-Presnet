@@ -30,6 +30,11 @@ namespace Presnet.Controllers
         {
             var user = GetCurrentUserProfile();
 
+            if (user == null)
+            {
+                return Ok(new List<Friend>());
+            }
+
             var friends = _friendRepository.GetAllPending(user.id);
             if (friends == null)
             {

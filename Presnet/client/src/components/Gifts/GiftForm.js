@@ -27,7 +27,7 @@ const GiftForm = () => {
         evt.preventDefault();
 
         addGift(newGift).then((e) => {
-            history.push("/userProfile/account");
+            history.push("/wishList");
         });
 
     };

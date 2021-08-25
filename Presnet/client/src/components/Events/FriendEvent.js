@@ -13,7 +13,7 @@ const FriendEvent = ({ event }) => {
         <CardBody className="card-content">
           <h5>{event.eventName}</h5>
           {event.userId === 1 ? ("") : (
-            <p><Link to={`/friend/getbyid/${event.userId}`}>{event.userProfile.firstName}</Link></p>)}
+            <p><Link to={`/friend/getbyid/${event.userId}`}>{event.userProfile.fullName}</Link></p>)}
           <p>{event.eventDetails}</p>
           <p>{createDateTime}</p>
         </CardBody>

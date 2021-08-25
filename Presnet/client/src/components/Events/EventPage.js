@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { onLoginStatusChange } from "../../modules/authManager";
 import UserEventList from "./UserEventList";
 import FriendEventList from "./FriendsEventList";
-import { Container, Row, Col, Spinner } from "reactstrap";
-import events from "../../Images/events1.jpeg";
+import { Container, Row, Spinner, Col } from "reactstrap";
+import events from "../../Images/events4.jpeg";
 import eventsBackground from "../../Images/eventsBackground.png";
 
 function EventPage() {
@@ -25,12 +25,16 @@ function EventPage() {
           <UserEventList isLoggedIn={isLoggedIn} />
         </Row>
 
-        <Row className="justify-content-center" lg="12">
+        <Row className="friendEventBlock justify-content-center" lg="12">
+          <Col xs lg="8">
             <FriendEventList isLoggedIn={isLoggedIn} />
-          {/* <div className="eventImageBox">
+          </Col>
+          <Col xs lg="4">
+            <div className="eventImageBox">
               <img className="eventImage1" src={events} alt="celebratory event" />
               <img className="eventImage2" src={eventsBackground} alt="celebratory event" />
-            </div> */}
+            </div>
+          </Col>
         </Row>
       </Container>
     </>

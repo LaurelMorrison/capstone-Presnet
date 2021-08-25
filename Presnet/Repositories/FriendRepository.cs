@@ -46,55 +46,42 @@ namespace Presnet.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT f.id, f.userId, f.friendId, f.statusId, fs.status, 
-                                             up.firstName as UserName, fup.firstName as FriendFirstName, fup.id as FriendId, 
-                                             fup.lastName as FriendLastName, fup.email as FriendEmail, fup.address as FriendAddess, 
-                                             fup.age as FriendAge, fup.shoeSize as FriendShoeSize, fup.clothingSizeId as FriendClothingSizeId, 
-                                             fup.favoriteColorId as FriendColorId, cs.size as FriendClothingSize, fc.color as FriendFavoriteColor
+                    cmd.CommandText = @"SELECT distinct 
+                                            up.firstName, up.mobilePhone, up.id as friendId, 
+                                            up.lastName, up.email, up.address, 
+                                            up.age, up.shoeSize, up.clothingSizeId, up.favoriteColorId,
+                                            cs.size, fc.color
                                         FROM friend f
-                                        LEFT JOIN friendStatus fs ON fs.id = f.statusId
-                                        LEFT JOIN userProfile up ON up.id = f.userId
-                                        LEFT JOIN userProfile fup ON fup.id = f.friendId
-                                        LEFT JOIN clothingSize cs ON cs.id = fup.clothingSizeId
-                                        LEFT JOIN favoriteColor fc ON fc.id = fup.favoriteColorId
-                                        Where friendId = @friendId";
+                                            LEFT JOIN userProfile up ON up.id = f.userId OR up.id =f.friendId
+                                            LEFT JOIN clothingSize cs ON cs.id = up.clothingSizeId
+                                            LEFT JOIN favoriteColor fc ON fc.id = up.favoriteColorId
+                                        Where up.id = @friendId";
                     cmd.Parameters.AddWithValue("@friendId", friendId);
                     var reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
                         return new Friend()
                         {
-                            id = DbUtils.GetInt(reader, "id"),
-                            userId = DbUtils.GetInt(reader, "userId"),
-                            friendId = DbUtils.GetInt(reader, "friendId"),
-                            statusId = DbUtils.GetInt(reader, "statusId"),
-                            FriendStatus = new FriendStatus()
-                            {
-                                status = reader.GetString(reader.GetOrdinal("status")),
-                            },
                             UserProfile = new UserProfile()
                             {
-                                firstName = DbUtils.GetString(reader, "UserName"),
-                            },
-                            FriendProfile = new UserProfile()
-                            {
-                                id = DbUtils.GetInt(reader, "FriendId"),
-                                firstName = DbUtils.GetString(reader, "FriendFirstName"),
-                                lastName = DbUtils.GetString(reader, "FriendLastName"),
-                                email = DbUtils.GetString(reader, "FriendEmail"),
-                                address = DbUtils.GetString(reader, "FriendAddess"),
-                                age = DbUtils.GetInt(reader, "FriendAge"),
-                                shoeSize = DbUtils.GetInt(reader, "FriendShoeSize"),
-                                clothingSizeId = DbUtils.GetInt(reader, "FriendClothingSizeId"),
-                                favoriteColorId = DbUtils.GetInt(reader, "FriendColorId")
+                                firstName = DbUtils.GetString(reader, "firstName"),
+                                id = DbUtils.GetInt(reader, "friendId"),
+                                mobilePhone = DbUtils.GetString(reader, "mobilePhone"),
+                                lastName = DbUtils.GetString(reader, "lastName"),
+                                email = DbUtils.GetString(reader, "email"),
+                                address = DbUtils.GetString(reader, "address"),
+                                age = DbUtils.GetInt(reader, "age"),
+                                shoeSize = DbUtils.GetInt(reader, "shoeSize"),
+                                clothingSizeId = DbUtils.GetInt(reader, "clothingSizeId"),
+                                favoriteColorId = DbUtils.GetInt(reader, "favoriteColorId")
                             },
                             ClothingSize = new ClothingSize()
                             {
-                                size = reader.GetString(reader.GetOrdinal("FriendClothingSize")),
+                                size = reader.GetString(reader.GetOrdinal("size")),
                             },
                             FavoriteColor = new FavoriteColor()
                             {
-                                color = reader.GetString(reader.GetOrdinal("FriendFavoriteColor")),
+                                color = reader.GetString(reader.GetOrdinal("color")),
                             }
                         };
                     }

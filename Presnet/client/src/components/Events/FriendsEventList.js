@@ -26,7 +26,7 @@ const FriendEventList = () => {
                     <div className="eventMap">
                         {!events.length ? (<div className="noEventsMessage">You have no upcoming friend events.</div>) : (
                             events?.map((event) => (
-                                <FriendEvent event={event} key={event.id} />
+                                <FriendEvent event={event} key={`friendsEvents-${event.id}`} />
                             ))
                         )}
                     </div>

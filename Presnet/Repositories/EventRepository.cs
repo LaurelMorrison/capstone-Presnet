@@ -64,7 +64,7 @@ namespace Presnet.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                         SELECT distinct e.eventName, e.eventDetails, e.date, up.firstName, up.lastName, up.id, e.id, e.userId
+                         SELECT distinct e.eventName, e.eventDetails, e.date, up.firstName, up.lastName, up.id as EventUserId, e.id, e.userId
                          FROM userProfile up
                               LEFT JOIN event e ON e.userId = up.id
                               LEFT JOIN friend f ON (f.userId = up.id OR f.friendId = up.id)
@@ -97,7 +97,7 @@ namespace Presnet.Repositories
                             userId = DbUtils.GetInt(reader, "userId"),
                             UserProfile = new UserProfile()
                             {
-                                id = DbUtils.GetInt(reader, "id"),
+                                id = DbUtils.GetInt(reader, "EventUserId"),
                                 firstName = DbUtils.GetString(reader, "firstName"),
                                 lastName = DbUtils.GetString(reader, "lastName")
                             }

@@ -44,7 +44,7 @@ const EventForm = () => {
             </FormGroup>
             <FormGroup className="formBox">
                 <Label for="eventDetails">Details: </Label>
-                <Input type="text" name="eventDetails" id="eventDetails" placeholder="Details"
+                <Input type="textarea" name="eventDetails" id="eventDetails" placeholder="Details"
                     value={newEvent.eventDetails}
                     onChange={handleInputChange} />
             </FormGroup>

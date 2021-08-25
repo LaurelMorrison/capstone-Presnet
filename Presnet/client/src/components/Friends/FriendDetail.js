@@ -23,12 +23,12 @@ const FriendDetails = () => {
         <>
             <div>
                 <Card className="userCard m-4">
-                    <h1>Let's celebrate {friend.friendProfile.firstName}</h1>
-                    <p className="text-left px-2">Name: {friend.friendProfile.fullName}</p>
-                    <p className="text-left px-2">Email: {friend.friendProfile.email}</p>
-                    <p className="text-left px-2">Address: {friend.friendProfile.address}</p>
-                    <p className="text-left px-2">Age: {friend.friendProfile.age}</p>
-                    <p className="text-left px-2">Shoe Size: {friend.friendProfile.shoeSize}</p>
+                    <h1>Let's celebrate {friend.userProfile.firstName}</h1>
+                    <p className="text-left px-2">Name: {friend.userProfile.fullName}</p>
+                    <p className="text-left px-2">Email: {friend.userProfile.email}</p>
+                    <p className="text-left px-2">Address: {friend.userProfile.address}</p>
+                    <p className="text-left px-2">Age: {friend.userProfile.age}</p>
+                    <p className="text-left px-2">Shoe Size: {friend.userProfile.shoeSize}</p>
                     <p className="text-left px-2">Favorite Color: {friend.favoriteColor.color}</p>
                     <p className="text-left px-2">Clothing Size: {friend.clothingSize.size}</p>
                     <Link className="a" to={`/friends`}><Button className="button">Back to Friend List</Button></Link>

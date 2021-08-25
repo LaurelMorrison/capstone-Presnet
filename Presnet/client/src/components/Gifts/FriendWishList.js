@@ -13,7 +13,6 @@ const FriendWishList = () => {
 
     useEffect(() => {
         if (friendId) {
-            console.log(friendId);
             getFriendWishList(friendId);
         }
     }, [friendId])
